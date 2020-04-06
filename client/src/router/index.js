@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Games from '../views/Games.vue'
 import Signin from '../views/Signin.vue'
 import Dashboard from '../views/Dashboard.vue'
 import store from '@/store'
@@ -10,8 +10,8 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'games',
+    component: Games
   },
   {
     path: '/signin',

@@ -1,0 +1,49 @@
+@import 'Main.scss';
+@import '_include-media';
+
+.main-container {
+    @include flex(column);
+    height: 100%;
+    padding: 0;
+}
+
+//HEADER STYLE
+.header {
+    background-color: $main_color_1;
+
+    .nav-item-one {
+        a {
+            font-size: $font_size_title;
+            color: $main_color_2;
+            font-weight: bolder;
+        }
+    }
+
+    .nav-item-two {
+        @include flex(row);
+
+        align-items: center;
+        
+        a {
+            margin-left: 25px;
+            font-size: $font_size_subtitle;
+            color: $color_grey;
+            font-weight: bolder;
+        }
+
+        i {
+            margin-left: 25px;
+            font-size: $font_size_subtitle;
+            color: $main_color_2;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .selected {
+            border-bottom: 3px solid $main_color_2;
+        }
+
+    }
+}
