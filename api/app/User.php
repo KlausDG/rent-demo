@@ -45,4 +45,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims(){
         return [];
     }
+
+    public function filial()
+    {
+        return $this->belongsTo('App\Filial', 'filial_id');
+    }
 }

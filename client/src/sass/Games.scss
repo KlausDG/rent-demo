@@ -25,59 +25,19 @@ sans-serif;
             color: $color_grey;
             font-size: $font_size_subtitle;
             font-weight: bold;
-
-        }
-
-        i {
-            margin-left: 25px;
-            color: $color_grey;
-            line-height: 150%;
-        }
-
-        ul {
-            display: none;
-        }
-
-        &:hover {
-            cursor: pointer;
-
-            ul {
-                display: block;
-                margin-top: 30px;
-                padding-top: 20px;
-                left: 10px;
-                width: 200px;
-                position: absolute;
-                color: $color_grey;
-                background-color: $main_color_1;
-                z-index: 1000;
-                border-radius: 0 0 15px 15px;
-
-                li {
-                    display: block;
-                    font-size: $font_size_important;
-                    font-weight: bold;
-                    margin: 15px;
-                    padding-left: 5px;
-                    height: 30px;
-                    &:hover {
-                        border: 2px solid lighten($main_color_2, 20);
-                        border-radius: 10px;
-                    }
-
-                }
-            }
+            margin: 0;
         }
     }
-
 
     .search-item {
         display: flex;
         padding-right: 15px;
+        height: 40px;
 
         input {
             margin-right: 10px;
             width: 40rem;
+            height: 100%;
 
             @include media('>=phone', '<=tablet') {
                 width: 100%;
@@ -85,7 +45,7 @@ sans-serif;
         }
 
         button {
-            @include size(120px, 45px);
+            @include size(120px, 100%);
             @extend %btn-colors;
             margin: 0;
             border-radius: 10px;
@@ -136,7 +96,7 @@ sans-serif;
             .label {
                 display: flex;
 
-                i {
+                .icon {
                     color: $main_color_2;
                     font-size: $font_size_icon;
                     width: 30px;
@@ -148,6 +108,10 @@ sans-serif;
                     border-left: 3px solid $main_color_2;
                     height: 25px;
                 }
+            }
+
+            select {
+                width: 250px;
             }
         }
 
@@ -178,10 +142,13 @@ sans-serif;
     @include flex(row);
     align-items: center;
 
+    .pagination {
+        margin-bottom: 0;
+    }
+
     .dropdown-container {
         @include flex(row);
         align-items: center;
-        // margin: 30px 12px 12px 12px;
 
         .exibit-dropdown {
             @include flex(row);
@@ -198,9 +165,8 @@ sans-serif;
     }
 
     .adv-filter-btn-container {
-        margin-left: 10px;
-
         button {
+            margin-left: 15px;
             height: 38px;
             font-size: 1rem;
             text-align: center;
@@ -208,11 +174,6 @@ sans-serif;
         }
     }
 }
-
-/* PAGINATION STYLE*/
-// .pagination {
-// margin-top: 25px;
-// }
 
 /* THUMB ITEM STYLE */
 .flex-container {
@@ -304,7 +265,7 @@ sans-serif;
                             @include flex(row);
                             @include size(50%, 100%);
 
-                            i {
+                            .icon {
                                 color: $main_color_2;
                                 font-size: $font_size_icon;
                                 width: 30px;
@@ -345,6 +306,15 @@ sans-serif;
         color: $color_grey;
         font-size: $font_size_important;
     }
+}
+
+.pagination {
+    li {
+        a {
+            color: $color_black;
+        }
+    }
+
 }
 
 //FIM THUMB ITEM STYLE

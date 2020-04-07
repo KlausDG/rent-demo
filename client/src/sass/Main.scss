@@ -11,8 +11,8 @@ $color_danger: red;
 $color_sidenav_background: #132644;
 $color_main_background: rgba(218, 216, 216, 0.541);
 $font_size_title: 36px;
-$font_size_subtitle: 24px;
 $font_size_icon: 25px;
+$font_size_subtitle: 24px;
 $font_size_important: 18px;
 $font_size_text: 14px;
 $font_size_btn: larger;
@@ -300,18 +300,3 @@ html {
         box-sizing: inherit;
     }
 }
-
-// Center & dribbble
-// body {
-//     min-height: 100vh;
-//     font-family: 'Inter', Arial, sans-serif;
-//     color: #8A91B4;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     background: #F6F8FF;
-
-//     @media(max-width: 800px) {
-//         flex-direction: column;
-//     }
-// }

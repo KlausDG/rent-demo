@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar v-if="!authenticated" />
+    <Sidebar/>
     <div id="cabecalho" style="padding: 1rem 0 1rem 2rem;">
       <div class="filial-container">
         <h4 id="cabecalho-text">
@@ -453,13 +454,16 @@
 
 <script>
 import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 import EventBus from "../main.js";
 import Axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     Navbar,
+    Sidebar,
     Footer,
   },
 
@@ -509,6 +513,13 @@ export default {
       adv_search: false,
       contact: "981432111",
     };
+  },
+
+  computed: {
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user",
+    }),
   },
 
   created() {

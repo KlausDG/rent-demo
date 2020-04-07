@@ -18,21 +18,23 @@ class DatabaseSeeder extends Seeder
             'email' => 'klausdgalm@hotmail.com',
             'password' => Hash::make('admin'),
             'role' => 2,
+            'filial_id' => 1,
         ]);
         User::create([
-            'name' => 'User',
-            'username' => 'User',
-            'email' => 'user@test.com',
-            'password' => Hash::make('secret'),
+            'name' => 'Arthur Casagrande',
+            'username' => 'arthur',
+            'email' => 'arthur@arthur.com',
+            'password' => Hash::make('lends'),
             'role' => 1,
+            'filial_id' => 1,
         ]);
 
         $this->call([
-            difficulties_seeder::class,
-            genres_seeder::class,
-            languages_seeder::class,
-            filial_seeder::class,
-            games_seeder::class,
+            DifficultySeeder::class,
+            GenreSeeder::class,
+            LanguageSeeder::class,
+            FilialSeeder::class,
+            GameSeeder::class,
         ]);
 
     }

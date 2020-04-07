@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Game;
 use App\Http\Resources\Game as GameResource;
-
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
     private $foreign_tables = ['language', 'genre', 'difficulty', 'filial'];
+
+    public function index() {
+        
+    }
 
     public function search($filial_id, $display_qtd, $sort_target, $sort_value, $query)
     {

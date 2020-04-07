@@ -21,19 +21,19 @@
 
     .nav-item-two {
         @include flex(row);
-
         align-items: center;
+        margin-right: 5px;
         
         a {
             margin-left: 25px;
-            font-size: $font_size_subtitle;
+            font-size: $font_size_important;
             color: $color_grey;
             font-weight: bolder;
         }
 
-        i {
+        .icon {
             margin-left: 25px;
-            font-size: $font_size_subtitle;
+            font-size: $font_size_important;
             color: $main_color_2;
 
             &:hover {

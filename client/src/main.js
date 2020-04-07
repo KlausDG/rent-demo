@@ -3,10 +3,21 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
+import Vuesax from 'vuesax'
+import 'vuesax/dist/vuesax.css'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'material-icons/iconfont/material-icons.css';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faAcquisitionsIncorporated, faCreativeCommonsBy } from '@fortawesome/free-brands-svg-icons'
+import { faUserLock, faBookReader, faCog, faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faClock, faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons'
 
 require('@/store/subscriber')
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
+
+library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faClock, faMoneyBillAlt)
 
 Vue.config.productionTip = false
 
@@ -25,14 +36,17 @@ Vue.use(VueScrollTo, {
   y: true
 })
 
+Vue.use(Vuesax)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('games', require('./views/Games.vue').default);
 Vue.component('scroll-top', require('./components/ScrollTop.vue').default);
 Vue.component('custom-footer', require('./components/Footer.vue').default);
 Vue.component('login-modal', require('./components/LoginModal.vue').default);
 
-  const EventBus = new Vue();
-  export default EventBus;
+const EventBus = new Vue();
+export default EventBus;
 
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
 
