@@ -74,15 +74,17 @@ export default {
     }),
 
     close() {
-		this.$emit("input", !this.value);
+      this.$emit("input", !this.value);
     },
 
     submit() {
-      this.signIn(this.form).then(() => {
-		this.has_error = false
-		EventBus.$emit("login", this.form.username);
-		this.$emit("input", !this.value);
-      }).catch(() => this.has_error = true);
+      this.signIn(this.form)
+        .then(() => {
+          this.has_error = false;
+          EventBus.$emit("login", this.form.username);
+          this.$emit("input", !this.value);
+        })
+        .catch(() => (this.has_error = true));
     },
   },
 };

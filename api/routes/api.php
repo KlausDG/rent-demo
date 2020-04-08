@@ -38,3 +38,7 @@ Route::delete('game/{id}', 'GameController@destroy');
 //OTHER
 // List filials
 Route::get('filials', "FilialController@index");
+
+// List single filial
+Route::get('filial/{id}', 'FilialController@show');
+

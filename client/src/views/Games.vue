@@ -408,7 +408,7 @@
         </div>
       </div>
       <div v-else class="no-items-found">
-        <p>Nenhum jogo encontrado. {{ filter_genre.length }}</p>
+        <p>Nenhum jogo encontrado.</p>
       </div>
 
       <!-- Navigation -->

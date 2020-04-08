@@ -10,4 +10,9 @@ class FilialController extends Controller
     {
         return Filial::get();
     }
+
+    public function show($id)
+    {
+        return Filial::findOrFail($id);
+    }
 }
