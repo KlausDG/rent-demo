@@ -1,0 +1,269 @@
+@import 'Main.scss';
+@import '_include-media';
+
+//variables
+$background-purple: #EEEEEE;
+$subtle-white: #f9f9f9;
+$subtle-grey: #f2f2f2;
+$masked-grey: #333;
+$blue: #F03861;
+
+$open-sans: 'Open Sans',
+sans-serif;
+
+.adv-search {
+  @include size(100%, 250px);
+  @extend %center-align;
+
+  form {
+    @include size(50vw, 100%);
+    background-color: $main_color_1;
+    border-radius: 0 0 30px 30px;
+
+    .close-btn {
+      color: $main_color_2;
+      margin-right: 15px;
+      margin-top: 5px;
+      float: right;
+      font-size: $font_size_important;
+    }
+
+    .close-btn:hover {
+      cursor: pointer;
+    }
+
+    .form-input {
+      @include flex("row");
+      justify-content: space-around;
+      overflow: hidden;
+      margin: auto;
+      padding-top: 30px;
+      color: white;
+      font-size: $font_size_important;
+      font-weight: 600;
+
+      .label {
+        display: flex;
+
+        .icon {
+          color: $main_color_2;
+          font-size: $font_size_icon;
+          width: 30px;
+        }
+
+        .divider {
+          margin-left: 7px;
+          margin-right: 7px;
+          border-left: 3px solid $main_color_2;
+          height: 25px;
+        }
+      }
+
+      select {
+        width: 250px;
+      }
+    }
+
+    .btn-container {
+      width: 100%;
+      @extend %center-align;
+
+      button {
+        @include size(75px, 25px);
+        background-color: darken($main_color_1, 5);
+        color: lighten($main_color_2, 20);
+        border: 2px solid lighten($main_color_2, 20);
+        margin: auto;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: $font_size_text;
+        line-height: 50%;
+      }
+
+      button:hover {
+        @extend %btn-hover;
+      }
+    }
+  }
+}
+
+// .main-container {
+// width: 100%;
+.nav-and-filters-container {
+  @include flex(row);
+  width: 90%;
+  align-items: center;
+
+  .pagination {
+    margin-bottom: 0;
+  }
+
+  .dropdown-container {
+    @include flex(row);
+    align-items: center;
+
+    .exibit-dropdown {
+      @include flex(row);
+      align-items: center;
+
+      p {
+        color: $color_grey;
+        font-size: $font_size_important;
+        font-weight: bold;
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+/* THUMB ITEM STYLE */
+.flex-container {
+  @include flex(row);
+  flex-wrap: wrap;
+  // justify-content: space-around;
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+
+  .game-thumb {
+    margin: 0.75rem;
+
+    .game-container {
+      @include flex(row);
+      @include size(500px, 230px);
+      background-color: $main_color_1;
+
+      .left-container {
+        @include flex(column);
+        display: flex;
+        width: 35%;
+
+        .game-image-container {
+          overflow: hidden;
+
+          .game-hexagon {
+            @include size(225px, 225px);
+            @include backgroundImage(Auto, 100%, true);
+            display: block;
+            margin: -55px 0 0 -55px;
+            padding: 70px 0 0 75px;
+            background-image: url("../assets/images/Polygon1.svg");
+
+            .game-image-limiter {
+              @include size(100px, 100px);
+
+              .game-image {
+                @include backgroundImage(Auto, 100%, true);
+                @include size(100%, 100%);
+                display: block;
+              }
+            }
+          }
+        }
+
+        .button-container {
+          height: 30%;
+          display: flex;
+
+          button {
+            @include size(80%, 45px);
+            @extend %btn-colors;
+            margin: 5px 0 0 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: $font_size_btn;
+          }
+
+          button:hover {
+            @extend %btn-hover;
+          }
+        }
+      }
+
+      .game-info-container {
+        @include flex(column);
+        width: 65%;
+        margin-right: 10px;
+
+        .game-title {
+          margin-top: 10px;
+          height: 95px;
+
+          h3 {
+            font-size: $font_size_subtitle;
+            text-align: center;
+            color: $color_grey;
+            font-weight: bold;
+            line-height: 25px;
+          }
+        }
+
+        .game-info {
+          padding-left: 30px;
+
+          .info-row {
+            @include flex(row);
+            height: 40px;
+
+            .info-item {
+              @include flex(row);
+              @include size(50%, 100%);
+
+              .icon {
+                color: $main_color_2;
+                font-size: $font_size_icon;
+                width: 30px;
+              }
+
+              .divider {
+                margin-left: 7px;
+                border-left: 3px solid $main_color_2;
+                height: 65%;
+              }
+
+              p {
+                height: 100%;
+                margin-left: 10px;
+                color: white;
+                vertical-align: middle;
+                font-size: $font_size_text;
+                line-height: 180%;
+                font-weight: 600;
+
+                span {
+                  font-size: $font_size_important;
+                  font-weight: bold;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.no-items-found {
+  margin: 0.75rem;
+
+  p {
+    color: $color_grey;
+    font-size: $font_size_important;
+  }
+}
+
+// }
+
+.pagination {
+  li {
+    a {
+      color: $color_black;
+    }
+  }
+
+}
+
+//FIM THUMB ITEM STYLE

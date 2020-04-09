@@ -24,6 +24,24 @@
         align-items: center;
         margin-right: 5px;
         
+        .dropdown {
+            &:hover {
+                color: $main_color_2;
+            }
+            .dropdown-menu {
+                .dropdown-item {
+                    font-size: $font_size_text;
+                    color: black;
+                    padding-left: 10px;
+    
+                    &:hover {
+                        color: $main_color_1;
+                        background: none;
+                    }
+                }
+            }
+        }
+
         a {
             margin-left: 25px;
             font-size: $font_size_important;

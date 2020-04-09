@@ -1,3 +1,19 @@
+.modal-backdrop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 #app {
   background-color: #1b1b1b;
 }
@@ -182,7 +198,17 @@ html {
           box-sizing: inherit;
 }
 
-.main-container {
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 1;
+}
+
+.modal-backdrop .add-game-modal {
+  width: 80rem;
+  height: 500px;
+  background-color: #fff;
+  -webkit-box-shadow: 2px 2px 5px 1px;
+          box-shadow: 2px 2px 5px 1px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -190,67 +216,95 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 100%;
-  padding: 0;
+  border-radius: 10px;
 }
 
-.header {
-  background-color: #f23c4c;
+.modal-backdrop .add-game-modal .divider {
+  width: 80%;
+  height: 1px;
+  margin: 25px auto;
+  background: -webkit-linear-gradient(left, white 0%, #7F7F7F 50%, white 100%);
 }
 
-.header .nav-item-one a {
+.modal-backdrop .add-game-modal .modal-container {
+  display: inline-block;
+  position: relative;
+}
+
+.modal-backdrop .add-game-modal .modal-container .modal-title {
+  margin-top: 15px;
+  padding-top: 10px;
+  width: 100%;
+  color: #191919;
   font-size: 36px;
-  color: #FCAE03;
   font-weight: bolder;
+  text-align: center;
 }
 
-.header .nav-item-two {
+.modal-backdrop .add-game-modal .modal-container .modal-title .title {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modal-backdrop .add-game-modal .modal-container .modal-title .modal-subtitle {
+  color: #ec1022;
+  font-size: 10px;
+}
+
+.modal-backdrop .add-game-modal .modal-container .btn-close {
+  padding: 0.4rem 0.6rem;
+  display: block;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ec1022;
+}
+
+.modal-backdrop .add-game-modal form {
+  margin-top: 0;
+}
+
+.modal-backdrop .add-game-modal form .row .form-group .title-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.modal-backdrop .add-game-modal form .row .form-group .letter {
+  line-height: 200%;
+}
+
+.modal-backdrop .add-game-modal form .row .form-group .form-input {
+  border-color: #000000;
+  height: 2.5rem;
+}
+
+.modal-backdrop .add-game-modal form .row .form-group .radio-input {
+  margin: 0;
+  padding: 7px 15px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  margin-right: 5px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border: 1px solid #000000;
+  border-radius: 5px;
 }
 
-.header .nav-item-two .dropdown:hover {
-  color: #FCAE03;
+.modal-backdrop .add-game-modal form .row .form-group .radio-input label {
+  padding-left: 5px;
 }
 
-.header .nav-item-two .dropdown .dropdown-menu .dropdown-item {
-  font-size: 14px;
-  color: black;
-  padding-left: 10px;
+.modal-backdrop .add-game-modal form .custom-btn {
+  margin: 25px auto 0 auto;
+  border-radius: 5px;
 }
 
-.header .nav-item-two .dropdown .dropdown-menu .dropdown-item:hover {
-  color: #f23c4c;
-  background: none;
+.modal-backdrop .add-game-modal form .custom-btn button {
+  width: 10rem;
 }
-
-.header .nav-item-two a {
-  margin-left: 25px;
-  font-size: 18px;
-  color: #ececec;
-  font-weight: bolder;
-}
-
-.header .nav-item-two .icon {
-  margin-left: 25px;
-  font-size: 18px;
-  color: #FCAE03;
-}
-
-.header .nav-item-two .icon:hover {
-  cursor: pointer;
-}
-
-.header .nav-item-two .selected {
-  border-bottom: 3px solid #FCAE03;
-}
-/*# sourceMappingURL=Navbar.css.map */
+/*# sourceMappingURL=AddGameModal.css.map */

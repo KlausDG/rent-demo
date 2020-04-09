@@ -1,16 +1,16 @@
-#cabecalho .search-item button, .flex-container .game-thumb .game-container .left-container .button-container button {
+.flex-container .game-thumb .game-container .left-container .button-container button {
   background-color: #f12436;
   color: #fdce68;
   border: 3px solid #fdce68;
 }
 
-#cabecalho .search-item button:hover, .adv-search form .btn-container button:hover, .flex-container .game-thumb .game-container .left-container .button-container button:hover {
+.adv-search form .btn-container button:hover, .flex-container .game-thumb .game-container .left-container .button-container button:hover {
   cursor: pointer;
   border: 3px solid #ececec;
   color: #ececec;
 }
 
-.adv-search form .btn-container {
+.adv-search, .adv-search form .btn-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -210,80 +210,9 @@ html {
           box-sizing: inherit;
 }
 
-#cabecalho {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 4rem;
-  background-color: #f23c4c;
-}
-
-#cabecalho .filial-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-#cabecalho .filial-container h4 {
-  color: #ececec;
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
-}
-
-#cabecalho .search-item {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-right: 15px;
-  height: 40px;
-}
-
-#cabecalho .search-item input {
-  margin-right: 10px;
-  width: 40rem;
-  height: 100%;
-}
-
-@media (min-width: 320px) and (max-width: 768px) {
-  #cabecalho .search-item input {
-    width: 100%;
-  }
-}
-
-#cabecalho .search-item button {
-  width: 120px;
-  height: 100%;
-  margin: 0;
-  border-radius: 10px;
-  font-weight: bold;
-  font-size: larger;
-}
-
 .adv-search {
   width: 100%;
   height: 250px;
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
 }
 
 .adv-search form {
@@ -364,7 +293,6 @@ html {
 }
 
 .nav-and-filters-container {
-  width: 90%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -372,6 +300,7 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  width: 90%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -405,7 +334,6 @@ html {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-right: 10px;
 }
 
 .nav-and-filters-container .dropdown-container .exibit-dropdown p {
@@ -413,14 +341,6 @@ html {
   font-size: 18px;
   font-weight: bold;
   padding: 0 10px;
-}
-
-.nav-and-filters-container .adv-filter-btn-container button {
-  margin-left: 15px;
-  height: 38px;
-  font-size: 1rem;
-  text-align: center;
-  line-height: initial;
 }
 
 /* THUMB ITEM STYLE */
@@ -613,4 +533,4 @@ html {
 .pagination li a {
   color: #191919;
 }
-/*# sourceMappingURL=Games.css.map */
+/*# sourceMappingURL=Admin.css.map */
