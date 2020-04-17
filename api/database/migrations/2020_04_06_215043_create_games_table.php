@@ -22,11 +22,8 @@ class CreateGamesTable extends Migration
             $table->integer('maxTime');
             $table->boolean('isExpansion')->default(false);
             $table->boolean('isAvailable')->default(true);
-            $table->date('dtaIniRent')->nullable();
-            $table->date('dtaEndRent')->nullable();
             $table->integer('price')->nullable();
             $table->text('description')->nullable();
-            $table->text('image')->nullable();
             $table->text('imageThumb');
             $table->tinyInteger('difficulties_id');
             $table->foreign('difficulties_id')->references('id')->on('difficulties');

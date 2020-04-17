@@ -67,9 +67,14 @@ Vue.component('scroll-top', require('./components/ScrollTop.vue').default);
 Vue.component('custom-footer', require('./components/Footer.vue').default);
 Vue.component('login-modal', require('./components/LoginModal.vue').default);
 Vue.component('add-game-modal', require('./components/Modal/AddGameModal.vue').default);
+Vue.component('edit-game-modal', require('./components/Modal/EditGameModal.vue').default);
 Vue.component('add-genre-modal', require('./components/Modal/AddGenreModal.vue').default);
 Vue.component('add-difficulty-modal', require('./components/Modal/AddDifficultyModal.vue').default);
 Vue.component('add-language-modal', require('./components/Modal/AddLanguageModal.vue').default);
+Vue.component('add-filial-modal', require('./components/Modal/AddFilialModal.vue').default);
+Vue.component('add-socio-modal', require('./components/Modal/AddSocioModal.vue').default);
+Vue.component('edit-profile-modal', require('./components/Modal/EditProfileModal.vue').default);
+Vue.component('edit-difficulties-modal', require('./components/Modal/EditDifficultiesModal.vue').default);
 
 const EventBus = new Vue();
 export default EventBus;

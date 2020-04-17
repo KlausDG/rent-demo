@@ -20,6 +20,7 @@
         <div class="form-group">
           <input
             type="text"
+            class="form-control form-input"
             name="username"
             placeholder="Usuário"
             v-model="form.username"
@@ -29,6 +30,7 @@
         <div class="form-group">
           <input
             type="password"
+            class="form-control form-input"
             name="pwd"
             placeholder="Senha"
             v-model="form.password"
@@ -36,7 +38,7 @@
           />
         </div>
 
-        <button type="submit" class="btn btn-primary custom-btn">
+        <button type="submit" class="btn btn-primary custom-btn d-flex justify-content-center">
           Entrar
         </button>
         <p v-if="has_error">Usuário ou senha inválidos.</p>
@@ -46,7 +48,6 @@
 </template>
 
 <script>
-import EventBus from "../main.js";
 import { mapActions } from "vuex";
 
 export default {
@@ -81,8 +82,10 @@ export default {
       this.signIn(this.form)
         .then(() => {
           this.has_error = false;
-          EventBus.$emit("login", this.form.username);
           this.$emit("input", !this.value);
+          this.$router.replace({
+          name: "admin",
+        });
         })
         .catch(() => (this.has_error = true));
     },
@@ -100,6 +103,7 @@ export default {
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0);
+  opacity: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,7 +126,7 @@ export default {
         padding-top: 10px;
         width: 100%;
         color: $color_black;
-        font-size: $font_size_subtitle;
+        font-size: $font_size_title;
         font-weight: bolder;
         text-align: center;
 
@@ -159,18 +163,17 @@ export default {
         display: flex;
         flex-direction: column;
         border-radius: 5px;
-        background-color: darken($color_grey, 7);
         height: 50px;
         width: 20rem;
-        padding: 10px 0 10px 10px;
+        padding: 5px 0 5px 0;
 
-        input {
-          background-color: darken($color_grey, 7);
-          border: 0;
-        }
+        // input {
+        //   // background-color: darken($color_grey, 7);
+        //   border: 0;
+        // }
       }
       .custom-btn {
-        margin-top: 25px;
+        margin-top: 10px;
         width: 20rem;
         border-radius: 3px;
       }

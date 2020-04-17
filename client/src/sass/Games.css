@@ -447,8 +447,37 @@ html {
   }
 }
 
+.flex-container .not-available-overlay {
+  height: 0px;
+}
+
+.flex-container .not_available {
+  position: absolute;
+  width: 500px;
+  height: 230px !important;
+  background-color: rgba(154, 154, 154, 0.9);
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.flex-container .not_available p {
+  -webkit-transform: rotate(-20deg);
+          transform: rotate(-20deg);
+  font-size: 50px;
+  font-weight: bolder;
+  margin-top: 76px;
+  padding: 0;
+}
+
 .flex-container .game-thumb {
   margin: 0.75rem;
+  height: 230px;
+}
+
+.flex-container .game-thumb .not_available_admin {
+  background-color: grey !important;
 }
 
 .flex-container .game-thumb .game-container {

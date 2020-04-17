@@ -105,6 +105,7 @@ class GameController extends Controller
         }
         //End of Genres Validation
 
+        $games = $games->orderBy('isAvailable', 'DESC');
         $games = $games->orderBy($sort_target, $sort_value);
 
         // dd($games);
@@ -122,8 +123,8 @@ class GameController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $game = $request->isMethod('put') ? Game::findOrFail($request->id) : new Game;
-        $game->id = $request->input('id');
         $game->title = $request->input('title');
         $game->minPlayers = $request->input('minPlayers');
         $game->maxPlayers = $request->input('maxPlayers');
@@ -131,19 +132,17 @@ class GameController extends Controller
         $game->maxTime = $request->input('maxTime');
         $game->isExpansion = $request->input('isExpansion');
         $game->isAvailable = $request->input('isAvailable');
-        $game->dtaIniRent = $request->input('dtaIniRent');
-        $game->dtaEndRent = $request->input('dtaEndRent');
         $game->price = $request->input('price');
         $game->description = $request->input('description');
-        $game->image = $request->input('image');
         $game->imageThumb = $request->input('imageThumb');
-        $game->difficultyId = $request->input('difficultyId');
-        $game->genreId = $request->input('genreId');
-        $game->languageId = $request->input('languageId');
+        $game->difficulties_id = $request->input('difficulties_id');
+        $game->genres_id = $request->input('genres_id');
+        $game->languages_id = $request->input('languages_id');
         $game->languageObs = $request->input('languageObs');
+        $game->filial_id = $request->input('filial_id');
 
         if ($game->save()) {
-            return new GameResourde($game);
+            return new GameResource($game);
         }
     }
 

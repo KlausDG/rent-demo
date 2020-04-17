@@ -1,0 +1,125 @@
+@import "../sass/Main.scss";
+
+.modal-backdrop {
+  @extend %center-align;
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 1;
+
+  .modal-main {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    @include size(50rem, auto);
+    background-color: $color_white;
+    box-shadow: 2px 2px 5px 1px;
+    display: flex;
+    flex-direction: column;
+    @include radius(10px);
+
+    .title-container {
+      display: inline-block;
+      position: relative;
+
+      .modal-title {
+        margin-top: 15px;
+        padding-top: 10px;
+        width: 100%;
+        color: $color_black;
+        font-size: $font_size_title;
+        font-weight: bolder;
+        text-align: center;
+
+        .title {
+          margin: 0;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+      }
+
+      .btn-close {
+        padding: 0.4rem 0.6rem;
+        display: block;
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        cursor: pointer;
+        font-size: 20px;
+        font-weight: bold;
+        color: darken($main_color_1, 10);
+      }
+    }
+
+    .divider {
+      @include size(80%, 1px);
+      margin: 10px auto 20px auto;
+      background: -webkit-linear-gradient(left,
+          rgb(255, 255, 255) 0%,
+          $color_grey_2 50%,
+          rgb(255, 255, 255) 100%);
+    }
+
+    form {
+      margin-top: 0;
+
+      .flex-container {
+        display: flex;
+        flex-direction: column;
+
+        .form-group {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+
+          .title-label {
+            font-size: 20px;
+            font-weight: bold;
+            width: 50px;
+            p {
+              padding: 3px 10px 0 0;
+              margin: 0;
+            }
+          }
+
+          .input-container {
+            .form-input {
+              @include size(20rem, 2.5rem);
+              border-color: #000000;
+            }
+          }
+
+          .item-submit {
+            display: flex;
+            button {
+              margin-left: 1rem;
+              @include size(5rem, 2.5rem);
+            }
+
+            .spacer {
+              margin-left: 1rem;
+              @include size(5rem, 2.5rem);
+            }
+          }
+
+        }
+      }
+
+      .result-message {
+        text-align: center;
+        color: green;
+      }
+
+      .error {
+        color: $main_color_1;
+      }
+
+      .custom-btn {
+        margin: 25px auto 0 auto;
+        @include radius(5px);
+
+        button {
+          width: 10rem;
+        }
+      }
+    }
+  }
+}

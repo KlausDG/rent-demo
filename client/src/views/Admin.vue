@@ -4,23 +4,23 @@
     <div class="content-container">
       <NavbarAdmin class="nav-admin" />
       <div id="cabecalho" style="padding: 1rem 0 1rem 2rem;">
-      <div class="filial-container">
-        <h4 id="cabecalho-text">
-          Todos os Jogos (12903)
-        </h4>
+        <div class="filial-container">
+          <h4 id="cabecalho-text">
+            Todos os Jogos (12903)
+          </h4>
+        </div>
+        <div class="search-item">
+          <input
+            class="form-control"
+            id="search-input"
+            type="text"
+            placeholder="Procure por um jogo aqui"
+            aria-label="Search"
+            v-model="search_query"
+          />
+          <button class="search-btn" @click="search()">Procurar</button>
+        </div>
       </div>
-      <div class="search-item">
-        <input
-          class="form-control"
-          id="search-input"
-          type="text"
-          placeholder="Procure por um jogo aqui"
-          aria-label="Search"
-          v-model="search_query"
-        />
-        <button class="search-btn" @click="search()">Procurar</button>
-      </div>
-    </div>
 
       <div class="main-container">
         <div class="nav-and-filters-container">
@@ -120,7 +120,11 @@
 
         <div class="flex-container" v-if="total_games != 0">
           <div class="game-thumb" v-for="game in games" v-bind:key="game.id">
-            <div class="game-container">
+
+            <div
+              class="game-container"
+              v-bind:class="{ not_available_admin: !game.isAvailable }"
+            >
               <div class="left-container">
                 <!-- Image -->
                 <div class="game-image-container">
@@ -136,8 +140,8 @@
                   </div>
                 </div>
                 <div class="button-container">
-                  <button @click="sendMessage(game.title)">
-                    Alugar
+                  <button @click="openEditModal(game.id)">
+                    Editar
                   </button>
                 </div>
               </div>
@@ -265,12 +269,12 @@
       </div>
       <Footer />
     </div>
+    <edit-game-modal v-model="edit_game_modal_open"></edit-game-modal>
   </div>
 </template>
 
 <script>
 import NavbarAdmin from "@/components/NavbarAdmin";
-// import Sidebar from "@/components/Sidebar";
 import Footer from "@/components/Footer";
 import EventBus from "../main.js";
 import Axios from "axios";
@@ -279,7 +283,6 @@ import { mapGetters } from "vuex";
 export default {
   components: {
     NavbarAdmin,
-    // Sidebar,
     Footer,
   },
 
@@ -314,7 +317,7 @@ export default {
       pagination: {},
       total_games: "",
       edit: false,
-      display_filter: 'all',
+      display_filter: "all",
       display_qtd: 15,
       //Searching
       search_query: "",
@@ -328,6 +331,7 @@ export default {
       filter_difficulty: [],
       filter_genre: [],
       adv_search: false,
+      edit_game_modal_open: false,
       contact: "981432111",
     };
   },
@@ -344,6 +348,9 @@ export default {
     EventBus.$on("home", function() {
       vm.clearFilter();
     });
+    EventBus.$on("fetch", function() {
+      vm.fetchGames();
+    });
     this.fetchFilials();
   },
 
@@ -351,7 +358,8 @@ export default {
     fetchFilials(page_url) {
       let vm = this;
 
-      page_url = page_url || "http://127.0.0.1:8000/api/filial/" + this.user.filial_id;
+      page_url =
+        page_url || "http://127.0.0.1:8000/api/filial/" + this.user.filial_id;
 
       Axios.get(page_url)
         .then((res) => {
@@ -360,6 +368,7 @@ export default {
         })
         .catch((err) => console.log(err));
     },
+
     fetchGames(page_url) {
       let vm = this;
       let string_difficulty = 0;
@@ -420,6 +429,7 @@ export default {
 
       this.pagination = pagination;
     },
+
     deleteGame(id) {
       if (confirm("Are you sure?")) {
         Axios.post(`http://127.0.0.1:8000/api/game/${id}`, {
@@ -432,42 +442,7 @@ export default {
           .catch((err) => console.log(err));
       }
     },
-    addGame() {
-      if (this.edit === "false") {
-        // Add
-        Axios.post("http://127.0.0.1:8000/api/game", {
-          methot: "post",
-          body: JSON.stringify(this.game),
-          headers: {
-            "content-type": "application/json",
-          },
-        })
-          .then(() => {
-            this.game.title = "";
-            this.game.price = "";
-            alert("Game Added");
-            this.fetchGames();
-          })
-          .catch((err) => console.log(err));
-      } else {
-        // Update
-        Axios.post("http://127.0.0.1:8000/api/game", {
-          methot: "put",
-          body: JSON.stringify(this.game),
-          headers: {
-            "content-type": "application/json",
-          },
-        })
-          .then(() => {
-            this.game.title = "";
-            this.game.price = "";
-            alert("Game Updated");
-            this.fetchGames();
-          })
-          .catch((err) => console.log(err));
 
-      }
-    },
     editGame(game) {
       this.edit = true;
       this.game.id = game.id;
@@ -509,15 +484,6 @@ export default {
           vm.makePagination(res.data.meta, res.data.links);
         })
         .catch((err) => console.log(err));
-
-    },
-
-    sendMessage(title) {
-      let message = "Olá! Gostaria de alugar o jogo " + title;
-      let formatedMessage = message.split(" ").join("%20");
-      let url =
-        "https://wa.me/5555" + this.contact + "?text=" + formatedMessage;
-      window.open(url, "_blank");
     },
 
     selectFilial(e) {
@@ -536,6 +502,11 @@ export default {
       this.filter_genre = [];
       this.search_query = "";
       this.fetchGames();
+    },
+
+    openEditModal(game_id) {
+      this.edit_game_modal_open = !this.edit_game_modal_open;
+      EventBus.$emit("search", game_id);
     },
   },
 };

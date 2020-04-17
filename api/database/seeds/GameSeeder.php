@@ -27,7 +27,6 @@ class GameSeeder extends Seeder
                 'isExpansion' => $obj->isExpansion,
                 'isAvailable' => $faker->boolean,
                 'price' => $faker->randomElement($pricesArray),
-                'image' => $obj->image,
                 'imageThumb' => $obj->thumbnail,
                 'difficulties_id' => $faker->numberBetween($min = 1, $max = 5),
                 'genres_id' => $faker->numberBetween($min = 1, $max = 5),

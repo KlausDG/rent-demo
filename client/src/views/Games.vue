@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar/>
+    <Navbar />
     <div id="cabecalho" style="padding: 1rem 0 1rem 2rem;">
       <div class="filial-container">
         <h4 id="cabecalho-text">
@@ -307,6 +307,13 @@
 
       <div class="flex-container" v-if="total_games != 0">
         <div class="game-thumb" v-for="game in games" v-bind:key="game.id">
+          <div
+            class="not-available-overlay"
+            v-bind:class="{ not_available: !game.isAvailable }"
+          >
+            <p>INDISPONÍVEL</p>
+          </div>
+
           <div class="game-container">
             <div class="left-container">
               <!-- Image -->
@@ -323,8 +330,11 @@
                 </div>
               </div>
               <div class="button-container">
-                <button @click="sendMessage(game.title)">
-                  Alugar
+                <button
+                  @click="sendMessage(game.title)"
+                  :disabled="!game.isAvailable"
+                >
+                  {{ game.isAvailable ? "Alugar" : "Indisponível" }}
                 </button>
               </div>
             </div>
@@ -493,7 +503,6 @@ export default {
       game_id: "",
       pagination: {},
       total_games: "",
-      edit: false,
       display_qtd: 15,
       //Searching
       search_query: "",
@@ -547,7 +556,7 @@ export default {
 
       page_url =
         page_url ||
-        "http://127.0.0.1:8000/api/games/filial/" +
+        "games/filial/" +
           this.current_filial.id +
           "/sort/" +
           this.display_qtd +
@@ -604,72 +613,7 @@ export default {
         // 	.catch((err) => console.log(err));
       }
     },
-    addGame() {
-      if (this.edit === "false") {
-        // Add
-        Axios.post("http://127.0.0.1:8000/api/game", {
-          methot: "post",
-          body: JSON.stringify(this.game),
-          headers: {
-            "content-type": "application/json",
-          },
-        })
-          .then(() => {
-            this.game.title = "";
-            this.game.price = "";
-            alert("Game Added");
-            this.fetchGames();
-          })
-          .catch((err) => console.log(err));
-        // fetch("http://127.0.0.1:8000/api/game", {
-        //   methot: "post",
-        //   body: JSON.stringify(this.game),
-        //   headers: {
-        //     "content-type": "application/json",
-        //   },
-        // })
-        //   .then((res) => res.json())
-        //   .then(() => {
-        //     this.game.title = "";
-        //     this.game.price = "";
-        //     alert("Game Added");
-        //     this.fetchGames();
-        //   })
-        //   .catch((err) => console.log(err));
-      } else {
-        // Update
-        Axios.post("http://127.0.0.1:8000/api/game", {
-          methot: "put",
-          body: JSON.stringify(this.game),
-          headers: {
-            "content-type": "application/json",
-          },
-        })
-          .then(() => {
-            this.game.title = "";
-            this.game.price = "";
-            alert("Game Updated");
-            this.fetchGames();
-          })
-          .catch((err) => console.log(err));
 
-        // fetch("api/game", {
-        //   methot: "put",
-        //   body: JSON.stringify(this.game),
-        //   headers: {
-        //     "content-type": "application/json",
-        //   },
-        // })
-        //   .then((res) => res.json())
-        //   .then(() => {
-        //     this.game.title = "";
-        //     this.game.price = "";
-        //     alert("Game Updated");
-        //     this.fetchGames();
-        //   })
-        //   .catch((err) => console.log(err));
-      }
-    },
     editGame(game) {
       this.edit = true;
       this.game.id = game.id;

@@ -3,7 +3,7 @@
     <div class="add-game-modal">
       <div class="modal-container">
         <div class="modal-title">
-          <p class="title">Cadastro de Jogo</p>
+          <p class="title">Edição de Jogo</p>
         </div>
         <div class="btn-close">
           <font-awesome-icon
@@ -15,7 +15,7 @@
       </div>
       <div class="divider"></div>
       <div class="container">
-        <form @submit.prevent="addGame">
+        <form @submit.prevent="editGame">
           <div class="row">
             <div class="form-group col-md-5">
               <label for="title" class="title-label">Título</label>
@@ -56,16 +56,15 @@
             </div>
 
             <div class="form-group col-md-2">
-              <label class="title-label">Expansão</label>
+              <label class="title-label">É Expansão?</label>
               <div class="row radio-input form-control">
                 <div>
                   <input
                     type="radio"
                     class="form-control"
-                    name="exp"
+                    name="exp_n"
                     value="0"
                     v-model="game.isExpansion"
-                    checked
                   />
                   <label for="exp_n">Não</label>
                 </div>
@@ -73,7 +72,7 @@
                   <input
                     type="radio"
                     class="form-control"
-                    name="exp"
+                    name="exp_s"
                     value="1"
                     v-model="game.isExpansion"
                   />
@@ -208,9 +207,34 @@
               <label for="description" class="title-label">Descrição</label>
               <textarea
                 class="form-control form-input"
-                id="description"
                 v-model="game.description"
               ></textarea>
+            </div>
+
+            <div class="form-group col-md-2">
+              <label class="title-label">Disponível</label>
+              <div class="row radio-input form-control">
+                <div>
+                  <input
+                    type="radio"
+                    class="form-control"
+                    name="exp"
+                    value="1"
+                    v-model="game.isAvailable"
+                  />
+                  <label for="exp_s">Sim</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    class="form-control"
+                    name="exp"
+                    value="0"
+                    v-model="game.isAvailable"
+                  />
+                  <label for="exp_n">Não</label>
+                </div>
+              </div>
             </div>
           </div>
           <div class="custom-btn d-flex justify-content-center">
@@ -223,10 +247,11 @@
 </template>
 
 <script>
+import EventBus from "@/main.js";
 import Axios from "axios";
 
 export default {
-  name: "AddGameModal",
+  name: "EditGameModal",
 
   data() {
     return {
@@ -236,7 +261,8 @@ export default {
         maxPlayers: "",
         minTime: "",
         maxTime: "",
-        isExpansion: "",
+        isExpansion: 0,
+        isAvailable: "",
         price: "",
         description: "",
         imageThumb: "",
@@ -254,13 +280,17 @@ export default {
   },
 
   props: {
+    // game_id: [Number, String],
     value: {
       required: true,
     },
   },
 
   created() {
-    this.fetch();
+    let vm = this;
+    EventBus.$on("search", function(payload) {
+      vm.fetch(payload);
+    });
   },
 
   methods: {
@@ -268,24 +298,27 @@ export default {
       this.$emit("input", !this.value);
     },
 
-    fetch() {
+    fetch(id) {
       let vm = this;
 
       let difficulties = "http://127.0.0.1:8000/api/difficulties";
       let genres = "http://127.0.0.1:8000/api/genres";
       let languages = "http://127.0.0.1:8000/api/languages";
       let filials = "http://127.0.0.1:8000/api/filials";
+      let game = "http://127.0.0.1:8000/api/game/" + id;
 
       const request_difficulties = Axios.get(difficulties);
       const request_genres = Axios.get(genres);
       const request_languages = Axios.get(languages);
       const request_filial = Axios.get(filials);
+      const request_game = Axios.get(game);
 
       Axios.all([
         request_difficulties,
         request_genres,
         request_languages,
         request_filial,
+        request_game
       ])
         .then(
           Axios.spread((...responses) => {
@@ -293,19 +326,20 @@ export default {
             vm.genres = responses[1].data;
             vm.languages = responses[2].data;
             vm.filials = responses[3].data;
+            vm.game = responses[4].data.data;
           })
         )
         .catch((err) => console.log(err));
     },
 
-    addGame() {
-      Axios.post("http://127.0.0.1:8000/api/game", this.game)
+    editGame() {
+      Axios.put("game", this.game)
         .then((res) => {
-          alert("Jogo adicionado com sucesso!");
+          alert("Jogo modificado com sucesso!");
           console.log(res);
         })
         .catch((err) => console.log(err));
-
+      EventBus.$emit('fetch', '');
       this.close();
     },
   },
@@ -314,4 +348,8 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/AddGameModal.scss";
+
+.add-game-modal {
+  height: 580px !important;
+}
 </style>

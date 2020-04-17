@@ -15,13 +15,12 @@
       </div>
       <div class="divider"></div>
       <div class="container">
-        <form @submit.prevent="submit" class="form-horizontal" >
+        <form @submit.prevent="add" class="form-horizontal" >
           <div class="row justify-content-md-center">
             <div class="form-group">
               <label for="title" class="title-label control-label">Título</label>
-              <input type="text" name="title" class="form-control form-input" />
+              <input type="text" name="title" class="form-control form-input" v-model="form.title" required/>
             </div>
-
           </div>
 
           <div class="custom-btn d-flex justify-content-center">
@@ -34,7 +33,8 @@
 </template>
 
 <script>
-import EventBus from "../../main.js";
+// import EventBus from "../../main.js";
+import Axios from "axios";
 
 export default {
   name: "signin",
@@ -60,14 +60,11 @@ export default {
       this.$emit("input", !this.value);
     },
 
-    submit() {
-      this.signIn(this.form)
-        .then(() => {
-          this.has_error = false;
-          EventBus.$emit("login", this.form.username);
-          this.$emit("input", !this.value);
-        })
-        .catch(() => (this.has_error = true));
+    add() {
+      Axios.post("http://127.0.0.1:8000/api/language", this.form)
+        .catch((err) => console.log(err));
+
+      this.close();
     },
   },
 };
