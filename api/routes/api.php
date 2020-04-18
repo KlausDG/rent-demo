@@ -3,86 +3,102 @@
 // use Illuminate\Http\Request;
 // use Illuminate\Support\Facades\Route;
 
-
-//USER
-// Add new User
-Route::post('socio', 'UserController@store');
-// Edit user
-Route::put('socio', 'UserController@store');
-
-
 //AUTH
-Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function() {
+Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::post('signin', 'SignInController');
     Route::post('signout', 'SignOutController');
-    
+
     Route::get('me', 'MeController');
 
 });
 
+//USER
+Route::group(['prefix' => 'users'], function () {
+    //List all
+    Route::get('all', 'UserController@index');
+    // List single
+    Route::get('usr={id}', 'UserController@show');
+    // Add new
+    Route::post('add', 'UserController@store');
+    // Edit
+    Route::put('edit', 'UserController@store');
+    // Remove
+    Route::delete('usr={id}', 'UserController@destroy');
+});
+
 //GAMES
-// List games
-Route::get('games/filial/{filial_id}/display={display_qtd}', 'GameController@index');
+Route::group(['prefix' => 'games'], function () {
+    // List games
+    Route::get('filial={filial_id}/display={display_qtd}', 'GameController@index');
+    // List filtered
+    Route::get('filial={filial_id}/sort={display_qtd}&{sort_target}&{sort_value}/filter={filter_player_qtd}&{filter_language}&{filter_difficulty}&{filter_genre}', 'GameController@filter');
+    // Search
+    Route::get('filial={filial_id}/sort={display_qtd}&{sort_target}&{sort_value}/search={query}', 'GameController@search');
+    // List singl
+    Route::get('game={id}', 'GameController@show');
+    // Create new
+    Route::post('add', 'GameController@store');
+    // Edit
+    Route::put('edit', 'GameController@store');
+    // Delete
+    Route::delete('game={id}', 'GameController@destroy');
+});
 
-// List filtered games
-Route::get('games/filial/{filial_id}/sort/{display_qtd}&{sort_target}&{sort_value}/filter/{filter_player_qtd}&{filter_language}&{filter_difficulty}&{filter_genre}', 'GameController@filter');
+//FILIALS
+Route::group(['prefix' => 'filials'], function () {
+    // List all
+    Route::get('all', "FilialController@index");
+    // List single
+    Route::get('fil={id}', 'FilialController@show');
+    // Create new
+    Route::post('add', 'FilialController@store');
+    // Edit
+    Route::put('edit', 'FilialController@store');
+    // Remove
+    Route::delete('fil={id}', 'FilialController@destroy');
 
-// Search
-Route::get('games/filial/{filial_id}/sort/{display_qtd}&{sort_target}&{sort_value}/search/{query}', 'GameController@search');
+});
 
-// List single game
-Route::get('game/{id}', 'GameController@show');
+//DIFFICULTIES
+Route::group(['prefix' => 'difficulties'], function () {
+    // List difficulties
+    Route::get('all', "DifficultyController@index");
+    // List single difficulty
+    Route::get('dif={id}', 'DifficultyController@show');
+    // Create new difficulty
+    Route::post('add', 'DifficultyController@store');
+    // Edit difficulty
+    Route::put('edit', 'DifficultyController@store');
+    // Remove difficulty
+    Route::delete('dif={id}', 'DifficultyController@destroy');
 
-// Create new game
-Route::post('game', 'GameController@store');
+});
 
-// Update game
-Route::put('game', 'GameController@store');
+//GENRES
+Route::group(['prefix' => 'genres'], function () {
+    // List genres
+    Route::get('all', "GenreController@index");
+    // List single genre
+    Route::get('gen={id}', 'GenreController@show');
+    // Create new genre
+    Route::post('add', 'GenreController@store');
+    // Edit genre
+    Route::put('edit', 'GenreController@store');
+    // Remove genre
+    Route::delete('gen={id}', 'GenreController@destroy');
+});
 
-// Delete game
-Route::delete('game/{id}', 'GameController@destroy');
+//LANGUAGES
+Route::group(['prefix' => 'languages'], function () {
+    // List all
+    Route::get('all', "LanguageController@index");
+    // List single
+    Route::get('lang={id}', 'LanguageController@show');
+    // Create new
+    Route::post('add', 'LanguageController@store');
+    // Edit
+    Route::put('edit', 'LanguageController@store');
+    // Remove
+    Route::delete('lang={id}', 'LanguageController@destroy');
 
-
-//OTHER
-// List filials
-Route::get('filials', "FilialController@index");
-
-// List single filial
-Route::get('filial/{id}', 'FilialController@show');
-
-// Create new filial
-Route::post('filial', 'FilialController@store');
-
-// List difficulties
-Route::get('difficulties', "DifficultyController@index");
-
-// List single difficulty
-Route::get('difficulty/{id}', 'DifficultyController@show');
-
-// Create new difficulty
-Route::post('difficulty', 'DifficultyController@store');
-
-// Edit difficulty
-Route::put('difficulty', 'DifficultyController@store');
-
-// Remove difficulty
-Route::delete('difficulty/{id}', 'DifficultyController@destroy');
-
-
-// List genres
-Route::get('genres', "GenreController@index");
-
-// List single genre
-Route::get('genre/{id}', 'GenreController@show');
-
-// Create new genre
-Route::post('genre', 'GenreController@store');
-
-// List languages
-Route::get('languages', "LanguageController@index");
-
-// List single language
-Route::get('language/{id}', 'LanguageController@show');
-
-// Create new genre
-Route::post('language', 'LanguageController@store');
+});

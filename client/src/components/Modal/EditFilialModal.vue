@@ -3,7 +3,7 @@
     <div class="add-game-modal">
       <div class="modal-container">
         <div class="modal-title">
-          <p class="title">Cadastro de Filial</p>
+          <p class="title">Edição de Filial</p>
         </div>
         <div class="btn-close">
           <font-awesome-icon
@@ -139,6 +139,7 @@
           <div class="custom-btn d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
+          <p>{{ filial }}</p>
         </form>
       </div>
     </div>
@@ -146,14 +147,16 @@
 </template>
 
 <script>
+import EventBus from "@/main.js";
 import Axios from "axios";
 
 export default {
-  name: "AddFilialModal",
+  name: "EditFilialModal",
 
   data() {
     return {
       filial: {
+        id: "",
         title: "",
         phone: "",
         rua: "",
@@ -173,6 +176,13 @@ export default {
     value: {
       required: true,
     },
+  },
+
+  created() {
+    let vm = this;
+    EventBus.$on("searchFilial", function(payload) {
+      vm.filial = payload;
+    });
   },
 
   methods: {
@@ -196,13 +206,13 @@ export default {
       this.filial.cidade = this.capitalize(this.filial.cidade);
       this.filial.pais = this.capitalize(this.filial.pais);
 
-      this.addFilial();
+      this.editFilial();
     },
 
-    addFilial() {
-      Axios.post("filials/add", this.filial)
+    editFilial() {
+      Axios.put("filials/edit", this.filial)
         .then((res) => {
-          alert("Filial " + res.data.title + " adicionada com sucesso!");
+          alert("Filial " + res.data.id + " alterada com sucesso!");
         })
         .catch((err) => console.log(err));
 

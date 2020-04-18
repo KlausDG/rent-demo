@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Genre;
 use Illuminate\Http\Request;
 
-
 class GenreController extends Controller
 {
     public function index()
@@ -20,8 +19,21 @@ class GenreController extends Controller
 
     public function store(Request $request)
     {
-        $genre = new Genre;
+        $genre = $request->isMethod('put') ? Genre::findOrFail($request->id) : new Genre;
         $genre->title = $request->input('title');
-        $genre->save();
+
+        if ($genre->save()) {
+            return $genre;
+        }
+
+    }
+
+    public function destroy($id)
+    {
+        $genre = Genre::findOrFail($id);
+
+        if ($genre->delete()) {
+            return $genre;
+        }
     }
 }

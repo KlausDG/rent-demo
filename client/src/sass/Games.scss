@@ -203,7 +203,7 @@ sans-serif;
         margin: 0;
         padding: 0;
         text-align: center;
-        
+
         p {
             transform: rotate(-20deg);
             font-size: 50px;
@@ -215,7 +215,7 @@ sans-serif;
 
     .game-thumb {
         margin: 0.75rem;
-        height: 230px;
+        height: auto;
 
         .not_available_admin {
             background-color: grey !important;
@@ -223,7 +223,7 @@ sans-serif;
 
         .game-container {
             @include flex(row);
-            @include size(500px, 230px);
+            @include size(500px, auto);
             background-color: $main_color_1;
 
             .left-container {
@@ -317,6 +317,34 @@ sans-serif;
                             p {
                                 height: 100%;
                                 margin-left: 10px;
+                                color: white;
+                                vertical-align: middle;
+                                font-size: $font_size_text;
+                                line-height: 180%;
+                                font-weight: 600;
+
+                                span {
+                                    font-size: $font_size_important;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+
+
+                    }
+
+                    .info-row-filial {
+                        @include flex(row);
+                        height: 40px;
+
+                        .info-item-filial {
+                            @include flex(row);
+                            @include size(100%, 100%);
+                            text-align: right;
+
+                            p {
+                                @include size(100%, 100%);
+                                margin-right: 2rem;
                                 color: white;
                                 vertical-align: middle;
                                 font-size: $font_size_text;

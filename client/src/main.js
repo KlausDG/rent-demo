@@ -25,11 +25,12 @@ import {
   faUserLock,
   faBookReader,
   faCog,
-  faTimes
+  faTimes,
+  faGlobeAmericas
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faClock,
-  faMoneyBillAlt
+  faMoneyBillAlt,
 } from '@fortawesome/free-regular-svg-icons'
 
 require('@/store/subscriber')
@@ -37,7 +38,7 @@ require('bootstrap')
 
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
 
-library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faClock, faMoneyBillAlt)
+library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faGlobeAmericas, faClock, faMoneyBillAlt)
 
 Vue.config.productionTip = false
 
@@ -68,13 +69,16 @@ Vue.component('custom-footer', require('./components/Footer.vue').default);
 Vue.component('login-modal', require('./components/LoginModal.vue').default);
 Vue.component('add-game-modal', require('./components/Modal/AddGameModal.vue').default);
 Vue.component('edit-game-modal', require('./components/Modal/EditGameModal.vue').default);
-Vue.component('add-genre-modal', require('./components/Modal/AddGenreModal.vue').default);
-Vue.component('add-difficulty-modal', require('./components/Modal/AddDifficultyModal.vue').default);
-Vue.component('add-language-modal', require('./components/Modal/AddLanguageModal.vue').default);
 Vue.component('add-filial-modal', require('./components/Modal/AddFilialModal.vue').default);
-Vue.component('add-socio-modal', require('./components/Modal/AddSocioModal.vue').default);
+Vue.component('add-user-modal', require('./components/Modal/AddUserModal.vue').default);
 Vue.component('edit-profile-modal', require('./components/Modal/EditProfileModal.vue').default);
 Vue.component('edit-difficulties-modal', require('./components/Modal/EditDifficultiesModal.vue').default);
+Vue.component('edit-genres-modal', require('./components/Modal/EditGenresModal.vue').default);
+Vue.component('edit-languages-modal', require('./components/Modal/EditLanguagesModal.vue').default);
+Vue.component('all-filials-modal', require('./components/Modal/AllFilialsModal.vue').default);
+Vue.component('edit-filial-modal', require('./components/Modal/EditFilialModal.vue').default);
+Vue.component('all-users-modal', require('./components/Modal/AllUsersModal.vue').default);
+Vue.component('edit-user-modal', require('./components/Modal/EditUserModal.vue').default);
 
 const EventBus = new Vue();
 export default EventBus;

@@ -5,9 +5,7 @@
       <NavbarAdmin class="nav-admin" />
       <div id="cabecalho" style="padding: 1rem 0 1rem 2rem;">
         <div class="filial-container">
-          <h4 id="cabecalho-text">
-            Todos os Jogos (12903)
-          </h4>
+          <h4 id="cabecalho-text">{{ filial.title }} ( {{ total_games }} )</h4>
         </div>
         <div class="search-item">
           <input
@@ -111,8 +109,8 @@
                 v-on:change="fetchGames()"
               >
                 <option value="all">Todos os Jogos</option>
-                <option value="false">Jogos Alugados</option>
-                <option value="true">Jogos Disponíveis</option>
+                <option value="0">Jogos Alugados</option>
+                <option value="1">Jogos Disponíveis</option>
               </select>
             </div>
           </div>
@@ -120,7 +118,6 @@
 
         <div class="flex-container" v-if="total_games != 0">
           <div class="game-thumb" v-for="game in games" v-bind:key="game.id">
-
             <div
               class="game-container"
               v-bind:class="{ not_available_admin: !game.isAvailable }"
@@ -221,6 +218,25 @@
                       </p>
                     </div>
                   </div>
+
+                  <div class="info-row">
+                    <div class="info-item">
+                      <font-awesome-icon
+                        class="icon"
+                        :icon="['fas', 'globe-americas']"
+                      />
+                      <div class="divider"></div>
+                      <p>{{ filial.title }}</p>
+                    </div>
+                  </div>
+
+                  <!-- <div class="info-row-filial">
+                    <div class="info-item-filial">
+                      <p>{{ filial.title }}</p>
+                    </div>
+                  </div> -->
+
+
                 </div>
                 <div class="game-rent-container"></div>
               </div>
@@ -270,6 +286,7 @@
       <Footer />
     </div>
     <edit-game-modal v-model="edit_game_modal_open"></edit-game-modal>
+    <scroll-top></scroll-top>
   </div>
 </template>
 
@@ -358,8 +375,7 @@ export default {
     fetchFilials(page_url) {
       let vm = this;
 
-      page_url =
-        page_url || "http://127.0.0.1:8000/api/filial/" + this.user.filial_id;
+      page_url = page_url || "filials/fil=" + this.user.filial_id;
 
       Axios.get(page_url)
         .then((res) => {
@@ -393,15 +409,15 @@ export default {
 
       page_url =
         page_url ||
-        "http://127.0.0.1:8000/api/games/filial/" +
+        "games/filial=" +
           this.filial.id +
-          "/sort/" +
+          "/sort=" +
           this.display_qtd +
           "&" +
           this.sort_target +
           "&" +
           this.sort_value +
-          "/filter/" +
+          "/filter=" +
           this.filter_player_qtd +
           "&" +
           this.filter_language +
@@ -432,7 +448,7 @@ export default {
 
     deleteGame(id) {
       if (confirm("Are you sure?")) {
-        Axios.post(`http://127.0.0.1:8000/api/game/${id}`, {
+        Axios.post(`games/game=${id}`, {
           method: "delete",
         })
           .then(() => {
@@ -466,15 +482,15 @@ export default {
 
       page_url =
         page_url ||
-        "http://127.0.0.1:8000/api/games/filial/" +
+        "games/filial=" +
           this.current_filial.id +
-          "/sort/" +
+          "/sort=" +
           this.display_qtd +
           "&" +
           this.sort_target +
           "&" +
           this.sort_value +
-          "/search/" +
+          "/search=" +
           query;
 
       Axios.get(page_url)

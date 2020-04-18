@@ -271,10 +271,10 @@ export default {
     fetch() {
       let vm = this;
 
-      let difficulties = "http://127.0.0.1:8000/api/difficulties";
-      let genres = "http://127.0.0.1:8000/api/genres";
-      let languages = "http://127.0.0.1:8000/api/languages";
-      let filials = "http://127.0.0.1:8000/api/filials";
+      let difficulties = "difficulties/all";
+      let genres = "genres/all";
+      let languages = "languages/all";
+      let filials = "filials/all";
 
       const request_difficulties = Axios.get(difficulties);
       const request_genres = Axios.get(genres);
@@ -299,10 +299,9 @@ export default {
     },
 
     addGame() {
-      Axios.post("http://127.0.0.1:8000/api/game", this.game)
+      Axios.post("games/add", this.game)
         .then((res) => {
-          alert("Jogo adicionado com sucesso!");
-          console.log(res);
+          alert("Jogo " + res.data.title + " adicionado com sucesso!");
         })
         .catch((err) => console.log(err));
 

@@ -17,10 +17,23 @@ class LanguageController extends Controller
         return Language::findOrFail($id);
     }
 
-     public function store(Request $request)
+    public function store(Request $request)
     {
-        $language = new Language;
+        $language = $request->isMethod('put') ? Language::findOrFail($request->id) : new Language;
         $language->title = $request->input('title');
-        $language->save();
+        
+        if ($language->save()) {
+            return $language;
+        }
+        
+    }
+
+    public function destroy($id)
+    {
+        $language = Language::findOrFail($id);
+
+        if ($language->delete()) {
+            return $language;
+        }
     }
 }

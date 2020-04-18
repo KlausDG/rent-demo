@@ -17,9 +17,6 @@
             left
           >
             <b-dropdown-item @click="openModal('addGame', modal.addGame)">Jogo</b-dropdown-item>
-            <b-dropdown-item @click="openModal('addDifficulty', modal.addDifficulty)">Dificuldade</b-dropdown-item>
-            <b-dropdown-item @click="openModal('addGenre', modal.addGenre)">Gênero</b-dropdown-item>
-            <b-dropdown-item @click="openModal('addLanguage', modal.addLanguage)">Idioma</b-dropdown-item>
             <b-dropdown-item @click="openModal('addFilial', modal.addFilial)">Filial</b-dropdown-item>
             <b-dropdown-item @click="openModal('addUser', modal.addUser)">Sócio</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -33,17 +30,14 @@
           >
             <!-- <b-dropdown-item @click="openEditProfileModal">Perfil (to-do)</b-dropdown-item> -->
             <b-dropdown-item @click="openModal('editProfile', modal.editProfile)">Perfil</b-dropdown-item>
-            <b-dropdown-item @click="openModal('editDifficulties', modal.editDifficulties)">Dificuldades (to-do)</b-dropdown-item>
-            <b-dropdown-item>Gêneros (to-do)</b-dropdown-item>
-            <b-dropdown-item>Idiomas (to-do)</b-dropdown-item>
-            <b-dropdown-item>Filiais (to-do)</b-dropdown-item>
-            <b-dropdown-item>Sócios (to-do)</b-dropdown-item>
+            <b-dropdown-item @click="openModal('editDifficulties', modal.editDifficulties)">Dificuldades</b-dropdown-item>
+            <b-dropdown-item @click="openModal('editGenres', modal.editGenres)">Gêneros</b-dropdown-item>
+            <b-dropdown-item @click="openModal('editLanguages', modal.editLanguages)">Idiomas</b-dropdown-item>
+            <b-dropdown-item @click="openModal('allFilials', modal.allFilials)">Filiais</b-dropdown-item>
+            <b-dropdown-item @click="openModal('allUsers', modal.allUsers)"> Sócios</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-nav>
 
-        <!-- <a href="#" class="navbar-brand" @click="openModal"> Adicionar Jogo </a> -->
-        <!-- <a href="#" class="navbar-brand"> Editar Perfil </a>
-        <a href="#" class="navbar-brand"> Editar Filial </a> -->
         <a href="#" class="navbar-brand" @click="logout"> Sair </a>
       </div>
     </nav>
@@ -51,15 +45,16 @@
 
     <!-- ADD MODAL -->
     <add-game-modal v-model="modal.addGame"></add-game-modal>
-    <add-genre-modal v-model="modal.addGenre"></add-genre-modal>
-    <add-difficulty-modal v-model="modal.addDifficulty"></add-difficulty-modal>
-    <add-language-modal v-model="modal.addLanguage"></add-language-modal>
     <add-filial-modal v-model="modal.addFilial"></add-filial-modal>
-    <add-socio-modal v-model="modal.addUser"></add-socio-modal>
+    <add-user-modal v-model="modal.addUser"></add-user-modal>
 
     <!-- EDIT MODAL -->
     <edit-profile-modal v-model="modal.editProfile"></edit-profile-modal>
     <edit-difficulties-modal v-model="modal.editDifficulties"></edit-difficulties-modal>
+    <edit-genres-modal v-model="modal.editGenres"></edit-genres-modal>
+    <edit-languages-modal v-model="modal.editLanguages"></edit-languages-modal>
+    <all-filials-modal v-model="modal.allFilials" v-on:addFilial="openModal('addFilial', modal.addFilial)"></all-filials-modal>
+    <all-users-modal v-model="modal.allUsers" v-on:addUser="openModal('addUser', modal.addUser)"></all-users-modal>
   </div>
 </template>
 
@@ -76,13 +71,14 @@ export default {
     return {
       modal: {
         addGame: false,
-        addGenre: false,
-        addDifficulty: false,
-        addLanguage: false,
         addFilial: false,
         addUser: false,
         editProfile: false,
         editDifficulties: false,
+        editGenres: false,
+        editLanguages: false,
+        allFilials: false,
+        allUsers: false,
       },
     };
   },

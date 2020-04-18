@@ -3,7 +3,7 @@
     <div class="modal-main">
       <div class="title-container">
         <div class="modal-title">
-          <p class="title">Dificuldades</p>
+          <p class="title">Gêneros</p>
         </div>
         <div class="btn-close">
           <font-awesome-icon
@@ -19,7 +19,7 @@
           <div class="flex-container">
             <div
               class="form-group"
-              v-for="(difficulty, index) in difficulties"
+              v-for="(genre, index) in genres"
               v-bind:key="index"
             >
               <div class="title-label">
@@ -30,7 +30,7 @@
                   type="text"
                   name="title"
                   class="form-control form-input"
-                  v-model="difficulties[index].title"
+                  v-model="genres[index].title"
                   required
                 />
               </div>
@@ -38,14 +38,14 @@
                 <button
                   type="submit"
                   class="btn btn-success"
-                  @click.prevent="edit(difficulties[index])"
+                  @click.prevent="edit(genres[index])"
                 >
                   Salvar
                 </button>
                 <button
                   type="submit"
                   class="btn btn-danger"
-                  @click.prevent="remove(difficulty.id)"
+                  @click.prevent="remove(genre.id)"
                 >
                   Deletar
                 </button>
@@ -56,15 +56,15 @@
 
             <div class="form-group">
               <div class="title-label">
-                <p>{{ difficulties.length + 1 }} -</p>
+                <p>{{ genres.length + 1 }} -</p>
               </div>
               <div class="input-container">
                 <input
                   type="text"
                   name="title"
                   class="form-control form-input"
-                  v-model="newDifficulty.title"
-                  placeholder="Adicionar nova dificuldade aqui"
+                  v-model="newGenre.title"
+                  placeholder="Adicionar novo gênero aqui"
                   required
                 />
               </div>
@@ -80,8 +80,9 @@
               </div>
             </div>
           </div>
-          <div class="result-message" v-bind:class="{ error: has_error }">
+          <div class="result-message" v-bind:class="{error: has_error}">
             <p>{{ resp }}</p>
+
           </div>
           <div class="custom-btn d-flex justify-content-center pb-4">
             <button
@@ -99,18 +100,17 @@
 </template>
 
 <script>
-// import EventBus from "@/main.js";
 import Axios from "axios";
 
 export default {
-  name: "DifficultiesModal",
+  name: "genresModal",
 
   data() {
     return {
-      newDifficulty: {
+      newGenre: {
         title: "",
       },
-      difficulties: [],
+      genres: [],
       resp: "",
       has_error: false,
     };
@@ -134,9 +134,9 @@ export default {
     fetch() {
       let vm = this;
 
-      Axios.get("difficulties/all")
+      Axios.get("genres/all")
         .then((res) => {
-          vm.difficulties = res.data;
+          vm.genres = res.data;
         })
         .catch((err) => console.log(err));
     },
@@ -144,11 +144,11 @@ export default {
     add() {
       this.has_error = false;
       let vm = this;
-      Axios.post("difficulties/add", this.newDifficulty)
+      Axios.post("genres/add", this.newGenre)
         .then((res) => {
           vm.resp =
-            "Dificuldade " + res.data.title + " adicionada com sucesso!";
-          vm.newDifficulty.title = "";
+            "Gênero " + res.data.title + " adicionado com sucesso!";
+          vm.newGenre.title = "";
           vm.fetch();
         })
         .catch((err) => console.log(err));
@@ -157,12 +157,12 @@ export default {
     async edit(dif) {
       this.has_error = false;
       let vm = this;
-      await Axios.put("difficulties/edit", dif)
+      await Axios.put("genres/edit", dif)
         .then((res) => {
           vm.resp =
-            "Dificuldade " +
+            "Gênero " +
             res.data.id +
-            " foi alterada com sucesso para " +
+            " foi alterado com sucesso para " +
             res.data.title;
           vm.fetch();
         })
@@ -172,8 +172,9 @@ export default {
     async editAll() {
       let vm = this;
       this.has_error = false;
-      this.difficulties.forEach(async (element) => {
-        await Axios.put("difficulties/edit", element).catch((err) => {
+      this.genres.forEach(async (element) => {
+        await Axios.put("genres/edit", element)
+        .catch((err) => {
           vm.has_error = true;
           console.log(err);
         });
@@ -190,9 +191,9 @@ export default {
     async remove(id) {
       this.has_error = false;
       let vm = this;
-      await Axios.delete("difficulties/dif=" + id)
+      await Axios.delete("genres/gen=" + id)
         .then((res) => {
-          vm.resp = "Dificuldade " + res.data.title + " removida com sucesso!";
+          vm.resp = "Gênero " + res.data.title + " removido com sucesso!";
         })
         .catch((err) => console.log(err));
 

@@ -280,7 +280,6 @@ export default {
   },
 
   props: {
-    // game_id: [Number, String],
     value: {
       required: true,
     },
@@ -301,11 +300,11 @@ export default {
     fetch(id) {
       let vm = this;
 
-      let difficulties = "http://127.0.0.1:8000/api/difficulties";
-      let genres = "http://127.0.0.1:8000/api/genres";
-      let languages = "http://127.0.0.1:8000/api/languages";
-      let filials = "http://127.0.0.1:8000/api/filials";
-      let game = "http://127.0.0.1:8000/api/game/" + id;
+      let difficulties = "difficulty/all";
+      let genres = "genre/all";
+      let languages = "language/all";
+      let filials = "filial/all";
+      let game = "games/game=" + id;
 
       const request_difficulties = Axios.get(difficulties);
       const request_genres = Axios.get(genres);
@@ -333,10 +332,9 @@ export default {
     },
 
     editGame() {
-      Axios.put("game", this.game)
+      Axios.put("games/edit", this.game)
         .then((res) => {
-          alert("Jogo modificado com sucesso!");
-          console.log(res);
+          alert("Jogo" + res.data.title + " modificado com sucesso!");
         })
         .catch((err) => console.log(err));
       EventBus.$emit('fetch', '');

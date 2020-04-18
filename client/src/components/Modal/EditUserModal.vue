@@ -3,7 +3,7 @@
     <div class="add-game-modal">
       <div class="modal-container">
         <div class="modal-title">
-          <p class="title">Cadastro de Sócios</p>
+          <p class="title">Edição de Sócios</p>
         </div>
         <div class="btn-close">
           <font-awesome-icon
@@ -25,7 +25,7 @@
               name="name"
               class="form-control form-input"
               placeholder="Nome"
-              v-model="socio.name"
+              v-model="user.name"
               required
             />
           </div>
@@ -36,7 +36,7 @@
               class="form-control form-input"
               name="username"
               placeholder="Usuário"
-              v-model="socio.username"
+              v-model="user.username"
               required
             />
           </div>
@@ -47,7 +47,18 @@
               class="form-control form-input"
               name="email"
               placeholder="E-mail"
-              v-model="socio.email"
+              v-model="user.email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="password"
+              name="password"
+              class="form-control form-input"
+              placeholder="Senha antiga"
+              v-model="user.old_password"
               required
             />
           </div>
@@ -58,7 +69,7 @@
               name="password"
               class="form-control form-input"
               placeholder="Senha"
-              v-model="socio.password"
+              v-model="user.password"
               required
             />
           </div>
@@ -69,11 +80,11 @@
               name="v_password"
               class="form-control form-input"
               placeholder="Confirmação de senha"
-              v-model="socio.v_password"
+              v-model="user.v_password"
               required
             />
           </div>
-          <div class="custom-btn d-flex justify-content-center">
+          <div class="custom-btn d-flex justify-content-center pb-4">
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
         </form>
@@ -83,20 +94,23 @@
 </template>
 
 <script>
+import EventBus from "@/main.js";
 import Axios from "axios";
 
 export default {
-  name: "AddSocioModal",
+  name: "EditUserModal",
 
   data() {
     return {
-      socio: {
+      user: {
         name: "",
         username: "",
         email: "",
+        old_password: "",
         password: "",
         v_password: "",
       },
+      confirm_old_password: "",
     };
   },
 
@@ -106,28 +120,40 @@ export default {
     },
   },
 
+  created() {
+    let vm = this;
+    EventBus.$on("searchUser", function(payload) {
+      vm.user = payload;
+      vm.user.old_password = vm.user.password;
+    });
+  },
+
   methods: {
     close() {
       this.$emit("input", !this.value);
     },
 
     formatData() {
-      if (this.socio.password !== this.socio.v_password) {
+      if (this.user.old_password !== this.confirm_old_password) {
+        alert("A senha antiga está errada!");
+        return;
+      }
+
+      if (this.user.password !== this.user.v_password) {
         alert("As senhas inseridas não são iguais!");
         return;
       }
-      
-      //To Lower
-      this.socio.email = this.socio.email.toLowerCase();
 
-      this.addSocio();
+      //To Lower
+      this.user.email = this.user.email.toLowerCase();
+
+      this.addUser();
     },
 
-    addSocio() {
-      Axios.post("socio", this.socio)
+    addUser() {
+      Axios.put("users/edit", this.user)
         .then((res) => {
-          alert("Usuário cadastrado com sucesso!");
-          console.log(res);
+          alert("Usuário " + res.data.id + " alterado com sucesso!");
         })
         .catch((err) => console.log(err));
 
@@ -147,7 +173,7 @@ export default {
 
 .add-game-modal {
   width: 35rem !important;
-  height: 33rem !important;
+  height: auto !important;
 }
 
 .form-input {

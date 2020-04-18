@@ -457,6 +457,7 @@
       </nav>
       <!-- End of Navigation -->
     </div>
+    <scroll-top></scroll-top>
     <Footer />
   </div>
 </template>
@@ -556,15 +557,15 @@ export default {
 
       page_url =
         page_url ||
-        "games/filial/" +
+        "games/filial=" +
           this.current_filial.id +
-          "/sort/" +
+          "/sort=" +
           this.display_qtd +
           "&" +
           this.sort_target +
           "&" +
           this.sort_value +
-          "/filter/" +
+          "/filter=" +
           this.filter_player_qtd +
           "&" +
           this.filter_language +
@@ -594,7 +595,7 @@ export default {
     },
     deleteGame(id) {
       if (confirm("Are you sure?")) {
-        Axios.post(`http://127.0.0.1:8000/api/game/${id}`, {
+        Axios.post(`games/game=${id}`, {
           method: "delete",
         })
           .then(() => {
@@ -602,15 +603,6 @@ export default {
             this.fetchGames();
           })
           .catch((err) => console.log(err));
-        // fetch(`http://127.0.0.1:8000/api/game/${id}`, {
-        // 	method: "delete",
-        // })
-        // 	.then((res) => res.json())
-        // 	.then(() => {
-        // 		alert("Game removed");
-        // 		this.fetchGames();
-        // 	})
-        // 	.catch((err) => console.log(err));
       }
     },
 
@@ -637,15 +629,15 @@ export default {
 
       page_url =
         page_url ||
-        "http://127.0.0.1:8000/api/games/filial/" +
+        "games/filial=" +
           this.current_filial.id +
-          "/sort/" +
+          "/sort=" +
           this.display_qtd +
           "&" +
           this.sort_target +
           "&" +
           this.sort_value +
-          "/search/" +
+          "/search=" +
           query;
 
       Axios.get(page_url)
@@ -655,15 +647,6 @@ export default {
           vm.makePagination(res.data.meta, res.data.links);
         })
         .catch((err) => console.log(err));
-
-      // fetch(page_url)
-      //   .then((res) => res.json())
-      //   .then((res) => {
-      //     vm.games = res.data;
-      //     vm.total_games = res.meta.total;
-      //     vm.makePagination(res.meta, res.links);
-      //   })
-      //   .catch((err) => console.log(err));
     },
 
     sendMessage(title) {

@@ -19,7 +19,7 @@ class FilialController extends Controller
 
     public function store(Request $request)
     {
-        $filial = new Filial;
+        $filial = $request->isMethod('put') ? Filial::findOrFail($request->id) : new Filial;
         $filial->title = $request->input('title');
         $filial->phone = $request->input('phone');
         $filial->rua = $request->input('rua');
@@ -32,6 +32,18 @@ class FilialController extends Controller
         $filial->complemento = $request->input('complemento');
         $filial->referencia = $request->input('referencia');
 
-        $filial->save();
+        if ($filial->save()) {
+            return $filial;
+        }
+
+    }
+
+    public function destroy($id)
+    {
+        $filial = Filial::findOrFail($id);
+
+        if ($filial->delete()) {
+            return $filial;
+        }
     }
 }

@@ -3,7 +3,7 @@
     <div class="add-game-modal">
       <div class="modal-container">
         <div class="modal-title">
-          <p class="title">Editar Perfil</p>
+          <p class="title">Cadastro de Sócios</p>
         </div>
         <div class="btn-close">
           <font-awesome-icon
@@ -25,7 +25,7 @@
               name="name"
               class="form-control form-input"
               placeholder="Nome"
-              v-model="me.name"
+              v-model="user.name"
               required
             />
           </div>
@@ -36,7 +36,7 @@
               class="form-control form-input"
               name="username"
               placeholder="Usuário"
-              v-model="me.username"
+              v-model="user.username"
               required
             />
           </div>
@@ -47,7 +47,7 @@
               class="form-control form-input"
               name="email"
               placeholder="E-mail"
-              v-model="me.email"
+              v-model="user.email"
               required
             />
           </div>
@@ -57,19 +57,8 @@
               type="password"
               name="password"
               class="form-control form-input"
-              placeholder="Senha antiga"
-              v-model="me.old_password"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="password"
-              name="password"
-              class="form-control form-input"
-              placeholder="Nova senha"
-              v-model="me.password"
+              placeholder="Senha"
+              v-model="user.password"
               required
             />
           </div>
@@ -79,12 +68,12 @@
               type="password"
               name="v_password"
               class="form-control form-input"
-              placeholder="Repetir nova senha"
-              v-model="me.v_password"
+              placeholder="Confirmação de senha"
+              v-model="user.v_password"
               required
             />
           </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
+          <div class="custom-btn d-flex justify-content-center">
             <button type="submit" class="btn btn-primary">Salvar</button>
           </div>
         </form>
@@ -95,23 +84,19 @@
 
 <script>
 import Axios from "axios";
-import { mapGetters } from "vuex";
 
 export default {
-  name: "EditProfileModal",
+  name: "AdduserModal",
 
   data() {
     return {
-      me: {
-        id: "",
+      user: {
         name: "",
         username: "",
         email: "",
-        old_password: "",
         password: "",
         v_password: "",
       },
-      confirm_old_password: "",
     };
   },
 
@@ -121,48 +106,27 @@ export default {
     },
   },
 
-  computed: {
-    ...mapGetters({
-      authenticated: "auth/authenticated",
-      user: "auth/user",
-    }),
-  },
-
-  created() {
-    this.me.id = this.user.id;
-    this.me.name = this.user.name;
-    this.me.username = this.user.username;
-    this.me.email = this.user.email;
-    this.confirm_old_password = this.user.password;
-  },
-
   methods: {
     close() {
       this.$emit("input", !this.value);
     },
 
     formatData() {
-      if (this.me.old_password !== this.confirm_old_password) {
-        alert("A senha antiga está errada!");
+      if (this.user.password !== this.user.v_password) {
+        alert("As senhas inseridas não são iguais!");
         return;
       }
-
-      if (this.me.password !== this.me.v_password) {
-        alert("As senhas inseridas são diferentes!");
-        return;
-      }
-
+      
       //To Lower
-      this.me.email = this.me.email.toLowerCase();
+      this.user.email = this.user.email.toLowerCase();
 
-      this.editMe();
+      this.addUser();
     },
 
-    editMe() {
-      Axios.put("users/edit", this.me)
-        .then(() => {
-          alert("Usuário modificado com sucesso!");
-          // console.log(res);
+    addUser() {
+      Axios.post("users/add", this.user)
+        .then((res) => {
+          alert("Usuário " + res.data.name + " cadastrado com sucesso!");
         })
         .catch((err) => console.log(err));
 
@@ -182,7 +146,7 @@ export default {
 
 .add-game-modal {
   width: 35rem !important;
-  height: auto !important;
+  height: 33rem !important;
 }
 
 .form-input {

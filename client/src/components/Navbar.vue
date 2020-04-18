@@ -66,7 +66,7 @@ export default {
     fetchFilials(page_url) {
       let vm = this;
 
-      page_url = page_url || "http://127.0.0.1:8000/api/filials";
+      page_url = page_url || "filials/all";
 
       Axios.get(page_url)
         .then((res) => {

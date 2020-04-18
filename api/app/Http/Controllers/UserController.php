@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return User::get();
+    }
+
+    public function show($id)
+    {
+        return User::findOrFail($id);
+    }
+
     public function store(Request $request)
     {
         $user = $request->isMethod('put') ? User::findOrFail($request->id) : new User;
@@ -17,6 +27,19 @@ class UserController extends Controller
         $user->role = 2;
         $user->filial_id = 1;
         // dd($user);
-        $user->save();
+        
+        if ($user->save()) {
+            return $user;
+        }
+
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($user->delete()) {
+            return $user;
+        }
     }
 }
