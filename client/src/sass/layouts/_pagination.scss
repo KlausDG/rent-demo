@@ -1,0 +1,11 @@
+  .pagination {
+    display: flex;
+    padding-left: 15px;
+    margin: 0;
+
+    li {
+      a {
+        color: $color_black;
+      }
+    }
+  }

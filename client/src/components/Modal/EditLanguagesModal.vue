@@ -1,99 +1,88 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="modal-main">
-      <div class="title-container">
-        <div class="modal-title">
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
           <p class="title">Idioma</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="modal-container">
-        <form>
-          <div class="flex-container">
-            <div
-              class="form-group"
-              v-for="(language, index) in languages"
-              v-bind:key="index"
-            >
-              <div class="title-label">
-                <p>{{ index + 1 }} -</p>
-              </div>
-              <div class="input-container">
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control form-input"
-                  v-model="languages[index].title"
-                  required
-                />
-              </div>
-              <div class="item-submit">
-                <button
-                  type="submit"
-                  class="btn btn-success"
-                  @click.prevent="edit(languages[index])"
-                >
-                  Salvar
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-danger"
-                  @click.prevent="remove(language.id)"
-                >
-                  Deletar
-                </button>
-              </div>
-            </div>
 
-            <div class="divider"></div>
-
-            <div class="form-group">
-              <div class="title-label">
-                <p>{{ languages.length + 1 }} -</p>
-              </div>
-              <div class="input-container">
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control form-input"
-                  v-model="newLanguage.title"
-                  placeholder="Adicionar novo gênero aqui"
-                  required
-                />
-              </div>
-              <div class="item-submit">
-                <button
-                  type="submit"
-                  class="btn btn-success"
-                  @click.prevent="add"
-                >
-                  Salvar
-                </button>
-                <div class="spacer"></div>
-              </div>
+      <div class="modal-body">
+        <form class="list-form mb-10">
+          <div
+            class="form-group"
+            v-for="(language, index) in languages"
+            v-bind:key="index"
+          >
+            <div class="index-label">{{ index + 1 }} -</div>
+            <input
+              type="text"
+              name="title"
+              class="form-input"
+              v-model="languages[index].title"
+              required
+            />
+            <div class="item-submit">
+              <button
+                type="submit"
+                class="btn btn-green ml-10"
+                @click.prevent="edit(languages[index])"
+              >
+                Salvar
+              </button>
+              <button
+                type="submit"
+                class="btn btn-red ml-10"
+                @click.prevent="remove(language.id)"
+              >
+                Deletar
+              </button>
             </div>
           </div>
-          <div class="result-message" v-bind:class="{error: has_error}">
+
+          <div class="divider-modal"></div>
+
+          <div class="form-group">
+            <div class="index-label">{{ languages.length + 1 }} -</div>
+            <input
+              type="text"
+              name="title"
+              class="form-control form-input"
+              v-model="newLanguage.title"
+              placeholder="Adicionar novo idioma"
+              required
+            />
+            <div class="item-submit-single">
+              <button
+                type="submit"
+                class="btn btn-green ml-10"
+                @click.prevent="add"
+              >
+                Salvar
+              </button>
+              <div class="spacer ml-10"></div>
+            </div>
+          </div>
+
+          <div class="result-message" v-bind:class="{ error: has_error }">
             <p>{{ resp }}</p>
+          </div>
 
-          </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              @click.prevent="editAll"
-            >
-              Salvar Todos
-            </button>
-          </div>
+          <div class="divider-modal"></div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-blue form-btn"
+          @click.prevent="editAll"
+        >
+          Salvar Todos
+        </button>
       </div>
     </div>
   </div>
@@ -123,6 +112,7 @@ export default {
   },
 
   created() {
+    this.resp = "";
     this.fetch();
   },
 
@@ -146,8 +136,7 @@ export default {
       let vm = this;
       Axios.post("languages/add", this.newLanguage)
         .then((res) => {
-          vm.resp =
-            "Idioma " + res.data.title + " adicionado com sucesso!";
+          vm.resp = "Idioma " + res.data.title + " adicionado com sucesso!";
           vm.newLanguage.title = "";
           vm.fetch();
         })
@@ -173,8 +162,7 @@ export default {
       let vm = this;
       this.has_error = false;
       this.languages.forEach(async (element) => {
-        await Axios.put("languages/edit", element)
-        .catch((err) => {
+        await Axios.put("languages/edit", element).catch((err) => {
           vm.has_error = true;
           console.log(err);
         });
@@ -202,7 +190,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/ListModal.scss";
-</style>

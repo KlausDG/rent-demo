@@ -1,0 +1,99 @@
+%btn-colors {
+  background-color: darken($main_color_1, 5);
+  color: lighten($main_color_2, 20);
+}
+
+%btn-hover {
+  &:hover {
+    cursor: pointer;
+    border: 3px solid $color_grey;
+    color: $color_grey;
+  }
+}
+
+%cursor-pointer {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+%default-icon {
+  color: $main_color_2;
+  font-size: $font_size_icon;
+}
+
+%center-align {
+  @include flex(row);
+  justify-content: center;
+  align-items: center;
+}
+
+%modal-title {
+  margin: 0;
+  color: $color_black;
+  font-size: $font_size_title;
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+%radius-5px {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  border-radius: 5px;
+}
+
+%background-image-normalize {
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+%no-decoration {
+  text-decoration: none;
+}
+
+%clearfix {
+  overflow: hidden;
+}
+
+%btn-transition {
+  transition: all 0.3s ease;
+}
+
+%flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+%flex-row {
+  display: flex;
+}
+
+%modal-container {
+  background-color: $color_white;
+  box-shadow: 2px 2px 5px 1px;
+  border-radius: 10px;
+}
+
+%c-white {
+  color: white;
+}
+
+%input-border {
+  border: 1px solid $color_input_border;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px;
+}
+
+
+%default-btn {
+  @extend %btn-colors;
+  border: 3px solid lighten($main_color_2, 20);
+  border-radius: 10px;
+  font-weight: bold;
+  font-size:$font_size_btn;
+}

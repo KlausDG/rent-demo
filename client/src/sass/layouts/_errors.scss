@@ -1,0 +1,12 @@
+.no-items-found {
+  margin: 0.75rem;
+
+  p {
+    color: $color_grey;
+    font-size: $font_size_important;
+  }
+}
+
+.form-error-message {
+  @include text(14px, 400, darken($main_color_1, 10));
+}

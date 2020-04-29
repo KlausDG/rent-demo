@@ -1,72 +1,60 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="modal-main">
-      <div class="title-container">
-        <div class="modal-title">
-          <p class="title">Filiais</p>
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
+          <p class="title">Lojas</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="modal-container">
-        <form>
-          <div class="flex-container">
-            <div
-              class="form-group"
-              v-for="(filial, index) in filials"
-              v-bind:key="index"
-            >
-              <div class="title-label">
-                <p>{{ index + 1 }} -</p>
-              </div>
-              <div class="input-container">
-                <input
-                  type="text"
-                  name="title"
-                  class="form-control form-input"
-                  v-model="filials[index].title"
-                  disabled
-                />
-              </div>
-              <div class="item-submit">
-                <button
-                  type="submit"
-                  class="btn btn-success"
-                  @click.prevent="editFilial(filials[index])"
-                >
-                  Editar
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-danger"
-                  @click.prevent="remove(filial.id)"
-                >
-                  Deletar
-                </button>
-              </div>
-            </div>
 
-            <div class="divider"></div>
+      <div class="modal-body">
+        <form class="list-form mb-10">
+          <div
+            class="form-group"
+            v-for="(filial, index) in filials"
+            v-bind:key="index"
+          >
+            <div class="index-label">{{ index + 1 }} -</div>
+            <input
+              type="text"
+              name="title"
+              class="form-input"
+              v-model="filials[index].title"
+              disabled
+            />
+            <div class="item-submit">
+              <button
+                type="submit"
+                class="btn btn-green ml-10"
+                @click.prevent="editFilial(filials[index])"
+              >
+                Editar
+              </button>
+              <button
+                type="submit"
+                class="btn btn-red ml-10"
+                @click.prevent="remove(filial.id)"
+              >
+                Deletar
+              </button>
+            </div>
           </div>
+
           <div class="result-message" v-bind:class="{ error: has_error }">
             <p>{{ resp }}</p>
           </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              @click.prevent="newFilial"
-            >
-              Cadastrar Nova Filial
-            </button>
-          </div>
+
+          <div class="divider-modal"></div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn" @click.prevent="newFilial">
+          Nova Loja
+        </button>
       </div>
     </div>
     <edit-filial-modal v-model="edit_filial_modal_open"></edit-filial-modal>
@@ -89,6 +77,12 @@ export default {
     };
   },
 
+  watch: {
+    value: function() {
+      this.fetch();
+    } 
+  },
+
   props: {
     value: {
       required: true,
@@ -96,6 +90,7 @@ export default {
   },
 
   created() {
+    this.resp = "";
     this.fetch();
   },
 
@@ -117,7 +112,6 @@ export default {
     async editFilial(fil) {
       this.edit_filial_modal_open = !this.edit_filial_modal_open;
       EventBus.$emit("searchFilial", fil);
-
     },
 
     async remove(id) {
@@ -139,7 +133,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/ListModal.scss";
-</style>

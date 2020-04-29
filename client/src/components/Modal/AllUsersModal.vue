@@ -1,50 +1,47 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="modal-main">
-      <div class="title-container">
-        <div class="modal-title">
-          <p class="title">Sócios</p>
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
+          <p class="title">Usuários</p>
         </div>
-        <div class="btn-close">
+        <div class="btn-close-modal">
           <font-awesome-icon
-            class="icon"
             :icon="['fas', 'times']"
             @click="close"
           />
         </div>
+      <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="modal-container">
-        <form>
-          <div class="flex-container">
+
+<div class="modal-body">
+        <form class="list-form mb-10">
             <div
               class="form-group"
               v-for="(user, index) in users"
               v-bind:key="index"
             >
-              <div class="title-label">
-                <p>{{ index + 1 }} -</p>
+              <div class="index-label">
+                {{ index + 1 }} -
               </div>
-              <div class="input-container">
                 <input
                   type="text"
                   name="title"
-                  class="form-control form-input"
+                  class="form-input"
                   v-model="users[index].name"
                   disabled
                 />
-              </div>
               <div class="item-submit">
                 <button
                   type="submit"
-                  class="btn btn-success"
+                  class="btn btn-green ml-10"
                   @click.prevent="editUser(users[index])"
                 >
                   Editar
                 </button>
                 <button
                   type="submit"
-                  class="btn btn-danger"
+                  class="btn btn-red ml-10"
                   @click.prevent="remove(user.id)"
                 >
                   Deletar
@@ -52,22 +49,23 @@
               </div>
             </div>
 
-            <div class="divider"></div>
-          </div>
+
           <div class="result-message" v-bind:class="{ error: has_error }">
             <p>{{ resp }}</p>
           </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
+          
+            <div class="divider-modal"></div>
+        </form>
+</div>
+          <div class="modal-footer">
             <button
               type="submit"
-              class="btn btn-primary"
+              class="btn btn-blue form-btn"
               @click.prevent="newUser"
             >
-              Cadastrar Novo Sócio
+              Novo Usuário
             </button>
           </div>
-        </form>
-      </div>
     </div>
     <edit-user-modal v-model="edit_user_modal_open"></edit-user-modal>
   </div>
@@ -89,6 +87,12 @@ export default {
     };
   },
 
+  watch: {
+    value: function() {
+      this.fetch();
+    } 
+  },
+
   props: {
     value: {
       required: true,
@@ -96,6 +100,7 @@ export default {
   },
 
   created() {
+    this.resp = "";
     this.fetch();
   },
 
@@ -109,6 +114,7 @@ export default {
 
       Axios.get("users/all")
         .then((res) => {
+          console.log(res.data);
           vm.users = res.data;
         })
         .catch((err) => console.log(err));
@@ -123,8 +129,8 @@ export default {
       this.has_error = false;
       let vm = this;
       await Axios.delete("users/usr=" + id)
-        .then((res) => {
-          vm.resp = "Sócio " + res.data.title + " removido com sucesso!";
+        .then(() => {
+          vm.resp = "Usuário removido com sucesso!";
         })
         .catch((err) => console.log(err));
 
@@ -138,7 +144,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/ListModal.scss";
-</style>

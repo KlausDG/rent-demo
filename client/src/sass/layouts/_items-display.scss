@@ -1,0 +1,4 @@
+.flex-container {
+  @include flex(row, center);
+  flex-wrap: wrap;
+}

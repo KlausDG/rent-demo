@@ -1,62 +1,25 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="add-game-modal">
-      <div class="modal-container">
-        <div class="modal-title">
-          <p class="title">Editar Perfil</p>
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
+          <p class="title">Alterar Senha</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="container">
-        <form
-          @submit.prevent="formatData"
-          class=" d-flex flex-column justify-content-center"
-        >
-          <div class="form-group">
-            <input
-              type="text"
-              name="name"
-              class="form-control form-input"
-              placeholder="Nome"
-              v-model="me.name"
-              required
-            />
-          </div>
+
+      <div class="modal-body">
+        <form class="vertical-form mb-20">
 
           <div class="form-group">
-            <input
-              type="text"
-              class="form-control form-input"
-              name="username"
-              placeholder="Usuário"
-              v-model="me.username"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              class="form-control form-input"
-              name="email"
-              placeholder="E-mail"
-              v-model="me.email"
-              required
-            />
-          </div>
-
-          <div class="form-group">
+            <label for="old_password" class="title-label">Senha Antiga</label>
             <input
               type="password"
-              name="password"
-              class="form-control form-input"
+              name="old_password"
+              class="form-input"
               placeholder="Senha antiga"
               v-model="me.old_password"
               required
@@ -64,10 +27,11 @@
           </div>
 
           <div class="form-group">
+            <label for="password" class="title-label">Senha Nova</label>
             <input
               type="password"
               name="password"
-              class="form-control form-input"
+              class="form-input"
               placeholder="Nova senha"
               v-model="me.password"
               required
@@ -75,19 +39,24 @@
           </div>
 
           <div class="form-group">
+            <label for="v_password" class="title-label"
+              >Confirmação de Senha</label
+            >
             <input
               type="password"
               name="v_password"
-              class="form-control form-input"
+              class="form-input"
               placeholder="Repetir nova senha"
               v-model="me.v_password"
               required
             />
           </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn" @click="formatData">
+          Salvar
+        </button>
       </div>
     </div>
   </div>
@@ -104,9 +73,6 @@ export default {
     return {
       me: {
         id: "",
-        name: "",
-        username: "",
-        email: "",
         old_password: "",
         password: "",
         v_password: "",
@@ -130,9 +96,6 @@ export default {
 
   created() {
     this.me.id = this.user.id;
-    this.me.name = this.user.name;
-    this.me.username = this.user.username;
-    this.me.email = this.user.email;
     this.confirm_old_password = this.user.password;
   },
 
@@ -142,27 +105,20 @@ export default {
     },
 
     formatData() {
-      if (this.me.old_password !== this.confirm_old_password) {
-        alert("A senha antiga está errada!");
-        return;
-      }
-
       if (this.me.password !== this.me.v_password) {
         alert("As senhas inseridas são diferentes!");
         return;
       }
-
-      //To Lower
-      this.me.email = this.me.email.toLowerCase();
 
       this.editMe();
     },
 
     editMe() {
       Axios.put("users/edit", this.me)
-        .then(() => {
-          alert("Usuário modificado com sucesso!");
-          // console.log(res);
+        .then((res) => {
+          res.data.error
+            ? alert(res.data.error)
+            : alert("Senha alterada com sucesso!");
         })
         .catch((err) => console.log(err));
 
@@ -171,22 +127,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/AddGameModal.scss";
-
-.container {
-  margin-top: 15px;
-  width: 500px;
-}
-
-.add-game-modal {
-  width: 35rem !important;
-  height: auto !important;
-}
-
-.form-input {
-  border-color: #000000 !important;
-  height: 2.5rem !important;
-}
-</style>

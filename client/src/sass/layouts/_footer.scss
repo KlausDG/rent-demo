@@ -1,0 +1,10 @@
+.footer-container {
+  @include size(100%, 100px);
+  @extend %center-align;
+  background-color: $main_color_2;
+
+  p {
+    margin: 0;
+    font-size: $font_size_important;
+  }
+}

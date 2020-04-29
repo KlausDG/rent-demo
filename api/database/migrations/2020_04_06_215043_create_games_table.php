@@ -20,8 +20,8 @@ class CreateGamesTable extends Migration
             $table->integer('maxPlayers');
             $table->integer('minTime');
             $table->integer('maxTime');
-            $table->boolean('isExpansion')->default(false);
-            $table->boolean('isAvailable')->default(true);
+            $table->boolean('isExpansion')->default(0);
+            $table->boolean('isAvailable')->default(1);
             $table->integer('price')->nullable();
             $table->text('description')->nullable();
             $table->text('imageThumb');

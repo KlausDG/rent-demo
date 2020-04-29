@@ -1,0 +1,42 @@
+.modal {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20% 60% 20%;
+  grid-template-areas:
+    "header"
+    "body"
+    "footer";
+  justify-content: center;
+
+  &-header {
+    grid-area: 'header';
+    position: relative;
+  }
+
+  &-body {
+    grid-area: 'body';
+    margin: auto;
+    width: 100%;
+  }
+
+  &-footer {
+    @extend %center-align;
+    grid-area: 'footer';
+    padding-bottom: 20px;
+  }
+}
+
+.login-modal-container {
+  @include size(455px, 375px);
+  @extend %modal-container;
+}
+
+.horizontal-modal {
+  @include size(auto, auto);
+  @extend %modal-container;
+}
+
+.vertical-modal {
+  @include size(600px, auto);
+  @extend %modal-container;
+}

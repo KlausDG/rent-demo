@@ -1,29 +1,24 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="add-game-modal">
-      <div class="modal-container">
-        <div class="modal-title">
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
           <p class="title">Edição de Sócios</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="container">
-        <form
-          @submit.prevent="formatData"
-          class=" d-flex flex-column justify-content-center"
-        >
+
+      <div class="modal-body">
+        <form class="vertical-form mb-20">
           <div class="form-group">
+            <label for="name" class="title-label">Nome</label>
             <input
               type="text"
               name="name"
-              class="form-control form-input"
+              class="form-input"
               placeholder="Nome"
               v-model="user.name"
               required
@@ -31,9 +26,10 @@
           </div>
 
           <div class="form-group">
+            <label for="username" class="title-label">Usuário</label>
             <input
               type="text"
-              class="form-control form-input"
+              class="form-input"
               name="username"
               placeholder="Usuário"
               v-model="user.username"
@@ -42,52 +38,20 @@
           </div>
 
           <div class="form-group">
+            <label for="email" class="title-label">E-mail</label>
             <input
               type="text"
-              class="form-control form-input"
+              class="form-input"
               name="email"
               placeholder="E-mail"
               v-model="user.email"
               required
             />
           </div>
-
-          <div class="form-group">
-            <input
-              type="password"
-              name="password"
-              class="form-control form-input"
-              placeholder="Senha antiga"
-              v-model="user.old_password"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="password"
-              name="password"
-              class="form-control form-input"
-              placeholder="Senha"
-              v-model="user.password"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="password"
-              name="v_password"
-              class="form-control form-input"
-              placeholder="Confirmação de senha"
-              v-model="user.v_password"
-              required
-            />
-          </div>
-          <div class="custom-btn d-flex justify-content-center pb-4">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn" @click="formatData">Salvar</button>
       </div>
     </div>
   </div>
@@ -106,11 +70,7 @@ export default {
         name: "",
         username: "",
         email: "",
-        old_password: "",
-        password: "",
-        v_password: "",
       },
-      confirm_old_password: "",
     };
   },
 
@@ -124,7 +84,6 @@ export default {
     let vm = this;
     EventBus.$on("searchUser", function(payload) {
       vm.user = payload;
-      vm.user.old_password = vm.user.password;
     });
   },
 
@@ -134,17 +93,8 @@ export default {
     },
 
     formatData() {
-      if (this.user.old_password !== this.confirm_old_password) {
-        alert("A senha antiga está errada!");
-        return;
-      }
 
-      if (this.user.password !== this.user.v_password) {
-        alert("As senhas inseridas não são iguais!");
-        return;
-      }
-
-      //To Lower
+//To Lower
       this.user.email = this.user.email.toLowerCase();
 
       this.addUser();
@@ -162,22 +112,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/AddGameModal.scss";
-
-.container {
-  margin-top: 15px;
-  width: 500px;
-}
-
-.add-game-modal {
-  width: 35rem !important;
-  height: auto !important;
-}
-
-.form-input {
-  border-color: #000000 !important;
-  height: 2.5rem !important;
-}
-</style>

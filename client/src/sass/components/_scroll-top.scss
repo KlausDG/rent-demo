@@ -1,0 +1,9 @@
+.go-top {
+  @include size(50px, 50px);
+  @extend %background-image-normalize;
+  position: fixed;
+  right: 75px;
+  bottom: 25px;
+  z-index: 1000;
+  background-image: url("assets/images/arrow.svg");
+}

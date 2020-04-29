@@ -1,246 +1,223 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="add-game-modal">
-      <div class="modal-container">
-        <div class="modal-title">
+  <div class="modal-background" v-show="value">
+    <div class="modal horizontal-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
           <p class="title">Edição de Jogo</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="container">
-        <form @submit.prevent="editGame">
-          <div class="row">
-            <div class="form-group col-md-5">
-              <label for="title" class="title-label">Título</label>
-              <input
-                type="text"
-                name="title"
-                class="form-control form-input"
-                v-model="game.title"
-                required
-              />
-            </div>
 
-            <div class="form-group col-md-2">
-              <label class="title-label">Nº Jogadores</label>
-              <div class="row">
-                <div class="col-md">
-                  <input
-                    type="text"
-                    class="form-control form-input"
-                    name="minPlayers"
-                    v-model="game.minPlayers"
-                    required
-                  />
-                </div>
-                <div class="letter">
-                  a
-                </div>
-                <div class="col-md">
-                  <input
-                    type="text"
-                    class="form-control form-input"
-                    name="maxPlayers"
-                    v-model="game.maxPlayers"
-                    required
-                  />
-                </div>
+      <div class="modal-body">
+        <form class="horizontal-form form-grid">
+          <div class="form-group flex-col-6">
+            <label for="title" class="title-label">Título</label>
+            <input
+              type="text"
+              name="title"
+              class="form-input"
+              v-model="game.title"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Nº Jogadores</label>
+            <div class="row">
+              <div class="input">
+                <input
+                  type="text"
+                  class="form-input"
+                  name="minPlayers"
+                  v-model="game.minPlayers"
+                  required
+                />
               </div>
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">É Expansão?</label>
-              <div class="row radio-input form-control">
-                <div>
-                  <input
-                    type="radio"
-                    class="form-control"
-                    name="exp_n"
-                    value="0"
-                    v-model="game.isExpansion"
-                  />
-                  <label for="exp_n">Não</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    class="form-control"
-                    name="exp_s"
-                    value="1"
-                    v-model="game.isExpansion"
-                  />
-                  <label for="exp_s">Sim</label>
-                </div>
+              <div class="letter">
+                a
               </div>
-            </div>
-
-            <div class="form-group col-md-3">
-              <label class="title-label">Tempo de Jogo (min.)</label>
-              <div class="row">
-                <div class="col-md">
-                  <input
-                    type="text"
-                    class="form-control form-input"
-                    name="minTime"
-                    v-model="game.minTime"
-                    required
-                  />
-                </div>
-                <div class="letter">
-                  a
-                </div>
-                <div class="col-md">
-                  <input
-                    type="text"
-                    class="form-control form-input"
-                    name="maxTime"
-                    v-model="game.maxTime"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-md-1">
-              <label for="price" class="title-label">Preço</label>
-              <input
-                type="text"
-                name="price"
-                class="form-control form-input"
-                v-model="game.price"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">Dificuldade</label>
-              <select
-                class="form-control form-input"
-                v-model="game.difficulties_id"
-                required
-              >
-                <option
-                  v-for="difficulty in difficulties"
-                  v-bind:key="difficulty.id"
-                  v-bind:value="difficulty.id"
-                  >{{ difficulty.title }}</option
-                >
-              </select>
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">Gênero</label>
-              <select
-                class="form-control form-input"
-                v-model="game.genres_id"
-                required
-              >
-                <option
-                  v-for="genre in genres"
-                  v-bind:key="genre.id"
-                  v-bind:value="genre.id"
-                  >{{ genre.title }}</option
-                >
-              </select>
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">Idioma</label>
-              <select
-                class="form-control form-input"
-                v-model="game.languages_id"
-                required
-              >
-                <option
-                  v-for="language in languages"
-                  v-bind:key="language.id"
-                  v-bind:value="language.id"
-                  >{{ language.title }}</option
-                >
-              </select>
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">Filial</label>
-              <select
-                class="form-control form-input"
-                v-model="game.filial_id"
-                required
-              >
-                <option
-                  v-for="filial in filials"
-                  v-bind:key="filial.id"
-                  v-bind:value="filial.id"
-                  >{{ filial.title }}</option
-                >
-              </select>
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="obslang" class="title-label">Obs. Idioma</label>
-              <input
-                type="text"
-                name="obslang"
-                class="form-control form-input"
-                v-model="game.languageObs"
-              />
-            </div>
-
-            <div class="form-group col-md-5">
-              <label for="image" class="title-label">Imagem (URL)</label>
-              <input
-                type="text"
-                name="image"
-                class="form-control form-input"
-                v-model="game.imageThumb"
-              />
-            </div>
-
-            <div class="form-group col-md-7">
-              <label for="description" class="title-label">Descrição</label>
-              <textarea
-                class="form-control form-input"
-                v-model="game.description"
-              ></textarea>
-            </div>
-
-            <div class="form-group col-md-2">
-              <label class="title-label">Disponível</label>
-              <div class="row radio-input form-control">
-                <div>
-                  <input
-                    type="radio"
-                    class="form-control"
-                    name="exp"
-                    value="1"
-                    v-model="game.isAvailable"
-                  />
-                  <label for="exp_s">Sim</label>
-                </div>
-                <div>
-                  <input
-                    type="radio"
-                    class="form-control"
-                    name="exp"
-                    value="0"
-                    v-model="game.isAvailable"
-                  />
-                  <label for="exp_n">Não</label>
-                </div>
+              <div class="input">
+                <input
+                  type="text"
+                  class="form-input"
+                  name="maxPlayers"
+                  v-model="game.maxPlayers"
+                  required
+                />
               </div>
             </div>
           </div>
-          <div class="custom-btn d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">É Expansão?</label>
+            <div class="row radio-input">
+              <div>
+                <input
+                  type="radio"
+                  name="exp_n"
+                  value="0"
+                  v-model="game.isExpansion"
+                />
+                <label for="exp_n">Não</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="exp_s"
+                  value="1"
+                  v-model="game.isExpansion"
+                />
+                <label for="exp_s">Sim</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Dificuldade</label>
+            <select class="form-input" v-model="game.difficulties_id" required>
+              <option
+                v-for="difficulty in difficulties"
+                v-bind:key="difficulty.id"
+                v-bind:value="difficulty.id"
+                >{{ difficulty.title }}</option
+              >
+            </select>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Gênero</label>
+            <select class="form-input" v-model="game.genres_id" required>
+              <option
+                v-for="genre in genres"
+                v-bind:key="genre.id"
+                v-bind:value="genre.id"
+                >{{ genre.title }}</option
+              >
+            </select>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Idioma</label>
+            <select class="form-input" v-model="game.languages_id" required>
+              <option
+                v-for="language in languages"
+                v-bind:key="language.id"
+                v-bind:value="language.id"
+                >{{ language.title }}</option
+              >
+            </select>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Filial</label>
+            <select class="form-input" v-model="game.filial_id" required>
+              <option
+                v-for="filial in filials"
+                v-bind:key="filial.id"
+                v-bind:value="filial.id"
+                >{{ filial.title }}</option
+              >
+            </select>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Tempo de Jogo (min.)</label>
+            <div class="row">
+              <div class="input">
+                <input
+                  type="text"
+                  class="form-input"
+                  name="minTime"
+                  v-model="game.minTime"
+                  required
+                />
+              </div>
+              <div class="letter">
+                a
+              </div>
+              <div class="input">
+                <input
+                  type="text"
+                  class="form-input"
+                  name="maxTime"
+                  v-model="game.maxTime"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group flex-col-1">
+            <label for="price" class="title-label">Preço</label>
+            <input
+              type="text"
+              name="price"
+              class="form-input"
+              v-model="game.price"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label for="obslang" class="title-label">Obs. Idioma</label>
+            <input
+              type="text"
+              name="obslang"
+              class="form-input"
+              v-model="game.languageObs"
+            />
+          </div>
+
+          <div class="form-group flex-col-5">
+            <label for="image" class="title-label">Imagem (URL)</label>
+            <input
+              type="text"
+              name="image"
+              class="form-input"
+              v-model="game.imageThumb"
+            />
+          </div>
+
+          <div class="form-group flex-col-12">
+            <label for="description" class="title-label">Descrição</label>
+            <textarea class="form-input" v-model="game.description"></textarea>
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Disponível</label>
+            <div class="row radio-input h-fix">
+              <div>
+                <input
+                  type="radio"
+                  name="available"
+                  value="1"
+                  v-model="game.isAvailable"
+                />
+                <label for="exp_s">Sim</label>
+              </div>
+              <div>
+                <input
+                  type="radio"
+                  name="available"
+                  value="0"
+                  v-model="game.isAvailable"
+                />
+                <label for="exp_n">Não</label>
+              </div>
+            </div>
           </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn" @click="edit">
+          Salvar
+        </button>
+        <button type="submit" class="btn btn-red form-btn ml-10" @click="remove">
+          Excluir
+        </button>
       </div>
     </div>
   </div>
@@ -256,6 +233,7 @@ export default {
   data() {
     return {
       game: {
+        id: "",
         title: "",
         minPlayers: "",
         maxPlayers: "",
@@ -300,10 +278,10 @@ export default {
     fetch(id) {
       let vm = this;
 
-      let difficulties = "difficulty/all";
-      let genres = "genre/all";
-      let languages = "language/all";
-      let filials = "filial/all";
+      let difficulties = "difficulties/all";
+      let genres = "genres/all";
+      let languages = "languages/all";
+      let filials = "filials/all";
       let game = "games/game=" + id;
 
       const request_difficulties = Axios.get(difficulties);
@@ -317,7 +295,7 @@ export default {
         request_genres,
         request_languages,
         request_filial,
-        request_game
+        request_game,
       ])
         .then(
           Axios.spread((...responses) => {
@@ -331,23 +309,25 @@ export default {
         .catch((err) => console.log(err));
     },
 
-    editGame() {
+    edit() {
       Axios.put("games/edit", this.game)
         .then((res) => {
-          alert("Jogo" + res.data.title + " modificado com sucesso!");
+          alert("Jogo " + res.data.data.title + " modificado com sucesso!");
         })
         .catch((err) => console.log(err));
-      EventBus.$emit('fetch', '');
+      EventBus.$emit("fetch", "");
+      this.close();
+    },
+
+    remove() {
+      Axios.delete(`games/destroy/${this.game.id}`)
+        .then(() => {
+          alert("Jogo removido com sucesso!");
+        })
+        .catch((err) => console.log(err));
+      EventBus.$emit("fetch", "");
       this.close();
     },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/AddGameModal.scss";
-
-.add-game-modal {
-  height: 580px !important;
-}
-</style>

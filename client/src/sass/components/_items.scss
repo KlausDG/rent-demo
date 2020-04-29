@@ -1,0 +1,122 @@
+.item {
+  height: auto;
+}
+
+.item-admin {
+  margin: 0 12px 24px 12px;
+  
+}
+
+.item-public {
+   margin: 0 12px 14px 12px;
+}
+
+.item-container {
+  @include size(450px, auto);
+  display: flex;
+  background-color: $main_color_1;
+}
+
+.left-container {
+  @extend %flex-column;
+  width: 35%;
+
+  .item-thumb-container {
+    @extend %clearfix;
+
+    .thumb-background {
+      @include size(200px, 200px);
+      @extend %background-image-normalize;
+      display: block;
+      margin: -45px 0 0 -45px;
+      padding: 60px 0 0 65px;
+      background-image: url("assets/images/Polygon1.svg");
+
+      .thumb-size {
+        @include size(85px, 85px);
+
+        .item-thumb {
+          @include size(100%, 100%);
+          @extend %background-image-normalize;
+          display: block;
+        }
+      }
+    }
+  }
+
+  .button-container {
+    height: 30%;
+  }
+}
+
+.right-container {
+  @extend %flex-column;
+  width: 65%;
+  margin-right: 10px;
+}
+
+.item-title {
+  height: 90px;
+
+  &-text {
+    @include text($font_size_subtitle, 600, $color_grey);
+    margin-top: 10px;
+    text-align: center;
+    line-height: 25px;
+  }
+}
+
+.item-info {
+  padding-left: 30px;
+
+  .info-row {
+    @extend %flex-row;
+    padding-bottom: 15px;
+    height: 40px;
+
+    .info-item {
+      @include flex(row, null, center);
+      @include size(50%, 100%);
+
+      .info-text {
+        @extend %center-align;
+        margin-left: 3px;
+        height: 100%;
+      }
+
+      .info-text-normal {
+        @include text(12px, $font_weight_subtitle, white);
+      }
+
+      .info-text-bold {
+        @include text($font_size_important, bold, white);
+      }
+    }
+  }
+
+  .info-row-filial {
+    @include flex(row);
+    height: 40px;
+
+    .info-item-filial {
+      @include flex(row);
+      @include size(100%, 100%);
+      text-align: right;
+
+      .info-text {
+        @include size(100%, 100%);
+        margin-right: 2rem;
+        color: white;
+        vertical-align: middle;
+        font-size: $font_size_text;
+        line-height: 180%;
+        font-weight: $font_weight_subtitle;
+
+        span {
+          font-size: $font_size_important;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

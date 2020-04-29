@@ -1,282 +1,283 @@
 <template>
   <div>
     <Navbar />
-    <div id="cabecalho" style="padding: 1rem 0 1rem 2rem;">
-      <div class="filial-container">
-        <h4 id="cabecalho-text">
-          {{ current_filial.title }} ( {{ total_games }} )
-        </h4>
-      </div>
-      <div class="search-item">
+    <div class="subheader">
+      <h4 class="subheader-title">
+        {{ current_filial.title }} ( {{ total_games }} )
+      </h4>
+      <div class="search">
+        <form v-on:submit.prevent="search()">
         <input
-          class="form-control"
-          id="search-input"
+          class="search-input"
           type="text"
           placeholder="Procure por um jogo aqui"
           aria-label="Search"
           v-model="search_query"
         />
         <button class="search-btn" @click="search()">Procurar</button>
+        </form>
       </div>
     </div>
 
     <!-- Advanced Search -->
-    <div class="adv-search" v-show="adv_search">
-      <form v-on:submit.prevent>
-        <div class="close-btn">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="adv_search = !adv_search"
-          />
-        </div>
-        <div class="form-input">
-          <div class="select-container">
-            <div class="form-group">
-              <div class="label">
-                <font-awesome-icon
-                  class="icon"
-                  :icon="['fab', 'creative-commons-by']"
-                />
-                <div class="divider"></div>
-                <label for="player-qtd"> Nº de Jogadores</label>
-              </div>
-              <select
-                id="player-qtd"
-                class="custom-form custom-select custom-select dropdown"
-                v-model="filter_player_qtd"
-              >
-                <option value="0">Todos</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6+">6+</option>
-              </select>
+    <form v-on:submit.prevent class="adv-search" v-show="adv_search">
+      <div class="btn-close">
+        <font-awesome-icon
+          class="icon"
+          :icon="['fas', 'times']"
+          @click="adv_search = !adv_search"
+        />
+      </div>
+      <div class="adv-search-form">
+        <div class="select-container">
+          <div class="form-group">
+            <div class="label">
+              <font-awesome-icon
+                class="icon"
+                :icon="['fab', 'creative-commons-by']"
+              />
+              <div class="divider-adv"></div>
+              <label for="player-qtd" class="adv-serach-label-text"> Nº de Jogadores</label>
             </div>
-            <div class="form-group">
-              <div class="label">
-                <font-awesome-icon
-                  class="icon"
-                  :icon="['fab', 'acquisitions-incorporated']"
-                />
-                <!-- <i class="fab fa-acquisitions-incorporated"></i> -->
-                <div class="divider"></div>
-                <label for="language">Idioma</label>
-              </div>
-              <select
-                id="language"
-                class="custom-form custom-select custom-select dropdown"
-                v-model="filter_language"
-              >
-                <option value="0">Todos</option>
-                <option value="1">Português</option>
-                <option value="2">Inglês</option>
-              </select>
-            </div>
+            <select
+              id="player-qtd"
+              class="dropdown-sm w-230"
+              v-model="filter_player_qtd"
+            >
+              <option value="0">Todos</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6+">6+</option>
+            </select>
           </div>
           <div class="form-group">
             <div class="label">
-              <font-awesome-icon class="icon" :icon="['fas', 'book-reader']" />
-              <!-- <i class="fas fa-book-reader"></i> -->
-              <div class="divider"></div>
-              <label>Dificuldade</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="1"
-                v-model="filter_difficulty"
+              <font-awesome-icon
+                class="icon"
+                :icon="['fab', 'acquisitions-incorporated']"
               />
-              <label class="form-check-label" for="facil">
-                Fácil
-              </label>
+              <div class="divider-adv"></div>
+              <label for="language" class="adv-serach-label-text">Idioma</label>
             </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="2"
-                v-model="filter_difficulty"
-              />
-              <label class="form-check-label" for="normal">
-                Normal
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="3"
-                v-model="filter_difficulty"
-              />
-              <label class="form-check-label" for="intermediario">
-                Intermediário
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="4"
-                v-model="filter_difficulty"
-              />
-              <label class="form-check-label" for="dificil">
-                Difícil
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="5"
-                v-model="filter_difficulty"
-              />
-              <label class="form-check-label" for="muito-dificil">
-                Muito Difícil
-              </label>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="label">
-              <font-awesome-icon class="icon" :icon="['fas', 'cog']" />
-              <!-- <i class="fas fa-cog"></i> -->
-              <div class="divider"></div>
-              <label for="genero">Gênero</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="1"
-                v-model="filter_genre"
-              />
-              <label class="form-check-label" for="festivo">
-                Festivo
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="2"
-                v-model="filter_genre"
-              />
-              <label class="form-check-label" for="infantil">
-                Infantil
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="3"
-                v-model="filter_genre"
-              />
-              <label class="form-check-label" for="familia">
-                Família
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="4"
-                v-model="filter_genre"
-              />
-              <label class="form-check-label" for="estrategico">
-                Estratégico
-              </label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="5"
-                v-model="filter_genre"
-              />
-              <label class="form-check-label" for="tematico">
-                Temático
-              </label>
-            </div>
+            <select
+              id="language"
+              class="dropdown-sm w-230"
+              v-model="filter_language"
+            >
+              <option value="0">Todos</option>
+              <option value="1">Português</option>
+              <option value="2">Inglês</option>
+            </select>
           </div>
         </div>
-        <div class="btn-container">
-          <button class="search-btn" @click="closeFilterPanel">
-            Aplicar
-          </button>
+        <div class="form-group">
+          <div class="label">
+            <font-awesome-icon class="icon" :icon="['fas', 'book-reader']" />
+            <div class="divider-adv"></div>
+            <label class="adv-serach-label-text">Dificuldade</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="dif-checkbox-1"
+              type="checkbox"
+              value="1"
+              v-model="filter_difficulty"
+            />
+            <label class="form-check-label" for="dif-checkbox-1">
+              Fácil
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="dif-checkbox-2"
+              type="checkbox"
+              value="2"
+              v-model="filter_difficulty"
+            />
+            <label class="form-check-label" for="dif-checkbox-2">
+              Normal
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="dif-checkbox-3"
+              type="checkbox"
+              value="3"
+              v-model="filter_difficulty"
+            />
+            <label class="form-check-label" for="dif-checkbox-3">
+              Intermediário
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="dif-checkbox-4"
+              type="checkbox"
+              value="4"
+              v-model="filter_difficulty"
+            />
+            <label class="form-check-label" for="dif-checkbox-4">
+              Difícil
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="dif-checkbox-5"
+              type="checkbox"
+              value="5"
+              v-model="filter_difficulty"
+            />
+            <label class="form-check-label" for="dif-checkbox-5">
+              Muito Difícil
+            </label>
+          </div>
         </div>
-      </form>
-    </div>
+
+        <div class="form-group">
+          <div class="label">
+            <font-awesome-icon class="icon" :icon="['fas', 'cog']" />
+            <div class="divider-adv"></div>
+            <label for="genero" class="adv-serach-label-text">Gênero</label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="gen-checkbox-1"
+              type="checkbox"
+              value="1"
+              v-model="filter_genre"
+            />
+            <label class="form-check-label" for="gen-checkbox-1">
+              Festivo
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="gen-checkbox-2"
+              type="checkbox"
+              value="2"
+              v-model="filter_genre"
+            />
+            <label class="form-check-label" for="gen-checkbox-2">
+              Infantil
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="gen-checkbox-3"
+              type="checkbox"
+              value="3"
+              v-model="filter_genre"
+            />
+            <label class="form-check-label" for="gen-checkbox-3">
+              Família
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="gen-checkbox-4"
+              type="checkbox"
+              value="4"
+              v-model="filter_genre"
+            />
+            <label class="form-check-label" for="gen-checkbox-4">
+              Estratégico
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              id="gen-checkbox-5"
+              type="checkbox"
+              value="5"
+              v-model="filter_genre"
+            />
+            <label class="form-check-label" for="gen-checkbox-5">
+              Temático
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container">
+        <button class="sm-search-btn" @click="closeFilterPanel">
+          Aplicar
+        </button>
+      </div>
+    </form>
+    <!-- End of Adv Search -->
 
     <div class="main-container">
-      <div class="nav-and-filters-container">
+      <div class="nav-filters-container">
         <!-- Navigation -->
         <nav aria-label="navigation">
           <ul class="pagination">
-            <li
-              v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-              class="page-item"
-            >
-              <a
-                class="page-link"
-                href="#"
+            <li>
+              <button
+                class="pg-btn pg-first btn-grey h-36"
+                :disabled="!pagination.prev_page_url"
                 @click="fetchGames(pagination.prev_page_url)"
-                >Anterior</a
               >
+                Anterior
+              </button>
             </li>
-            <li class="page-item disabled">
-              <a class="page-link">
+            <li class="pg-btn pg-middle btn-dark-grey h-36">
                 {{
                   pagination.last_page > 1
                     ? pagination.current_page + " de " + pagination.last_page
                     : "1 de 1"
-                }}</a
-              >
+                }}
             </li>
-            <li
-              v-bind:class="[{ disabled: !pagination.next_page_url }]"
-              class="page-item"
-            >
-              <a
-                class="page-link"
-                href="#"
+            <li>
+              <button
+                class="pg-btn pg-end btn-grey h-36"
+                :disabled="!pagination.next_page_url"
                 @click="fetchGames(pagination.next_page_url)"
-                >Próximo</a
               >
+                Próximo
+              </button>
             </li>
           </ul>
         </nav>
         <!-- End of Navigation -->
 
         <div class="dropdown-container">
-          <div class="exibit-dropdown">
-            <p style="margin: 0;">
+          <div class="display-dropdown">
+            <p  class="dropdown-label">
               Exibir:
             </p>
             <select
-              class="custom-form custom-select custom-select dropdown"
+              class="dropdown-sm w-175 h-36"
               id="sort-options"
               name="sort-options"
               v-model="display_qtd"
               v-on:change="fetchGames()"
             >
-              <option value="15">15 jogos por página</option>
-              <option value="30">30 jogos por página</option>
-              <option value="60">60 jogos por página</option>
-              <option value="120">120 jogos por página</option>
-              <option value="120">240 jogos por página</option>
+              <option value="12">12 jogos por página</option>
+              <option value="24">24 jogos por página</option>
+              <option value="48">48 jogos por página</option>
+              <option value="96">96 jogos por página</option>
+              <option value="192">192 jogos por página</option>
               <option value="todos">Todos os jogos</option>
             </select>
           </div>
-          <div class="exibit-dropdown">
-            <p style="margin: 0;">
+
+          <div class="display-dropdown">
+            <p  class="dropdown-label">
               Odernar:
             </p>
             <select
-              class="custom-form custom-select custom-select dropdown"
+              class="dropdown-sm w-175 h-36"
               id="sort-options"
               name="sort-options"
               v-model="sort_params"
@@ -286,19 +287,18 @@
               <option value="title desc">Z-A</option>
               <option value="price asc">Menor Preço</option>
               <option value="price desc">Maior Preço</option>
+              <option value="maxTime asc">Mais Curto</option>
+              <option value="maxTime desc">Mais Longo</option>
             </select>
           </div>
-          <div class="adv-filter-btn-container">
+          <div class="btn-container">
             <button
-              class="search-btn btn btn-light btn-lg"
+              class="btn btn-grey h-36"
               @click="adv_search = !adv_search"
             >
               Mais Filtros
             </button>
-            <button
-              class="search-btn btn btn-light btn-lg"
-              @click="clearFilter"
-            >
+            <button class="btn btn-grey ml-10 h-36" @click="clearFilter">
               Limpar Filtros
             </button>
           </div>
@@ -306,22 +306,22 @@
       </div>
 
       <div class="flex-container" v-if="total_games != 0">
-        <div class="game-thumb" v-for="game in games" v-bind:key="game.id">
+        <div class="item item-public" v-for="game in games" v-bind:key="game.id">
           <div
-            class="not-available-overlay"
+            class="unavailable-overlay"
             v-bind:class="{ not_available: !game.isAvailable }"
           >
-            <p>INDISPONÍVEL</p>
+            <p class="unavailable-text">INDISPONÍVEL</p>
           </div>
 
-          <div class="game-container">
+          <div class="item-container">
             <div class="left-container">
-              <!-- Image -->
-              <div class="game-image-container">
-                <div class="game-hexagon">
-                  <div class="game-image-limiter">
+              <!-- Image thumb -->
+              <div class="item-thumb-container">
+                <div class="thumb-background">
+                  <div class="thumb-size">
                     <div
-                      class="game-image"
+                      class="item-thumb"
                       :style="{
                         backgroundImage: 'url(' + game.imageThumb + ')',
                       }"
@@ -331,6 +331,7 @@
               </div>
               <div class="button-container">
                 <button
+                  class="item-btn"
                   @click="sendMessage(game.title)"
                   :disabled="!game.isAvailable"
                 >
@@ -339,44 +340,42 @@
               </div>
             </div>
             <!-- Info -->
-            <div class="game-info-container">
+            <div class="right-container">
               <!-- Title -->
-              <div class="game-title">
-                <h3>{{ game.title }}</h3>
+              <div class="item-title">
+                <h3 class="item-title-text">{{ game.title }}</h3>
               </div>
-              <!-- Items -->
-              <div class="game-info">
+              <!-- Info -->
+              <div class="item-info">
                 <div class="info-row">
                   <div class="info-item">
                     <font-awesome-icon
                       class="icon"
                       :icon="['fab', 'creative-commons-by']"
                     />
-                    <div class="divider"></div>
-                    <div class="center-align">
-                      <p>
-                        {{
-                          game.minPlayers === game.maxPlayers
-                            ? game.minPlayers
-                            : game.minPlayers + " a " + game.maxPlayers
-                        }}
-                      </p>
-                    </div>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-normal">
+                      {{
+                        game.minPlayers === game.maxPlayers
+                          ? game.minPlayers
+                          : game.minPlayers + " a " + game.maxPlayers
+                      }}
+                    </p>
                   </div>
                   <div class="info-item">
                     <font-awesome-icon
                       class="icon"
                       :icon="['fas', 'book-reader']"
                     />
-                    <div class="divider"></div>
-                    <p>{{ game.difficulty.title }}</p>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-normal">{{ game.difficulty.title }}</p>
                   </div>
                 </div>
                 <div class="info-row">
                   <div class="info-item">
                     <font-awesome-icon class="icon" :icon="['far', 'clock']" />
-                    <div class="divider"></div>
-                    <p>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-normal">
                       {{
                         game.minTime === game.maxTime
                           ? game.minTime
@@ -387,32 +386,29 @@
                   </div>
                   <div class="info-item">
                     <font-awesome-icon class="icon" :icon="['fas', 'cog']" />
-                    <div class="divider"></div>
-                    <p>{{ game.genre.title }}</p>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-normal">{{ game.genre.title }}</p>
                   </div>
                 </div>
                 <div class="info-row">
                   <div class="info-item">
                     <font-awesome-icon
-                      class="icon"
+                      class="icon thin-icon"
                       :icon="['fab', 'acquisitions-incorporated']"
                     />
-                    <div class="divider"></div>
-                    <p>{{ game.language.title }}</p>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-normal">{{ game.language.title }}</p>
                   </div>
                   <div class="info-item">
                     <font-awesome-icon
-                      class="icon"
+                      class="icon money-icon"
                       :icon="['far', 'money-bill-alt']"
                     />
-                    <div class="divider"></div>
-                    <p>
-                      <span>R$ {{ game.price }}</span>
-                    </p>
+                    <div class="divider-item"></div>
+                    <p class="info-text info-text-bold">R$ {{ game.price }}</p>
                   </div>
                 </div>
               </div>
-              <div class="game-rent-container"></div>
             </div>
           </div>
         </div>
@@ -422,40 +418,38 @@
       </div>
 
       <!-- Navigation -->
-      <nav aria-label="navigation">
-        <ul class="pagination">
-          <li
-            v-bind:class="[{ disabled: !pagination.prev_page_url }]"
-            class="page-item"
-          >
-            <a
-              class="page-link"
-              href="#"
-              @click="fetchGames(pagination.prev_page_url)"
-              >Anterior</a
-            >
-          </li>
-          <li class="page-item disabled">
-            <a class="page-link">{{
-              pagination.last_page > 1
-                ? pagination.current_page + " de " + pagination.last_page
-                : "1 de 1"
-            }}</a>
-          </li>
-          <li
-            v-bind:class="[{ disabled: !pagination.next_page_url }]"
-            class="page-item"
-          >
-            <a
-              class="page-link"
-              href="#"
-              @click="fetchGames(pagination.next_page_url)"
-              >Próximo</a
-            >
-          </li>
-        </ul>
-      </nav>
-      <!-- End of Navigation -->
+      <div class="nav-filters-container">
+        <nav aria-label="navigation">
+          <ul class="pagination">
+            <li>
+              <button
+                class="pg-btn pg-first btn-grey h-36"
+                :disabled="!pagination.prev_page_url"
+                @click="fetchGames(pagination.prev_page_url)"
+              >
+                Anterior
+              </button>
+            </li>
+            <li class="pg-btn pg-middle btn-dark-grey h-36">
+                {{
+                  pagination.last_page > 1
+                    ? pagination.current_page + " de " + pagination.last_page
+                    : "1 de 1"
+                }}
+            </li>
+            <li>
+              <button
+                class="pg-btn pg-end btn-grey h-36"
+                :disabled="!pagination.next_page_url"
+                @click="fetchGames(pagination.next_page_url)"
+              >
+                Próximo
+              </button>
+            </li>
+          </ul>
+        </nav>
+        <!-- End of Navigation -->
+      </div>
     </div>
     <scroll-top></scroll-top>
     <Footer />
@@ -504,7 +498,7 @@ export default {
       game_id: "",
       pagination: {},
       total_games: "",
-      display_qtd: 15,
+      display_qtd: 12,
       //Searching
       search_query: "",
       //Sorting
@@ -593,26 +587,6 @@ export default {
 
       this.pagination = pagination;
     },
-    deleteGame(id) {
-      if (confirm("Are you sure?")) {
-        Axios.post(`games/game=${id}`, {
-          method: "delete",
-        })
-          .then(() => {
-            alert("Game removed");
-            this.fetchGames();
-          })
-          .catch((err) => console.log(err));
-      }
-    },
-
-    editGame(game) {
-      this.edit = true;
-      this.game.id = game.id;
-      this.game.game_id = game.id;
-      this.title = game.title;
-      this.price = game.price;
-    },
 
     search(page_url) {
       let vm = this;
@@ -677,7 +651,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss">
-@import "../sass/Games.scss";
-</style>

@@ -1,0 +1,32 @@
+.adv-search {
+  @include size(700px, 250px);
+  margin: auto;
+  background-color: $main_color_1;
+  border-radius: 0 0 30px 30px;
+
+  &-form {
+    @include flex(row, space-around);
+    @extend %c-white;
+    padding-top: 30px;
+    overflow: hidden;
+    font-size: scut-rem($font_size_important);
+    font-weight: $font_weight_subtitle;
+  }
+
+  .form-group {
+    margin-bottom: 10px;
+  }
+
+  .label {
+    display: flex;
+    margin-bottom: 10px;
+
+    .adv-serach-label-text {
+      line-height: 140%;
+    }
+  }
+
+  .btn-container {
+    margin-top: 15px;
+  }
+}

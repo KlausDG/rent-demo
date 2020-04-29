@@ -28,20 +28,22 @@ Route::group(['prefix' => 'users'], function () {
 
 //GAMES
 Route::group(['prefix' => 'games'], function () {
-    // List games
-    Route::get('filial={filial_id}/display={display_qtd}', 'GameController@index');
+    // Admin List all 
+    Route::get('admin/filial={filial_id}/sort={display_qtd}&{sort_target}&{sort_value}/filter={available}', 'GameController@admin');
+
     // List filtered
     Route::get('filial={filial_id}/sort={display_qtd}&{sort_target}&{sort_value}/filter={filter_player_qtd}&{filter_language}&{filter_difficulty}&{filter_genre}', 'GameController@filter');
     // Search
     Route::get('filial={filial_id}/sort={display_qtd}&{sort_target}&{sort_value}/search={query}', 'GameController@search');
-    // List singl
+    // List single
     Route::get('game={id}', 'GameController@show');
+
     // Create new
     Route::post('add', 'GameController@store');
     // Edit
     Route::put('edit', 'GameController@store');
     // Delete
-    Route::delete('game={id}', 'GameController@destroy');
+    Route::delete('destroy/{id}', 'GameController@destroy');
 });
 
 //FILIALS

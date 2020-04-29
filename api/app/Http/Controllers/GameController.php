@@ -10,8 +10,38 @@ class GameController extends Controller
 {
     private $foreign_tables = ['language', 'genre', 'difficulty', 'filial'];
 
-    public function index() {
-        
+    public function index()
+    {
+
+    }
+
+    public function admin($filial_id, $display_qtd, $sort_target, $sort_value, $available)
+    {
+        $games = Game::with($this->foreign_tables);
+
+        if ($available != 'all') {
+            $games = $games->availability($available);
+        }
+
+        if ($filial_id != "all") {
+            $games = $games->filial($filial_id);
+        }
+
+        $games = $games->orderBy('isAvailable', 'DESC');
+        $games = $games->orderBy($sort_target, $sort_value);
+
+        //Debug
+        // dd($games);
+        // dd($games->toSql());
+
+        if ($display_qtd === "todos") {
+            $display_qtd = $games->count();
+            $games = $games->paginate($display_qtd);
+        } else {
+            $games = $games->paginate($display_qtd);
+        }
+        return GameResource::collection($games);
+
     }
 
     public function search($filial_id, $display_qtd, $sort_target, $sort_value, $query)
@@ -19,10 +49,14 @@ class GameController extends Controller
         $formatted_query = str_replace("%20", " ", $query);
 
         $games = Game::with($this->foreign_tables);
-        $games = $games->where([
-            ['filial_id', '=', $filial_id],
-            ['title', 'LIKE', '%' . $formatted_query . '%'],
-        ]);
+        if ($filial_id != 'all') {
+            $games = $games->where([
+                ['filial_id', '=', $filial_id],
+                ['title', 'LIKE', '%' . $formatted_query . '%'],
+            ]);
+        } else {
+            $games = $games->where('title', 'LIKE', '%' . $formatted_query . '%');
+        }
         $games = $games->orderBy($sort_target, $sort_value);
 
         // dd($games.toSql());
@@ -60,14 +94,22 @@ class GameController extends Controller
         //END of Language Validation
 
         $games = Game::with($this->foreign_tables);
-        $games = $games->where([
-            ['filial_id', '=', $filial_id],
-            ['minPlayers', $qtd_operator, $qtd_value],
-            ['languages_id', $lang_operator, $filter_language],
-        ]);
+
+        if ($filial_id != "all") {
+            $games = $games->where([
+                ['filial_id', '=', $filial_id],
+                ['minPlayers', $qtd_operator, $qtd_value],
+                ['languages_id', $lang_operator, $filter_language],
+            ]);
+        } else {
+            $games = $games->where([
+                ['minPlayers', $qtd_operator, $qtd_value],
+                ['languages_id', $lang_operator, $filter_language],
+            ]);
+        }
 
         //Difficulties validation
-        if ($filter_difficulty > 1) {
+        if ($filter_difficulty > 0) {
             $difficulties_array = explode(':', $filter_difficulty);
 
             if (count($difficulties_array) > 0) {
@@ -87,7 +129,7 @@ class GameController extends Controller
         //END of Difficulties validation
 
         //Genres Validation
-        if ($filter_genre > 1) {
+        if ($filter_genre > 0) {
             $genres_array = explode(':', $filter_genre);
             if (count($genres_array) > 0) {
                 $games = $games->where(function ($q) use ($genres_array) {
@@ -159,9 +201,6 @@ class GameController extends Controller
     {
         $game = Game::findOrFail($id);
 
-        if ($game->delete()) {
-            return new GameResource($game);
-        }
-
+        $game->delete();
     }
 }

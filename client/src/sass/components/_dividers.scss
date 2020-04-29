@@ -1,0 +1,16 @@
+.divider-adv {
+  @include divider-vertical(25px, 7px, 7px);
+}
+
+.divider-item {
+  @include divider-vertical(65%, 7px, 7px, 3px);
+}
+
+.divider-modal {
+  @include size(80%, 1px);
+  margin: 25px auto;
+  background: -webkit-linear-gradient(left,
+      rgb(255, 255, 255) 0%,
+      $color_grey_2 50%,
+      rgb(255, 255, 255) 100%);
+}

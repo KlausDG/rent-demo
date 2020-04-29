@@ -3,13 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import axios from 'axios'
-// import Vuesax from 'vuesax'
-import 'vuesax/dist/vuesax.css'
-import 'bootstrap/dist/css/bootstrap.css'
-import BootstrapVue from 'bootstrap-vue'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import 'material-icons/iconfont/material-icons.css';
-import PortalVue from 'portal-vue'
+// import 'material-icons/iconfont/material-icons.css';
+// import PortalVue from 'portal-vue'
+// import xmljs from "xml-js";
 
 import {
   library
@@ -34,9 +30,8 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 
 require('@/store/subscriber')
-require('bootstrap')
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/'
+axios.defaults.baseURL = 'http://localhost:8000/api/'
 
 library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faGlobeAmericas, faClock, faMoneyBillAlt)
 
@@ -57,16 +52,13 @@ Vue.use(VueScrollTo, {
   y: true
 })
 
-// Vue.use(Vuesax)
-Vue.use(BootstrapVue)
-Vue.use(PortalVue)
+// Vue.use(PortalVue)
+// Vue.use(xmljs);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.component('navbar', require('./components/Navbar.vue').default);
 Vue.component('games', require('./views/Games.vue').default);
 Vue.component('scroll-top', require('./components/ScrollTop.vue').default);
-Vue.component('custom-footer', require('./components/Footer.vue').default);
-Vue.component('login-modal', require('./components/LoginModal.vue').default);
+Vue.component('login-modal', require('./components/Modal/LoginModal.vue').default);
 Vue.component('add-game-modal', require('./components/Modal/AddGameModal.vue').default);
 Vue.component('edit-game-modal', require('./components/Modal/EditGameModal.vue').default);
 Vue.component('add-filial-modal', require('./components/Modal/AddFilialModal.vue').default);

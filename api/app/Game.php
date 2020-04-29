@@ -11,6 +11,14 @@ class Game extends Model
     // Primary Key
     public $primaryKey = 'id';
 
+    public function scopeAvailability($query, $value){
+        return $query->where('isAvailable', '=', $value);
+    }
+
+    public function scopeFilial($query, $value){
+        return $query->where('filial_id', '=', $value);
+    }
+
     public function difficulty()
     {
         return $this->belongsTo('App\Difficulty', 'difficulties_id');

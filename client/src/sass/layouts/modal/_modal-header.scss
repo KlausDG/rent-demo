@@ -1,0 +1,13 @@
+.modal-title-container {
+  margin-top: 15px;
+  padding-top: 10px;
+  text-align: center;
+
+  .title {
+    @extend %modal-title;
+  }
+
+  .subtitle {
+    @include text(12px, $color: darken($main_color_1, 10));
+  }
+}

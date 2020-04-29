@@ -20,14 +20,33 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $user = $request->isMethod('put') ? User::findOrFail($request->id) : new User;
-        $user->name = $request->input('name');
-        $user->username = $request->input('username');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
+
+        if ($request->input('old_password')) {
+            if (!password_verify($request->input('old_password'), $user->password)) {
+                return ['error' => "A senha antiga está errada!"];
+            }
+        }
+
+        if ($request->input('name')) {
+            $user->name = $request->input('name');
+        }
+
+        if ($request->input('username')) {
+            $user->username = $request->input('username');
+        }
+
+        if ($request->input('email')) {
+            $user->email = $request->input('email');
+        } 
+        
+        if ($request->input('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
+        
         $user->role = 2;
         $user->filial_id = 1;
         // dd($user);
-        
+
         if ($user->save()) {
             return $user;
         }

@@ -28,17 +28,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../sass/Main.scss";
-
-.go-top {
-  position: fixed;
-  right: 75px;
-  bottom: 25px;
-  z-index: 1000;
-  @include size(50px, 50px);
-  @include backgroundImage(Auto, 100%, true);
-  background-image: url("../assets/images/arrow.svg");
-}
-</style>

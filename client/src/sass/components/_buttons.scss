@@ -1,0 +1,117 @@
+.btn-close-modal {
+  @include text(20px, bold, darken($main_color_1, 10));
+  @extend %cursor-pointer;
+  display: block;
+  position: absolute;
+  padding: 0.4rem 0.6rem;
+  right: 10px;
+  top: 3px;
+}
+
+.btn-close {
+  @extend %cursor-pointer;
+  margin: 5px 15px 0 0;
+  float: right;
+  color: $main_color_2;
+  font-size: scut-rem($font_size_important);
+}
+
+.search-btn {
+  @include size(120px, 100%);
+  @extend %default-btn;
+  @extend %btn-hover;
+  margin: 0;
+}
+
+.sm-search-btn {
+  @include size(75px, 25px);
+  @include default-btn(2px, 5px, bold);
+  @extend %cursor-pointer;
+  line-height: 50%;
+}
+
+.pg-btn {
+  @extend %no-decoration;
+  border: none;
+  padding: 0 10px;
+  font-size: 14px;
+  width: 85px;
+}
+
+.pg-first {
+  @extend %cursor-pointer;
+  border-radius: 7px 0 0 7px;
+}
+
+.pg-middle {
+  @extend %center-align;
+  width: 75px;
+}
+
+.pg-end {
+  @extend %cursor-pointer;
+  border-radius: 0 7px 7px 0;
+}
+
+.nav-btn {
+  @include size(150px, 38px);
+  @extend %cursor-pointer;
+  margin-left: 15px;
+  font-size: 1rem;
+  text-align: center;
+  line-height: initial;
+}
+
+.item-btn {
+  @include size(80%, 45px);
+  @extend %default-btn;
+  @extend %cursor-pointer;
+  margin: 5px 0 0 15px;
+}
+
+.btn-container {
+  @extend %center-align;
+}
+
+.primary-btn {
+  width: 50%;
+}
+
+.form-btn {
+  width: 150px;
+  margin-bottom: 15px;
+}
+
+//testing
+
+.btn {
+  @extend %cursor-pointer;
+  @extend %no-decoration;
+  border: none;
+  padding: 8px 25px;
+  border-radius: 7px;
+  font-size: 14px;
+}
+
+.btn-blue {
+  @include button-bg($color_blue);
+  @extend %c-white;
+}
+
+.btn-green {
+  @include button-bg($color_green);
+  @extend %c-white;
+}
+
+.btn-red {
+  @include button-bg($color_red);
+  @extend %c-white;
+}
+
+.btn-grey {
+  @include button-bg($color_grey);
+}
+
+.btn-dark-grey {
+  @include button-bg(darken($color_grey, 25%));
+}

@@ -1,0 +1,40 @@
+.nav-container {
+  @include flex(row, space-between, center);
+  padding: 10px 15px;
+  background-color: $main_color_1;
+}
+
+.title-container {
+  margin: 10px 0 0 0;
+  padding: 0 0 0 10px;
+
+  .title-text {
+    @include text($font_size_title, bolder, $main_color_2);
+    @extend %no-decoration;
+    height: 100%;
+  }
+}
+
+.menu-container {
+  display: flex;
+  // padding-top: 20px;
+  margin-top: 15px;
+  margin-right: 10px;
+  list-style-type: none;
+
+  .menu-item {
+    @include text($font_size_menu, bolder, $color_grey);
+    @extend %no-decoration;
+    margin-left: 50px;
+
+    &:hover {
+      color: $main_color_2;
+      cursor: pointer;
+    }
+  }
+
+  .selected {
+    border-bottom: 3px solid $main_color_2;
+  }
+
+}

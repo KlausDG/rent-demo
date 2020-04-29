@@ -1,0 +1,21 @@
+.icon {
+  @extend %default-icon;
+}
+
+.icon-link {
+  @extend %cursor-pointer;
+  color: $main_color_2 !important;
+}
+
+.money-icon {
+  margin-top: 4px;
+  font-size: 20px;
+}
+
+.thin-icon {
+  margin-right: 5px;
+}
+
+.globe-icon {
+  font-size: 24px;
+}

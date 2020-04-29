@@ -20,6 +20,7 @@ class MeController extends Controller
             'username' => $user->username,
             'name' => $user->name,
             'email' => $user->email,
+            'password' => $user->password,
             'filial_id' => $user->filial_id,
         ]);
     }

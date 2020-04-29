@@ -1,39 +1,32 @@
 <template>
-  <div>
-    <!-- HEADER -->
-    <nav class="navbar header">
-      <div class="nav-item-one">
-        <a href="#" class="navbar-brand" @click="home">LendsGames DEMO</a>
-      </div>
-      <div class="nav-item-two">
-        <a
-          href="#"
-          class="navbar-brand"
-          v-for="filial in filials"
-          :key="filial.id"
-          @click="changeFilial(filial)"
-          v-bind:class="[{ selected: current_selected == filial.id }]"
-          >{{ filial.title }}</a
-        >
+  <!-- HEADER -->
+  <nav class="nav-container">
+    <div class="title-container">
+      <a href="#" class="title-text" @click="home">Rent-Games DEMO</a>
+    </div>
+    <div class="menu-container">
+      <a
+        href="#"
+        class="menu-item"
+        v-for="filial in filials"
+        :key="filial.id"
+        @click="changeFilial(filial)"
+        v-bind:class="[{ selected: current_selected == filial.id }]"
+        >{{ filial.title }}</a
+      >
 
-        <font-awesome-icon
-          :icon="['fas', 'user-lock']"
-          size="lg"
-          class="icon"
-          @click="openModal"
-        />
-      </div>
-    </nav>
-    <!-- FIM HEADER -->
-
+      <font-awesome-icon
+        :icon="['fas', 'user-lock']"
+        size="lg"
+        class="icon-link menu-item"
+        @click="openModal"
+      />
+    </div>
     <!-- Login Modal -->
     <login-modal v-model="login_modal_open"></login-modal>
-  </div>
+  </nav>
+  <!-- FIM HEADER -->
 </template>
-
-<style lang="scss">
-@import "../sass/Navbar.scss";
-</style>
 
 <script>
 import EventBus from "../main.js";

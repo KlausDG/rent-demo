@@ -1,0 +1,15 @@
+.nav-filters-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  .dropdown-container {
+    display: flex;
+    align-items: center;
+    margin-left: 25px;
+  }
+
+  .btn-container {
+    margin-left: 15px;
+  }
+}

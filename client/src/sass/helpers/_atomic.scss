@@ -1,0 +1,30 @@
+// Here i'm using Atomic CSS strategy to set specific values 
+// that would make the generalization of the stylesheets more difficult
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.h-fix {
+  height: 38px !important;
+}
+
+.w-175 {
+  width: 175px;
+}
+
+.w-230 {
+  width: 230px;
+}
+
+.h-36 {
+  height: 36px;
+}

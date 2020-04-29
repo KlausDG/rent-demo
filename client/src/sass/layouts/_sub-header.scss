@@ -1,0 +1,28 @@
+.subheader {
+  @include flex(row, space-between, center);
+  @include size(100%, 64px);
+  background-color: $main_color_1;
+
+  .subheader-title {
+    @include text($font_size_subtitle, bold, $color_grey);
+    margin: 0;
+    padding-left: 32px;
+  }
+}
+
+.search {
+  display: flex;
+  padding-right: 15px;
+  height: 40px;
+
+  .search-input {
+    @include size(640px, 100%);
+    @include border(none, 3px);
+    margin-right: 10px;
+    padding: 10px;
+
+    // @include media('>=phone', '<=tablet') {
+    //   width: 100%;
+    // }
+  }
+}

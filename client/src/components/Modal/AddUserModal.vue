@@ -1,82 +1,81 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="add-game-modal">
-      <div class="modal-container">
-        <div class="modal-title">
-          <p class="title">Cadastro de Sócios</p>
+  <div class="modal-background" v-show="value">
+    <div class="modal vertical-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
+          <p class="title">Cadastro de Usuário</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="container">
-        <form
-          @submit.prevent="formatData"
-          class=" d-flex flex-column justify-content-center"
-        >
+
+      <div class="modal-body">
+        <form class="vertical-form mb-20">
           <div class="form-group">
+            <label for="name" class="title-label">Nome</label>
             <input
               type="text"
               name="name"
-              class="form-control form-input"
-              placeholder="Nome"
+              class="form-input"
               v-model="user.name"
               required
             />
           </div>
 
           <div class="form-group">
+            <label for="username" class="title-label">Usuário</label>
             <input
               type="text"
-              class="form-control form-input"
+              class="form-input"
               name="username"
-              placeholder="Usuário"
               v-model="user.username"
               required
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group col-md-12">
+            <label for="email" class="title-label">E-mail</label>
             <input
               type="text"
-              class="form-control form-input"
+              class="form-input"
               name="email"
-              placeholder="E-mail"
               v-model="user.email"
               required
             />
           </div>
 
           <div class="form-group">
+            <label for="password" class="title-label">Senha</label>
             <input
               type="password"
               name="password"
-              class="form-control form-input"
-              placeholder="Senha"
+              class="form-input"
               v-model="user.password"
               required
             />
           </div>
 
-          <div class="form-group">
+          <div class="form-group last-input">
+            <label for="v_password" class="title-label"
+              >Confirmação de Senha</label
+            >
             <input
               type="password"
               name="v_password"
-              class="form-control form-input"
-              placeholder="Confirmação de senha"
+              class="form-input"
               v-model="user.v_password"
               required
             />
           </div>
-          <div class="custom-btn d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-          </div>
         </form>
+      </div>
+
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn" @click="formatData">
+          Salvar
+        </button>
       </div>
     </div>
   </div>
@@ -116,7 +115,7 @@ export default {
         alert("As senhas inseridas não são iguais!");
         return;
       }
-      
+
       //To Lower
       this.user.email = this.user.email.toLowerCase();
 
@@ -135,22 +134,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/AddGameModal.scss";
-
-.container {
-  margin-top: 15px;
-  width: 500px;
-}
-
-.add-game-modal {
-  width: 35rem !important;
-  height: 33rem !important;
-}
-
-.form-input {
-  border-color: #000000 !important;
-  height: 2.5rem !important;
-}
-</style>

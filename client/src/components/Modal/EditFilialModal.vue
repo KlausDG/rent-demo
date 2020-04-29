@@ -1,146 +1,140 @@
 <template>
-  <div class="modal-backdrop" v-show="value">
-    <div class="add-game-modal">
-      <div class="modal-container">
-        <div class="modal-title">
+  <div class="modal-background" v-show="value">
+    <div class="modal horizontal-modal">
+      <div class="modal-header">
+        <div class="modal-title-container">
           <p class="title">Edição de Filial</p>
         </div>
-        <div class="btn-close">
-          <font-awesome-icon
-            class="icon"
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+        <div class="btn-close-modal">
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
+        <div class="divider-modal"></div>
       </div>
-      <div class="divider"></div>
-      <div class="container">
-        <form @submit.prevent="formatData">
-          <div class="row">
-            <div class="form-group col-md-5">
-              <label for="title" class="title-label">Título</label>
-              <input
-                type="text"
-                name="title"
-                class="form-control form-input"
-                v-model="filial.title"
-                required
-              />
-            </div>
 
-            <div class="form-group col-md-2">
-              <label class="title-label">Telefone</label>
-              <input
-                type="text"
-                class="form-control form-input"
-                name="phone"
-                v-model="filial.phone"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-4">
-              <label for="price" class="title-label">Rua</label>
-              <input
-                type="text"
-                name="rua"
-                class="form-control form-input"
-                v-model="filial.rua"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-1">
-              <label for="image" class="title-label">Nº</label>
-              <input
-                type="text"
-                name="numero"
-                class="form-control form-input"
-                v-model="filial.numero"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="obslang" class="title-label">Bairro</label>
-              <input
-                type="text"
-                name="bairro"
-                class="form-control form-input"
-                v-model="filial.bairro"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="image" class="title-label">Cidade</label>
-              <input
-                type="text"
-                name="cidade"
-                class="form-control form-input"
-                v-model="filial.cidade"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-1">
-              <label for="image" class="title-label">UF</label>
-              <input
-                type="text"
-                name="uf"
-                class="form-control form-input"
-                v-model="filial.uf"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-2">
-              <label for="image" class="title-label">País</label>
-              <input
-                type="text"
-                name="pais"
-                class="form-control form-input"
-                v-model="filial.pais"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-3">
-              <label for="image" class="title-label">Cep</label>
-              <input
-                type="text"
-                name="cep"
-                class="form-control form-input"
-                v-model="filial.cep"
-                required
-              />
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="image" class="title-label">Complemento</label>
-              <input
-                type="text"
-                name="complemento"
-                class="form-control form-input"
-                v-model="filial.complemento"
-              />
-            </div>
-
-            <div class="form-group col-md-6">
-              <label for="image" class="title-label">Ponto de Referência</label>
-              <input
-                type="text"
-                name="referencia"
-                class="form-control form-input"
-                v-model="filial.referencia"
-              />
-            </div>
+      <div class="modal-body">
+        <form class="horizontal-form form-grid" @submit.prevent="formatData">
+          <div class="form-group flex-col-12">
+            <label for="title" class="title-label">Título</label>
+            <input
+              type="text"
+              name="title"
+              class="form-input"
+              v-model="filial.title"
+              required
+            />
           </div>
-          <div class="custom-btn d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary">Salvar</button>
+
+          <div class="form-group flex-col-4">
+            <label for="price" class="title-label">Rua</label>
+            <input
+              type="text"
+              name="rua"
+              class="form-input"
+              v-model="filial.rua"
+              required
+            />
           </div>
-          <p>{{ filial }}</p>
+
+          <div class="form-group flex-col-1">
+            <label for="image" class="title-label">Nº</label>
+            <input
+              type="text"
+              name="numero"
+              class="form-input"
+              v-model="filial.numero"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-2">
+            <label for="obslang" class="title-label">Bairro</label>
+            <input
+              type="text"
+              name="bairro"
+              class="form-input"
+              v-model="filial.bairro"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-2">
+            <label for="image" class="title-label">Cidade</label>
+            <input
+              type="text"
+              name="cidade"
+              class="form-input"
+              v-model="filial.cidade"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-1">
+            <label for="image" class="title-label">UF</label>
+            <input
+              type="text"
+              name="uf"
+              class="form-input"
+              v-model="filial.uf"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-2">
+            <label for="image" class="title-label">País</label>
+            <input
+              type="text"
+              name="pais"
+              class="form-input"
+              v-model="filial.pais"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-2">
+            <label for="image" class="title-label">Cep</label>
+            <input
+              type="text"
+              name="cep"
+              class="form-input"
+              v-model="filial.cep"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label for="image" class="title-label">Complemento</label>
+            <input
+              type="text"
+              name="complemento"
+              class="form-input"
+              v-model="filial.complemento"
+            />
+          </div>
+
+          <div class="form-group flex-col-4">
+            <label for="image" class="title-label">Ponto de Referência</label>
+            <input
+              type="text"
+              name="referencia"
+              class="form-input"
+              v-model="filial.referencia"
+            />
+          </div>
+
+          <div class="form-group flex-col-3">
+            <label class="title-label">Telefone</label>
+            <input
+              type="text"
+              class="form-input"
+              name="phone"
+              v-model="filial.phone"
+              required
+            />
+          </div>
         </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-blue form-btn">Salvar</button>
       </div>
     </div>
   </div>
@@ -227,7 +221,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "@/sass/AddGameModal.scss";
-</style>

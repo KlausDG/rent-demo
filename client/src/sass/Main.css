@@ -1,12 +1,9 @@
-#app {
-  background-color: #1b1b1b;
-}
-
-#app .main-container {
-  width: 1600px;
-  margin: auto;
-}
-
+/*
+* Scut, a collection of Sass utilities
+* to ease and improve our implementations of common style-code patterns.
+* v1.4.0
+* Docs at http://davidtheclark.github.io/scut
+*/
 @supports (-webkit-appearance: none) or (-moz-appearance: none) {
   input[type='checkbox'],
   input[type='radio'] {
@@ -152,6 +149,10 @@
   input[type='radio']:checked {
     --s: .5;
   }
+}
+
+#app {
+  background-color: #202020;
 }
 
 ul {
