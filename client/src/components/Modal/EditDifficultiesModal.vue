@@ -18,7 +18,7 @@
             v-for="(difficulty, index) in difficulties"
             v-bind:key="index"
           >
-            <div class="index-label">{{ index + 1 }} -</div>
+            <div class="index-label" v-if="!phone">{{ index + 1 }} -</div>
             <input
               type="text"
               name="title"
@@ -29,14 +29,16 @@
             <div class="item-submit">
               <button
                 type="submit"
-                class="btn btn-green ml-10"
+                class="btn btn-green"
+                :class="{'btn-sm': phone, 'ml-10': !phone}"
                 @click.prevent="edit(difficulties[index])"
               >
                 Salvar
               </button>
               <button
                 type="submit"
-                class="btn btn-red ml-10"
+                class="btn btn-red"
+                :class="{'btn-sm': phone, 'ml-10': !phone}"
                 @click.prevent="remove(difficulty.id)"
               >
                 Deletar
@@ -47,15 +49,15 @@
           <div class="divider-modal"></div>
 
           <div class="form-group">
-            <div class="index-label">{{ difficulties.length + 1 }} -</div>
-              <input
-                type="text"
-                name="title"
-                class="form-control form-input"
-                v-model="newDifficulty.title"
-                placeholder="Nova dificuldade"
-                required
-              />
+            <div class="index-label" v-if="!phone">{{ difficulties.length + 1 }} -</div>
+            <input
+              type="text"
+              name="title"
+              class="form-control form-input"
+              v-model="newDifficulty.title"
+              placeholder="Nova dificuldade"
+              required
+            />
             <div class="item-submit-single">
               <button
                 type="submit"
@@ -64,7 +66,7 @@
               >
                 Salvar
               </button>
-              <div class="spacer ml-10"></div>
+              <div class="spacer ml-10"  v-if="!phone"></div>
             </div>
           </div>
 
@@ -73,11 +75,14 @@
           </div>
 
           <div class="divider-modal"></div>
-
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-blue form-btn" @click.prevent="editAll">
+        <button
+          type="submit"
+          class="btn btn-blue form-btn"
+          @click.prevent="editAll"
+        >
           Salvar Todos
         </button>
       </div>
@@ -87,9 +92,11 @@
 
 <script>
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "DifficultiesModal",
+  mixins: [responsive],
 
   data() {
     return {
@@ -102,6 +109,14 @@ export default {
     };
   },
 
+  watch: {
+    value: function() {
+      if (this.value != false) {
+        this.fetch();
+      }
+    },
+  },
+
   props: {
     value: {
       required: true,
@@ -110,7 +125,7 @@ export default {
 
   created() {
     this.resp = "";
-    this.fetch();
+    // this.fetch();
   },
 
   methods: {
@@ -123,6 +138,7 @@ export default {
 
       Axios.get("difficulties/all")
         .then((res) => {
+          console.log("Fetch -> All Difficulties");
           vm.difficulties = res.data;
         })
         .catch((err) => console.log(err));

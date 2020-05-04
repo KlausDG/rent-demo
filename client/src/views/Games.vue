@@ -2,19 +2,52 @@
   <div>
     <Navbar />
     <div class="subheader">
-      <h4 class="subheader-title">
+      <h4 class="subheader-title" v-if="!phone">
         {{ current_filial.title }} ( {{ total_games }} )
       </h4>
+
+      <div class="subheader-phone" v-if="phone">
+        <div class="dropdown-variable">
+          <div class="dropdown-variable-label menu-item">
+            <h4 class="m-0">
+              {{ current_filial.title }} ( {{ total_games }} )
+            </h4>
+            <font-awesome-icon class="ml-10" :icon="['fas', 'caret-down']" />
+          </div>
+          <div class="dropdown-content">
+            <a
+              v-for="(filial, index) in filials"
+              v-bind:key="index"
+              @click="changeFilial(filial)"
+              >{{ filial.title }}</a
+            >
+          </div>
+        </div>
+      </div>
+
       <div class="search">
-        <form v-on:submit.prevent="search()">
-        <input
-          class="search-input"
-          type="text"
-          placeholder="Procure por um jogo aqui"
-          aria-label="Search"
-          v-model="search_query"
-        />
-        <button class="search-btn" @click="search()">Procurar</button>
+        <form>
+          <input
+            class="search-input"
+            type="text"
+            placeholder="Procure por um jogo aqui"
+            aria-label="Search"
+            v-model="search_query"
+          />
+          <button
+            class="search-btn"
+            @click="search()"
+            v-if="!phone"
+          >
+            Procurar
+          </button>
+          <button
+            class="search-btn"
+            @click="search()"
+            v-if="phone"
+          >
+            <font-awesome-icon class="button-icon" :icon="['fas', 'search']" />
+          </button>
         </form>
       </div>
     </div>
@@ -37,7 +70,9 @@
                 :icon="['fab', 'creative-commons-by']"
               />
               <div class="divider-adv"></div>
-              <label for="player-qtd" class="adv-serach-label-text"> Nº de Jogadores</label>
+              <label for="player-qtd" class="adv-serach-label-text">
+                Nº de Jogadores</label
+              >
             </div>
             <select
               id="player-qtd"
@@ -220,7 +255,7 @@
     <div class="main-container">
       <div class="nav-filters-container">
         <!-- Navigation -->
-        <nav aria-label="navigation">
+        <nav aria-label="navigation" v-if="!phone">
           <ul class="pagination">
             <li>
               <button
@@ -232,11 +267,11 @@
               </button>
             </li>
             <li class="pg-btn pg-middle btn-dark-grey h-36">
-                {{
-                  pagination.last_page > 1
-                    ? pagination.current_page + " de " + pagination.last_page
-                    : "1 de 1"
-                }}
+              {{
+                pagination.last_page > 1
+                  ? pagination.current_page + " de " + pagination.last_page
+                  : "1 de 1"
+              }}
             </li>
             <li>
               <button
@@ -252,8 +287,8 @@
         <!-- End of Navigation -->
 
         <div class="dropdown-container">
-          <div class="display-dropdown">
-            <p  class="dropdown-label">
+          <div class="display-dropdown w-sm">
+            <p class="dropdown-label" v-if="!phone">
               Exibir:
             </p>
             <select
@@ -272,8 +307,8 @@
             </select>
           </div>
 
-          <div class="display-dropdown">
-            <p  class="dropdown-label">
+          <div class="display-dropdown w-sm ml-10">
+            <p class="dropdown-label" v-if="!phone">
               Odernar:
             </p>
             <select
@@ -291,30 +326,30 @@
               <option value="maxTime desc">Mais Longo</option>
             </select>
           </div>
-          <div class="btn-container">
-            <button
-              class="btn btn-grey h-36"
-              @click="adv_search = !adv_search"
-            >
-              Mais Filtros
-            </button>
-            <button class="btn btn-grey ml-10 h-36" @click="clearFilter">
-              Limpar Filtros
-            </button>
-          </div>
+        </div>
+        <div class="btn-container">
+          <button
+            class="btn btn-grey h-36 w-sm"
+            @click="adv_search = !adv_search"
+          >
+            Mais Filtros
+          </button>
+          <button class="btn btn-grey ml-10 h-36 w-sm" @click="clearFilter">
+            Limpar Filtros
+          </button>
         </div>
       </div>
 
       <div class="flex-container" v-if="total_games != 0">
-        <div class="item item-public" v-for="game in games" v-bind:key="game.id">
+        <div
+          class="item item-public"
+          v-for="game in games"
+          v-bind:key="game.id"
+        >
           <div
-            class="unavailable-overlay"
+            class="item-container"
             v-bind:class="{ not_available: !game.isAvailable }"
           >
-            <p class="unavailable-text">INDISPONÍVEL</p>
-          </div>
-
-          <div class="item-container">
             <div class="left-container">
               <!-- Image thumb -->
               <div class="item-thumb-container">
@@ -333,6 +368,7 @@
                 <button
                   class="item-btn"
                   @click="sendMessage(game.title)"
+                  v-bind:class="{ not_available: !game.isAvailable }"
                   :disabled="!game.isAvailable"
                 >
                   {{ game.isAvailable ? "Alugar" : "Indisponível" }}
@@ -368,7 +404,9 @@
                       :icon="['fas', 'book-reader']"
                     />
                     <div class="divider-item"></div>
-                    <p class="info-text info-text-normal">{{ game.difficulty.title }}</p>
+                    <p class="info-text info-text-normal">
+                      {{ game.difficulty.title }}
+                    </p>
                   </div>
                 </div>
                 <div class="info-row">
@@ -387,7 +425,9 @@
                   <div class="info-item">
                     <font-awesome-icon class="icon" :icon="['fas', 'cog']" />
                     <div class="divider-item"></div>
-                    <p class="info-text info-text-normal">{{ game.genre.title }}</p>
+                    <p class="info-text info-text-normal">
+                      {{ game.genre.title }}
+                    </p>
                   </div>
                 </div>
                 <div class="info-row">
@@ -397,7 +437,9 @@
                       :icon="['fab', 'acquisitions-incorporated']"
                     />
                     <div class="divider-item"></div>
-                    <p class="info-text info-text-normal">{{ game.language.title }}</p>
+                    <p class="info-text info-text-normal">
+                      {{ game.language.title }}
+                    </p>
                   </div>
                   <div class="info-item">
                     <font-awesome-icon
@@ -431,11 +473,11 @@
               </button>
             </li>
             <li class="pg-btn pg-middle btn-dark-grey h-36">
-                {{
-                  pagination.last_page > 1
-                    ? pagination.current_page + " de " + pagination.last_page
-                    : "1 de 1"
-                }}
+              {{
+                pagination.last_page > 1
+                  ? pagination.current_page + " de " + pagination.last_page
+                  : "1 de 1"
+              }}
             </li>
             <li>
               <button
@@ -461,8 +503,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import EventBus from "../main.js";
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
+  mixins: [responsive],
+
   components: {
     Navbar,
     Footer,
@@ -472,6 +517,7 @@ export default {
     return {
       //Filiais
       current_filial: {},
+      filials: [],
       //Jogos
       games: [],
       game: {
@@ -517,16 +563,31 @@ export default {
 
   created() {
     let vm = this;
+
+    this.fetchFilials();
+
     EventBus.$on("home", function() {
       vm.clearFilter();
     });
+
     EventBus.$on("changeFilial", function(payload) {
-      vm.current_filial = payload;
-      vm.clearFilter();
+        vm.changeFilial(payload);
     });
   },
 
   methods: {
+    fetchFilials(page_url) {
+      page_url = page_url || "filials/all";
+
+      Axios.get(page_url)
+        .then((res) => {
+          console.log("Fetch -> All Filials");
+          this.filials = res.data;
+          this.current_filial = this.filials[0];
+        })
+        .catch((err) => console.log(err));
+    },
+
     fetchGames(page_url) {
       let vm = this;
       let string_difficulty = 0;
@@ -570,6 +631,7 @@ export default {
 
       Axios.get(page_url)
         .then((res) => {
+          console.log("Fetch -> All Games");      
           vm.games = res.data.data;
           vm.total_games = res.data.meta.total;
           vm.makePagination(res.data.meta, res.data.links);
@@ -578,13 +640,21 @@ export default {
     },
 
     makePagination(meta, links) {
+      if (links.next) {
+        links.next = links.next.replace("http", "https");
+      }
+
+      if (links.prev) {
+        links.prev = links.prev.replace("http", "https");
+      }
+
       let pagination = {
         current_page: meta.current_page,
         last_page: meta.last_page,
         next_page_url: links.next,
         prev_page_url: links.prev,
       };
-
+      console.log("Make -> Pagination");
       this.pagination = pagination;
     },
 
@@ -596,7 +666,8 @@ export default {
       if (regex.test(this.search_query)) {
         query = this.search_query.split(" ").join("%20");
       } else {
-        query = "!err";
+        alert("Parâmetros de busca inválidos.");
+        return;
       }
 
       this.search_query = "";
@@ -616,6 +687,7 @@ export default {
 
       Axios.get(page_url)
         .then((res) => {
+          console.log("Fetch -> Search");
           vm.games = res.data.data;
           vm.total_games = res.data.meta.total;
           vm.makePagination(res.data.meta, res.data.links);
@@ -631,16 +703,20 @@ export default {
       window.open(url, "_blank");
     },
 
-    selectFilial(e) {
-      this.current_filial = e.currentTarget.id.split("_")[1];
+    changeFilial(filial) {
+      console.log("Change -> Filial");
+      this.current_filial = filial;
+      this.clearFilter();
     },
 
     closeFilterPanel() {
+      console.log("Close -> Filter Panel");
       this.fetchGames();
       this.adv_search = !this.adv_search;
     },
 
     clearFilter() {
+      console.log("Clear -> Filters");
       this.filter_player_qtd = 0;
       this.filter_language = 0;
       this.filter_difficulty = [];

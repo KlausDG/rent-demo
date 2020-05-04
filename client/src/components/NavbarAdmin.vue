@@ -3,11 +3,10 @@
     <!-- HEADER -->
     <nav class="nav-container">
       <div class="title-container">
-        <a href="#" class="title-text" @click="home">Admin - {{ user.name }}</a>
+        <a href="#" class="title-text-admin" @click="home">Admin - {{ user.name }}</a>
       </div>
 
       <div class="menu-container">
-
         <div class="dropdown">
           <div class="dropdown-label menu-item">Cadastrar</div>
           <div class="dropdown-content">
@@ -20,10 +19,16 @@
         <div class="dropdown">
           <div class="dropdown-label menu-item">Editar</div>
           <div class="dropdown-content">
-            <a @click="openModal('editProfile', modal.editProfile)">Alterar Senha</a>
-            <a @click="openModal('editDifficulties', modal.editDifficulties)">Dificuldades</a>
+            <a @click="openModal('editProfile', modal.editProfile)"
+              >Alterar Senha</a
+            >
+            <a @click="openModal('editDifficulties', modal.editDifficulties)"
+              >Dificuldades</a
+            >
             <a @click="openModal('editGenres', modal.editGenres)">Gêneros</a>
-            <a @click="openModal('editLanguages', modal.editLanguages)">Idiomas</a>
+            <a @click="openModal('editLanguages', modal.editLanguages)"
+              >Idiomas</a
+            >
             <a @click="openModal('allFilials', modal.allFilials)">Lojas</a>
             <a @click="openModal('allUsers', modal.allUsers)">Usuários</a>
           </div>
@@ -75,7 +80,20 @@ export default {
         allFilials: false,
         allUsers: false,
       },
+      window: {
+        width: 0,
+        height: 0,
+      },
+      screen: {
+        phone: 767.98,
+        tablet: 991.98,
+      },
     };
+  },
+
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
   },
 
   computed: {
@@ -95,15 +113,22 @@ export default {
     },
 
     logout() {
-      this.signOutAction().then(() => {
-        this.$router.replace({
+      this.$router
+        .replace({
           name: "games",
+        })
+        .then(() => {
+          this.signOutAction();
         });
-      });
     },
 
     openModal(property, value) {
       this.modal[property] = !value;
+    },
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
   },
 };

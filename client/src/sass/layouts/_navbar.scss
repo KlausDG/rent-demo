@@ -2,26 +2,53 @@
   @include flex(row, space-between, center);
   padding: 10px 15px;
   background-color: $main_color_1;
+
+  @include media(phone) {
+    flex-direction: column;
+    padding: 10px 0 0 0;
+    width: 100%;
+  }
 }
 
 .title-container {
   margin: 10px 0 0 0;
   padding: 0 0 0 10px;
 
+  @include media(phone) {
+    @include flex(row, center, center);
+    padding: 0;
+    margin-top: 5px;
+  }
+
   .title-text {
-    @include text($font_size_title, bolder, $main_color_2);
-    @extend %no-decoration;
-    height: 100%;
+    @extend %title-text;
+
+    @include media(phone) {
+      font-size: 30px;
+    }
+  }
+
+  .title-text-admin {
+    @extend %title-text;
+
+    @include media(phone) {
+      font-size: scut-rem($font_size_title - 10px);
+    }
   }
 }
 
 .menu-container {
   display: flex;
-  // padding-top: 20px;
   margin-top: 15px;
   margin-right: 10px;
   list-style-type: none;
 
+  @include media(phone) {
+    width: 100%;
+    margin: 15px 0 0 0;
+    font-size: scut-rem($font_size_title - 10px);
+    
+  }
   .menu-item {
     @include text($font_size_menu, bolder, $color_grey);
     @extend %no-decoration;
@@ -36,5 +63,4 @@
   .selected {
     border-bottom: 3px solid $main_color_2;
   }
-
 }

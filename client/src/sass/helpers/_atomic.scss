@@ -1,6 +1,20 @@
 // Here i'm using Atomic CSS strategy to set specific values 
 // that would make the generalization of the stylesheets more difficult
 
+.sm-screen {
+  display: none;
+
+  @include media(phone) {
+    display: block;
+  }
+}
+
+.lg-screen {
+  @include media(phone) {
+    display: none;
+  }
+}
+
 .ml-10 {
   margin-left: 10px;
 }
@@ -11,6 +25,14 @@
 
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.m-0 {
+  margin: 0;
 }
 
 .h-fix {
@@ -27,4 +49,21 @@
 
 .h-36 {
   height: 36px;
+}
+
+
+//Media Query
+
+.w-sm {
+  @include media(phone) {
+    width: 162px;
+  }
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.bg-secondary {
+  background-color: $main_color_2;
 }

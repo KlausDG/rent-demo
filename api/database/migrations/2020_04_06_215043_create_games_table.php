@@ -25,15 +25,15 @@ class CreateGamesTable extends Migration
             $table->integer('price')->nullable();
             $table->text('description')->nullable();
             $table->text('imageThumb');
-            $table->tinyInteger('difficulties_id');
+            $table->unsignedBigInteger('difficulties_id');
             $table->foreign('difficulties_id')->references('id')->on('difficulties');
-            $table->tinyInteger('genres_id');
+            $table->unsignedBigInteger('genres_id');
             $table->foreign('genres_id')->references('id')->on('genres');
-            $table->tinyInteger('languages_id');
+            $table->unsignedBigInteger('languages_id');
             $table->foreign('languages_id')->references('id')->on('languages');
             $table->string('languageObs')->nullable();
-            $table->tinyInteger('filial_id');
-            $table->foreign('filial_id')->references('id')->on('filial');
+            $table->unsignedBigInteger('filial_id');
+            $table->foreign('filial_id')->references('id')->on('filials');
             $table->timestamps();
         });
     }

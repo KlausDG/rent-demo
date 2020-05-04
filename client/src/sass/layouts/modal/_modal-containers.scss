@@ -8,6 +8,12 @@
     "footer";
   justify-content: center;
 
+  @include media(phone) {
+    display: flex;
+    flex-direction: column;
+    width: 90% !important;
+  }
+
   &-header {
     grid-area: 'header';
     position: relative;
@@ -23,6 +29,10 @@
     @extend %center-align;
     grid-area: 'footer';
     padding-bottom: 20px;
+
+    @include media(phone) {
+     padding: 10px 0 5px 0;
+    }
   }
 }
 

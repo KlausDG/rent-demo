@@ -3,13 +3,42 @@
   align-items: center;
   width: 100%;
 
+  @include media(phone) {
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 2px 0 2px;
+
+  }
+
   .dropdown-container {
     display: flex;
     align-items: center;
     margin-left: 25px;
+    order: 1;
+
+    @include media(phone) {
+      justify-content: space-around;
+      margin: 5px 0 0 0;
+      order: 2;
+
+    }
+  }
+
+  .nav-filters-container-admin {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    background-color: $main_color_2;
   }
 
   .btn-container {
     margin-left: 15px;
+    order: 2;
+
+    @include media(phone) {
+      width: 100%;
+      margin: 0;
+      order: 1;
+    }
   }
 }

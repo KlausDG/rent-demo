@@ -3,10 +3,25 @@
   @include size(100%, 64px);
   background-color: $main_color_1;
 
+  @include media(phone) {
+    flex-direction: column;
+    justify-content: center;
+    height: 85px;
+  }
+
   .subheader-title {
     @include text($font_size_subtitle, bold, $color_grey);
     margin: 0;
     padding-left: 32px;
+  }
+
+  .subheader-phone {
+    @include text($font_size_menu, bold, $color_grey);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0 0 10px 0;
+    padding: 0;
   }
 }
 
@@ -15,14 +30,22 @@
   padding-right: 15px;
   height: 40px;
 
+  @include media(phone) {
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+  }
+
   .search-input {
     @include size(640px, 100%);
     @include border(none, 3px);
     margin-right: 10px;
     padding: 10px;
 
-    // @include media('>=phone', '<=tablet') {
-    //   width: 100%;
-    // }
+    @include media(phone) {
+      width: 275px;
+
+    }
   }
 }

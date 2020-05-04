@@ -1,5 +1,7 @@
 <template>
-  <div class="go-top" v-show="displayButton" v-scroll-to="'#app'"></div>
+  <div class="go-top-container" v-show="displayButton" v-scroll-to="'#app'">
+    <div class="go-top"></div>
+  </div>
 </template>
 
 <script>

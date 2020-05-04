@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './router/index'
 import store from './store'
 import axios from 'axios'
-// import 'material-icons/iconfont/material-icons.css';
-// import PortalVue from 'portal-vue'
-// import xmljs from "xml-js";
 
 import {
   library
@@ -22,7 +19,9 @@ import {
   faBookReader,
   faCog,
   faTimes,
-  faGlobeAmericas
+  faGlobeAmericas,
+  faCaretDown,
+  faSearch
 } from '@fortawesome/free-solid-svg-icons'
 import {
   faClock,
@@ -31,9 +30,10 @@ import {
 
 require('@/store/subscriber')
 
-axios.defaults.baseURL = 'http://localhost:8000/api/'
+// axios.defaults.baseURL = 'http://localhost:8000/api/'
+axios.defaults.baseURL = 'https://hidden-ridge-55617.herokuapp.com/api/'
 
-library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faGlobeAmericas, faClock, faMoneyBillAlt)
+library.add(faAcquisitionsIncorporated, faCreativeCommonsBy, faUserLock, faBookReader, faCog, faTimes, faGlobeAmericas, faCaretDown, faSearch, faClock, faMoneyBillAlt)
 
 Vue.config.productionTip = false
 
@@ -51,9 +51,6 @@ Vue.use(VueScrollTo, {
   x: false,
   y: true
 })
-
-// Vue.use(PortalVue)
-// Vue.use(xmljs);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('games', require('./views/Games.vue').default);

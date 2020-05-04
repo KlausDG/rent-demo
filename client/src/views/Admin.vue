@@ -2,7 +2,7 @@
   <div>
     <NavbarAdmin />
     <div class="subheader">
-      <h4 class="subheader-title">
+      <h4 class="subheader-title" v-if="!phone">
         {{
           filter_filial != "all"
             ? filials[filter_filial - 1].title
@@ -10,7 +10,7 @@
         }}
         ( {{ total_games }} )
       </h4>
-      <div class="search">
+      <div class="search" v-bind:class="{ 'mb-10': phone, 'mt-10': phone }">
         <form v-on:submit.prevent="search()">
           <input
             class="search-input"
@@ -19,15 +19,28 @@
             aria-label="Search"
             v-model="search_query"
           />
-          <button class="search-btn" @click="search()">Procurar</button>
+          <button
+            class="search-btn"
+            @click="search()"
+            v-if="window.width > screen.phone"
+          >
+            Procurar
+          </button>
+          <button
+            class="search-btn"
+            @click="search()"
+            v-if="window.width <= screen.phone"
+          >
+            <font-awesome-icon class="button-icon" :icon="['fas', 'search']" />
+          </button>
         </form>
       </div>
     </div>
 
     <div class="main-container">
-      <div class="nav-filters-container">
+      <div class="nav-filters-container" v-bind:class="{ 'bg-secondary': phone }">
         <!-- Navigation -->
-        <nav aria-label="navigation">
+        <nav aria-label="navigation" v-if="!phone">
           <ul class="pagination">
             <li>
               <button
@@ -58,7 +71,7 @@
         </nav>
         <!-- End of Navigation -->
 
-        <div class="dropdown-container">
+        <div class="dropdown-container" v-bind:class="{ 'flex-wrap': phone }">
           <div class="display-dropdown">
             <p class="dropdown-label">
               Exibir:
@@ -79,7 +92,7 @@
             </select>
           </div>
 
-          <div class="display-dropdown">
+          <div class="display-dropdown" v-if="!phone">
             <p class="dropdown-label">
               Odernar:
             </p>
@@ -134,14 +147,23 @@
               >
             </select>
           </div>
-          <div class="btn-container">
-            <button class="btn btn-grey ml-10 h-36" @click="clearFilter">
+          <div :class="{'btn-container-admin': phone, 'btn-container': !phone}">
+            <button class="btn btn-grey h-36" @click="clearFilter" :class="{'ml-10': !phone}">
               Limpar Busca
             </button>
           </div>
         </div>
       </div>
-
+      <div class="sm-title-contaier" v-if="phone">
+        <h4 class="sm-title">
+          {{
+            filter_filial != "all"
+              ? filials[filter_filial - 1].title
+              : "Todos os Jogos"
+          }}
+          ( {{ total_games }} )
+        </h4>
+      </div>
       <div class="flex-container" v-if="total_games != 0">
         <div class="item item-admin" v-for="game in games" v-bind:key="game.id">
           <div
@@ -304,7 +326,6 @@
     <Footer />
     <edit-game-modal v-model="edit_game_modal_open"></edit-game-modal>
     <scroll-top></scroll-top>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -367,6 +388,15 @@ export default {
       //Other
       edit_game_modal_open: false,
       contact: "981432111",
+      //Media Queries
+      window: {
+        width: 0,
+        height: 0,
+      },
+      screen: {
+        phone: 767.98,
+        tablet: 991.98,
+      },
     };
   },
 
@@ -375,16 +405,26 @@ export default {
       authenticated: "auth/authenticated",
       user: "auth/user",
     }),
+
+    phone() {
+      return this.window.width <= this.screen.phone;
+    },
   },
 
   created() {
     let vm = this;
+
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+
     EventBus.$on("home", function() {
       vm.clearFilter();
     });
+
     EventBus.$on("fetch", function() {
       vm.fetchGames();
     });
+
     this.fetchFilials();
   },
 
@@ -397,6 +437,7 @@ export default {
       Axios.get(page_url)
         .then((res) => {
           vm.filials = res.data;
+          console.log("Fetch -> Filials");
           this.fetchGames();
         })
         .catch((err) => console.log(err));
@@ -423,6 +464,7 @@ export default {
 
       Axios.get(page_url)
         .then((res) => {
+          console.log("Fetch -> Games");
           vm.games = res.data.data;
           vm.total_games = res.data.meta.total;
           vm.makePagination(res.data.meta, res.data.links);
@@ -459,7 +501,7 @@ export default {
       this.game.id = game.id;
       this.game.game_id = game.id;
       this.title = game.title;
-      this.price = game.price;      
+      this.price = game.price;
     },
 
     search(page_url) {
@@ -520,6 +562,11 @@ export default {
     openEditModal(game_id) {
       this.edit_game_modal_open = !this.edit_game_modal_open;
       EventBus.$emit("search", game_id);
+    },
+
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
   },
 };

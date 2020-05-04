@@ -6,66 +6,62 @@
           <p class="title">Usuários</p>
         </div>
         <div class="btn-close-modal">
-          <font-awesome-icon
-            :icon="['fas', 'times']"
-            @click="close"
-          />
+          <font-awesome-icon :icon="['fas', 'times']" @click="close" />
         </div>
-      <div class="divider-modal"></div>
+        <div class="divider-modal"></div>
       </div>
 
-<div class="modal-body">
+      <div class="modal-body">
         <form class="list-form mb-10">
-            <div
-              class="form-group"
-              v-for="(user, index) in users"
-              v-bind:key="index"
-            >
-              <div class="index-label">
-                {{ index + 1 }} -
-              </div>
-                <input
-                  type="text"
-                  name="title"
-                  class="form-input"
-                  v-model="users[index].name"
-                  disabled
-                />
-              <div class="item-submit">
-                <button
-                  type="submit"
-                  class="btn btn-green ml-10"
-                  @click.prevent="editUser(users[index])"
-                >
-                  Editar
-                </button>
-                <button
-                  type="submit"
-                  class="btn btn-red ml-10"
-                  @click.prevent="remove(user.id)"
-                >
-                  Deletar
-                </button>
-              </div>
+          <div
+            class="form-group"
+            v-for="(user, index) in users"
+            v-bind:key="index"
+          >
+            <div class="index-label" v-if="!phone">{{ index + 1 }} -</div>
+            <input
+              type="text"
+              name="title"
+              class="form-input"
+              v-model="users[index].name"
+              disabled
+            />
+            <div class="item-submit">
+              <button
+                type="submit"
+                class="btn btn-green"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
+                @click.prevent="editUser(users[index])"
+              >
+                Editar
+              </button>
+              <button
+                type="submit"
+                class="btn btn-red"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
+                @click.prevent="remove(user.id)"
+              >
+                Deletar
+              </button>
             </div>
-
+          </div>
 
           <div class="result-message" v-bind:class="{ error: has_error }">
             <p>{{ resp }}</p>
           </div>
-          
-            <div class="divider-modal"></div>
+
+          <div class="divider-modal"></div>
         </form>
-</div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-blue form-btn"
-              @click.prevent="newUser"
-            >
-              Novo Usuário
-            </button>
-          </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-blue form-btn"
+          @click.prevent="newUser"
+        >
+          Novo Usuário
+        </button>
+      </div>
     </div>
     <edit-user-modal v-model="edit_user_modal_open"></edit-user-modal>
   </div>
@@ -74,9 +70,11 @@
 <script>
 import EventBus from "@/main.js";
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "usersModal",
+  mixins: [responsive],
 
   data() {
     return {
@@ -89,8 +87,10 @@ export default {
 
   watch: {
     value: function() {
-      this.fetch();
-    } 
+      if (this.value != false) {
+        this.fetch();
+      }
+    },
   },
 
   props: {
@@ -101,7 +101,6 @@ export default {
 
   created() {
     this.resp = "";
-    this.fetch();
   },
 
   methods: {
@@ -114,7 +113,7 @@ export default {
 
       Axios.get("users/all")
         .then((res) => {
-          console.log(res.data);
+          console.log("Fetch -> All Users");
           vm.users = res.data;
         })
         .catch((err) => console.log(err));

@@ -1,15 +1,28 @@
 .icon {
   @extend %default-icon;
+
+  @include media(phone) {
+    font-size: 20px;
+  }
 }
 
 .icon-link {
   @extend %cursor-pointer;
   color: $main_color_2 !important;
+
+  @include media(phone) {
+    font-size: 15px;
+    margin-left: 25px;
+  }
 }
 
 .money-icon {
   margin-top: 4px;
   font-size: 20px;
+
+  @include media(phone) {
+    font-size: 16px;
+  }
 }
 
 .thin-icon {

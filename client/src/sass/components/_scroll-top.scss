@@ -1,9 +1,30 @@
-.go-top {
+.go-top-container {
   @include size(50px, 50px);
-  @extend %background-image-normalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   right: 75px;
   bottom: 25px;
   z-index: 1000;
+  border-radius: 50%;
+  background-color: $main_color_2;
+  cursor: pointer;
+
+  @include media(phone) {
+    @include size(40px, 40px);
+        right: 7.5%;
+        bottom: 3%;
+  }
+}
+
+.go-top {
+  @include size(75%, 75%);
+  margin-right: 2px;
+  @extend %background-image-normalize;
   background-image: url("assets/images/arrow.svg");
+
+  @include media(phone) {
+    @include size(30px, 30px);
+  }
 }

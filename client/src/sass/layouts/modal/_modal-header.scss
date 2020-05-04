@@ -5,6 +5,10 @@
 
   .title {
     @extend %modal-title;
+
+    @include media(phone) {
+      font-size: scut-rem($font_size_title - 10px);
+    }
   }
 
   .subtitle {

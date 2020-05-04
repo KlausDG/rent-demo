@@ -3,7 +3,7 @@
     <div class="modal horizontal-modal">
       <div class="modal-header">
         <div class="modal-title-container">
-          <p class="title">Edição de Filial</p>
+          <p class="title">Edição de Loja</p>
         </div>
         <div class="btn-close-modal">
           <font-awesome-icon :icon="['fas', 'times']" @click="close" />
@@ -12,8 +12,8 @@
       </div>
 
       <div class="modal-body">
-        <form class="horizontal-form form-grid" @submit.prevent="formatData">
-          <div class="form-group flex-col-12">
+        <form class="horizontal-form form-grid">
+          <div class="form-group" :class="{ 'flex-col-12': !phone }">
             <label for="title" class="title-label">Título</label>
             <input
               type="text"
@@ -24,7 +24,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-4">
+          <div class="form-group flex-col-4" v-if="!phone">
             <label for="price" class="title-label">Rua</label>
             <input
               type="text"
@@ -35,7 +35,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-1">
+          <div class="form-group flex-col-1" v-if="!phone">
             <label for="image" class="title-label">Nº</label>
             <input
               type="text"
@@ -46,7 +46,31 @@
             />
           </div>
 
-          <div class="form-group flex-col-2">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+              <label for="price" class="title-label">Rua</label>
+              <input
+                type="text"
+                name="rua"
+                class="form-input"
+                v-model="filial.rua"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="image" class="title-label">Nº</label>
+              <input
+                type="text"
+                name="numero"
+                class="form-input"
+                v-model="filial.numero"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group flex-col-2" v-if="!phone">
             <label for="obslang" class="title-label">Bairro</label>
             <input
               type="text"
@@ -57,7 +81,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-2">
+          <div class="form-group flex-col-2" v-if="!phone">
             <label for="image" class="title-label">Cidade</label>
             <input
               type="text"
@@ -68,7 +92,31 @@
             />
           </div>
 
-          <div class="form-group flex-col-1">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+              <label for="obslang" class="title-label">Bairro</label>
+              <input
+                type="text"
+                name="bairro"
+                class="form-control form-input"
+                v-model="filial.bairro"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="image" class="title-label">Cidade</label>
+              <input
+                type="text"
+                name="cidade"
+                class="form-control form-input"
+                v-model="filial.cidade"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group flex-col-1" v-if="!phone">
             <label for="image" class="title-label">UF</label>
             <input
               type="text"
@@ -79,7 +127,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-2">
+          <div class="form-group flex-col-2" v-if="!phone">
             <label for="image" class="title-label">País</label>
             <input
               type="text"
@@ -88,6 +136,30 @@
               v-model="filial.pais"
               required
             />
+          </div>
+
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+            <label for="image" class="title-label">UF</label>
+            <input
+              type="text"
+              name="uf"
+              class="form-control form-input"
+              v-model="filial.uf"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="image" class="title-label">País</label>
+            <input
+              type="text"
+              name="pais"
+              class="form-control form-input"
+              v-model="filial.pais"
+              required
+            />
+          </div>
           </div>
 
           <div class="form-group flex-col-2">
@@ -134,7 +206,9 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-blue form-btn">Salvar</button>
+        <button type="submit" class="btn btn-blue form-btn" @click="formatData">
+          Salvar
+        </button>
       </div>
     </div>
   </div>
@@ -143,9 +217,11 @@
 <script>
 import EventBus from "@/main.js";
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "EditFilialModal",
+  mixins: [responsive],
 
   data() {
     return {

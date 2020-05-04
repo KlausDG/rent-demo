@@ -1,4 +1,21 @@
 .flex-container {
   @include flex(row, center);
   flex-wrap: wrap;
+
+  @include media(phone) {
+    margin-top: 10px;
+    flex-direction: column;
+  }
+}
+
+.sm-title-contaier {
+  background-color: $main_color_1;
+  height: 75px; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .sm-title {
+    @include text($font_size_subtitle, bold, $color_grey);
+  }
 }

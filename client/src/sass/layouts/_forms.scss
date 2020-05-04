@@ -1,8 +1,13 @@
 .title-label {
   display: block;
   color: $form_color;
-  font-size: $font_size_important;
+  font-size: scut-rem($font_size_important);
   margin-bottom: 8px;
+
+  @include media(phone) {
+    font-size: scut-rem($font_size_important - 3px);
+    margin-bottom: 1px;
+  }
 }
 
 .list-form {
@@ -10,11 +15,22 @@
   margin: 10 auto 0 auto;
   color: $form_color;
 
+    @include media(phone) {
+      padding-left: 10px;
+      margin: 0;
+    }
+
   .form-group {
     @include flex(row, center, center);
     @include size(500px, 50px);
     border-radius: 5px;
     margin-bottom: 5px;
+
+      @include media(phone) {
+        justify-content: start;
+        margin: 0;
+        width: auto;
+      }
 
     .form-input {
       @extend %input-border;
@@ -23,6 +39,14 @@
 
     .index-label {
       margin-right: 10px;
+    }
+
+    .item-submit {
+       @include media(phone) {
+         display: flex;
+         justify-content: space-evenly;
+         width: 100%;
+       }
     }
 
     .item-submit-single {
@@ -75,9 +99,19 @@
   padding: 0 25px 25px 25px;
   color: $form_color;
 
+  @include media(phone) {
+    padding: 0 10px;
+    width: 100%;
+  }
+
   .form-group {
     @include flex(column);
     padding: 10px;
+
+    @include media(phone) {
+      padding: 0 0 10px 0;
+      width: 100%;
+    }
 
     .row {
       display: flex;
@@ -96,6 +130,10 @@
       @extend %input-border;
       padding: 10px 0 10px 10px;
       width: 100%;
+
+      @include media(phone) {
+        padding: 5px 0 5px 5px;
+      }
     }
 
     .radio-input {
@@ -112,6 +150,11 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+
+  @include media(phone) {
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
 }
 
 // grid calculation
@@ -140,5 +183,18 @@ $imporatnt: !important;
     .flex-col-#{$i} {
       width: percentage(($a)/100);
     }
+  }
+}
+
+
+//testing
+
+.form-group-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .form-group {
+    width: 48%;
   }
 }

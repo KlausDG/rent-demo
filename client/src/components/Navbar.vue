@@ -3,8 +3,15 @@
   <nav class="nav-container">
     <div class="title-container">
       <a href="#" class="title-text" @click="home">Rent-Games DEMO</a>
+      <font-awesome-icon
+        :icon="['fas', 'user-lock']"
+        size="lg"
+        class="icon-link menu-item"
+        @click="openModal"
+        v-if="window.width <= screen.phone"
+      />
     </div>
-    <div class="menu-container">
+    <div class="menu-container" v-if="window.width > screen.phone">
       <a
         href="#"
         class="menu-item"
@@ -40,9 +47,19 @@ export default {
       current_selected: 1,
       login_modal_open: false,
       logged_in: false,
+      window: {
+        width: 0,
+        height: 0,
+      },
+      screen: {
+        phone: 767.98,
+        tablet: 991.98,
+      },
     };
   },
   created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
     this.fetchFilials();
   },
   methods: {
@@ -67,6 +84,10 @@ export default {
           vm.changeFilial(this.filials[0]);
         })
         .catch((err) => console.log(err));
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     },
   },
 };

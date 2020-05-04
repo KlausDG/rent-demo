@@ -18,7 +18,7 @@
             v-for="(filial, index) in filials"
             v-bind:key="index"
           >
-            <div class="index-label">{{ index + 1 }} -</div>
+            <div class="index-label" v-if="!phone">{{ index + 1 }} -</div>
             <input
               type="text"
               name="title"
@@ -29,14 +29,16 @@
             <div class="item-submit">
               <button
                 type="submit"
-                class="btn btn-green ml-10"
+                class="btn btn-green"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="editFilial(filials[index])"
               >
                 Editar
               </button>
               <button
                 type="submit"
-                class="btn btn-red ml-10"
+                class="btn btn-red"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="remove(filial.id)"
               >
                 Deletar
@@ -52,7 +54,11 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-blue form-btn" @click.prevent="newFilial">
+        <button
+          type="submit"
+          class="btn btn-blue form-btn"
+          @click.prevent="newFilial"
+        >
           Nova Loja
         </button>
       </div>
@@ -64,9 +70,11 @@
 <script>
 import EventBus from "@/main.js";
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "filialsModal",
+  mixins: [responsive],
 
   data() {
     return {
@@ -79,8 +87,10 @@ export default {
 
   watch: {
     value: function() {
-      this.fetch();
-    } 
+      if (this.value != false) {
+        this.fetch();
+      }
+    },
   },
 
   props: {
@@ -91,7 +101,6 @@ export default {
 
   created() {
     this.resp = "";
-    this.fetch();
   },
 
   methods: {
@@ -104,6 +113,7 @@ export default {
 
       Axios.get("filials/all")
         .then((res) => {
+          console.log("Fetch -> All Filials");
           vm.filials = res.data;
         })
         .catch((err) => console.log(err));

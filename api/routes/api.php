@@ -11,7 +11,6 @@ Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
     Route::get('me', 'MeController');
 
 });
-
 //USER
 Route::group(['prefix' => 'users'], function () {
     //List all

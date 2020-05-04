@@ -1,25 +1,45 @@
 .item {
   height: auto;
+
+  @include media(phone) {
+    @include size(100%, auto);
+  }
 }
 
 .item-admin {
   margin: 0 12px 24px 12px;
-  
+
+  @include media(phone) {
+    margin: 0 0 10px 0;
+  }
 }
 
 .item-public {
-   margin: 0 12px 14px 12px;
+  margin: 0 12px 14px 12px;
+
+  @include media(phone) {
+    margin: 0 0 10px 0;
+  }
 }
 
 .item-container {
   @include size(450px, auto);
   display: flex;
   background-color: $main_color_1;
+
+  @include media(phone) {
+    @include size(95%, 90%);
+    margin: auto;
+  }
 }
 
 .left-container {
   @extend %flex-column;
   width: 35%;
+
+  @include media(phone) {
+    width: 32%;
+  }
 
   .item-thumb-container {
     @extend %clearfix;
@@ -32,8 +52,18 @@
       padding: 60px 0 0 65px;
       background-image: url("assets/images/Polygon1.svg");
 
+      @include media(phone) {
+        @include size(150px, 150px);
+        margin: -35px 0 0 -40px;
+        padding: 45px 0 0 50px;
+      }
+
       .thumb-size {
         @include size(85px, 85px);
+
+        @include media(phone) {
+          @include size(65px, 65px);
+        }
 
         .item-thumb {
           @include size(100%, 100%);
@@ -46,6 +76,14 @@
 
   .button-container {
     height: 30%;
+
+    @include media(phone) {
+      height: 50%;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 0 15px 0;
+      font-size: 12px;
+    }
   }
 }
 
@@ -53,6 +91,11 @@
   @extend %flex-column;
   width: 65%;
   margin-right: 10px;
+
+  @include media(phone) {
+    width: 68%;
+    margin: 0;
+  }
 }
 
 .item-title {
@@ -63,16 +106,30 @@
     margin-top: 10px;
     text-align: center;
     line-height: 25px;
+
+    @include media(phone) {
+      margin-top: 5px;
+      font-size: 20px;
+    }
   }
 }
 
 .item-info {
   padding-left: 30px;
 
+  @include media(phone) {
+    padding: 0 0 15px 0;
+  }
+
   .info-row {
     @extend %flex-row;
     padding-bottom: 15px;
     height: 40px;
+
+    @include media(phone) {
+      padding-bottom: 0px;
+      height: 30px;
+    }
 
     .info-item {
       @include flex(row, null, center);
@@ -82,14 +139,27 @@
         @extend %center-align;
         margin-left: 3px;
         height: 100%;
+
+        @include media(phone) {
+          margin: 0;
+        }
       }
 
       .info-text-normal {
         @include text(12px, $font_weight_subtitle, white);
+
+        @include media(phone) {
+          font-weight: 400;
+        }
       }
 
       .info-text-bold {
         @include text($font_size_important, bold, white);
+
+        @include media(phone) {
+          font-size: 16px;
+          font-weight: 500;
+        }
       }
     }
   }

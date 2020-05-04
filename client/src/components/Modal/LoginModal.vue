@@ -43,7 +43,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-blue form-btn" @click="submit">
+        <button type="submit" class="btn btn-blue form-btn" @click="login">
           Entrar
         </button>
       </div>
@@ -82,7 +82,7 @@ export default {
       this.$emit("input", !this.value);
     },
 
-    submit() {
+    login() {
       this.signIn(this.form)
         .then(() => {
           this.has_error = false;

@@ -4,8 +4,14 @@
   display: block;
   position: absolute;
   padding: 0.4rem 0.6rem;
-  right: 10px;
+  right: 40px;
   top: 3px;
+
+  @include media(phone) {
+    font-size: 16px;
+    right: 0;
+    top: 0;
+  }
 }
 
 .btn-close {
@@ -21,6 +27,22 @@
   @extend %default-btn;
   @extend %btn-hover;
   margin: 0;
+
+  @include media(phone) {
+    border-radius: 50px;
+    width: 35px;
+    height: 35px;
+
+    .button-icon {
+        color: $main_color_2;
+        font-size: 16px;
+        margin: 0;
+        // margin-bottom: 1px;
+        padding-right: 3px;
+      }
+  }
+
+
 }
 
 .sm-search-btn {
@@ -36,6 +58,10 @@
   padding: 0 10px;
   font-size: 14px;
   width: 85px;
+
+  @include media(phone) {
+    padding: 0;
+  }
 }
 
 .pg-first {
@@ -63,14 +89,38 @@
 }
 
 .item-btn {
-  @include size(80%, 45px);
+  @include size(80%, 40px);
   @extend %default-btn;
   @extend %cursor-pointer;
-  margin: 5px 0 0 15px;
+  margin: 10px 0 0 15px;
+
+  @include media(phone) {
+    cursor: pointer;
+    margin: 0;
+    height: 35px;
+    border-top: 3px solid lighten($main_color_2, 20);
+    border-right: 3px solid lighten($main_color_2, 20);
+    border-bottom: 3px solid lighten($main_color_2, 20);
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+  }
 }
 
 .btn-container {
   @extend %center-align;
+}
+
+.btn-container-admin{
+  height: 58px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  padding-bottom: 3px;
+
+  .btn {
+    width: 170px;
+    border-radius: 3px;
+  }
 }
 
 .primary-btn {
@@ -82,8 +132,6 @@
   margin-bottom: 15px;
 }
 
-//testing
-
 .btn {
   @extend %cursor-pointer;
   @extend %no-decoration;
@@ -91,6 +139,11 @@
   padding: 8px 25px;
   border-radius: 7px;
   font-size: 14px;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
 }
 
 .btn-blue {

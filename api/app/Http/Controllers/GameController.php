@@ -40,6 +40,7 @@ class GameController extends Controller
         } else {
             $games = $games->paginate($display_qtd);
         }
+        $games->setPath('');
         return GameResource::collection($games);
 
     }
@@ -59,15 +60,13 @@ class GameController extends Controller
         }
         $games = $games->orderBy($sort_target, $sort_value);
 
-        // dd($games.toSql());
-
         if ($display_qtd === "todos") {
             $display_qtd = $games->count();
             $games = $games->paginate($display_qtd);
         } else {
             $games = $games->paginate($display_qtd);
         }
-
+        $games->setPath('');
         return GameResource::collection($games);
 
     }

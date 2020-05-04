@@ -18,7 +18,7 @@
             v-for="(genre, index) in genres"
             v-bind:key="index"
           >
-            <div class="index-label">{{ index + 1 }} -</div>
+            <div class="index-label" v-if="!phone">{{ index + 1 }} -</div>
             <input
               type="text"
               name="title"
@@ -29,14 +29,16 @@
             <div class="item-submit">
               <button
                 type="submit"
-                class="btn btn-green ml-10"
+                class="btn btn-green"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="edit(genres[index])"
               >
                 Salvar
               </button>
               <button
                 type="submit"
-                class="btn btn-red ml-10"
+                class="btn btn-red"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="remove(genre.id)"
               >
                 Deletar
@@ -47,15 +49,17 @@
           <div class="divider-modal"></div>
 
           <div class="form-group">
-            <div class="index-label">{{ genres.length + 1 }} -</div>
-              <input
-                type="text"
-                name="title"
-                class="form-control form-input"
-                v-model="newGenre.title"
-                placeholder="Adicionar novo gênero"
-                required
-              />
+            <div class="index-label" v-if="!phone">
+              {{ genres.length + 1 }} -
+            </div>
+            <input
+              type="text"
+              name="title"
+              class="form-control form-input"
+              v-model="newGenre.title"
+              placeholder="Adicionar novo gênero"
+              required
+            />
             <div class="item-submit-single">
               <button
                 type="submit"
@@ -73,27 +77,28 @@
           </div>
 
           <div class="divider-modal"></div>
-
         </form>
       </div>
-          <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-blue form-btn"
-              @click.prevent="editAll"
-            >
-              Salvar Todos
-            </button>
-          </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          class="btn btn-blue form-btn"
+          @click.prevent="editAll"
+        >
+          Salvar Todos
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "genresModal",
+  mixins: [responsive],
 
   data() {
     return {
@@ -106,6 +111,14 @@ export default {
     };
   },
 
+  watch: {
+    value: function() {
+      if (this.value != false) {
+        this.fetch();
+      }
+    },
+  },
+
   props: {
     value: {
       required: true,
@@ -114,7 +127,6 @@ export default {
 
   created() {
     this.resp = "";
-    this.fetch();
   },
 
   methods: {
@@ -127,6 +139,7 @@ export default {
 
       Axios.get("genres/all")
         .then((res) => {
+          console.log("Fetch -> All Genres");
           vm.genres = res.data;
         })
         .catch((err) => console.log(err));

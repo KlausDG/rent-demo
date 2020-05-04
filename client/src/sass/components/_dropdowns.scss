@@ -10,6 +10,10 @@
 .dropdown-sm {
   @include border(1px solid $color_input_border, 3px);
   padding: 5px;
+
+  @include media(phone) {
+    width: 170px;
+  }
 }
 
 .dropdown-menu {
@@ -33,6 +37,16 @@
     @include text($font_size_important, bold, $color_grey);
     vertical-align: middle;
     padding: 0 10px;
+
+    @include media(phone) {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  @include media(phone) {
+    display: block;
+    margin: 0 0 5px 0;
   }
 }
 
@@ -63,6 +77,10 @@
   text-decoration: none;
   display: block;
   cursor: pointer;
+
+  @include media(phone) {
+    font-size: $font_size_text;
+  }
 }
 
 .dropdown-content a:hover {
@@ -73,6 +91,19 @@
   display: block;
 }
 
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+//Variable dropdown
+
+.dropdown-variable {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+  cursor: pointer;
+
+  &-label {
+    display: flex;
+  }
+}
+
+.dropdown-variable:hover .dropdown-content {
+  display: block;
 }

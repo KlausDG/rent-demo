@@ -3,7 +3,7 @@
     <div class="modal vertical-modal">
       <div class="modal-header">
         <div class="modal-title-container">
-          <p class="title">Idioma</p>
+          <p class="title">Idiomas</p>
         </div>
         <div class="btn-close-modal">
           <font-awesome-icon :icon="['fas', 'times']" @click="close" />
@@ -18,7 +18,7 @@
             v-for="(language, index) in languages"
             v-bind:key="index"
           >
-            <div class="index-label">{{ index + 1 }} -</div>
+            <div class="index-label" v-if="!phone">{{ index + 1 }} -</div>
             <input
               type="text"
               name="title"
@@ -29,14 +29,16 @@
             <div class="item-submit">
               <button
                 type="submit"
-                class="btn btn-green ml-10"
+                class="btn btn-green"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="edit(languages[index])"
               >
                 Salvar
               </button>
               <button
                 type="submit"
-                class="btn btn-red ml-10"
+                class="btn btn-red"
+                :class="{ 'btn-sm': phone, 'ml-10': !phone }"
                 @click.prevent="remove(language.id)"
               >
                 Deletar
@@ -47,7 +49,9 @@
           <div class="divider-modal"></div>
 
           <div class="form-group">
-            <div class="index-label">{{ languages.length + 1 }} -</div>
+            <div class="index-label" v-if="!phone">
+              {{ languages.length + 1 }} -
+            </div>
             <input
               type="text"
               name="title"
@@ -90,9 +94,11 @@
 
 <script>
 import Axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "languagesModal",
+  mixins: [responsive],
 
   data() {
     return {
@@ -105,6 +111,14 @@ export default {
     };
   },
 
+  watch: {
+    value: function() {
+      if (this.value != false) {
+        this.fetch();
+      }
+    },
+  },
+
   props: {
     value: {
       required: true,
@@ -113,7 +127,6 @@ export default {
 
   created() {
     this.resp = "";
-    this.fetch();
   },
 
   methods: {
@@ -126,6 +139,7 @@ export default {
 
       Axios.get("languages/all")
         .then((res) => {
+          console.log("Fetch -> All Languages");
           vm.languages = res.data;
         })
         .catch((err) => console.log(err));

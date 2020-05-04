@@ -13,7 +13,7 @@
 
       <div class="modal-body">
         <form class="horizontal-form form-grid">
-          <div class="form-group flex-col-6">
+          <div class="form-group" :class="{ 'flex-col-6': !phone }">
             <label for="title" class="title-label">Título</label>
             <input
               type="text"
@@ -24,7 +24,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Nº Jogadores</label>
             <div class="row">
               <div class="input">
@@ -51,7 +51,7 @@
             </div>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group flex-col-6" v-if="!phone">
             <label class="title-label">É Expansão?</label>
             <div class="row radio-input">
               <div>
@@ -76,7 +76,61 @@
             </div>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+              <label class="title-label">Nº Jogadores</label>
+              <div class="row">
+                <div class="input">
+                  <input
+                    type="text"
+                    class="form-input"
+                    name="minPlayers"
+                    v-model="game.minPlayers"
+                    required
+                  />
+                </div>
+                <div class="letter">
+                  a
+                </div>
+                <div class="input">
+                  <input
+                    type="text"
+                    class="form-input"
+                    name="maxPlayers"
+                    v-model="game.maxPlayers"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="title-label">É Expansão?</label>
+              <div class="row radio-input">
+                <div>
+                  <input
+                    type="radio"
+                    name="exp"
+                    value="0"
+                    v-model="game.isExpansion"
+                    checked
+                  />
+                  <label for="exp_n">Não</label>
+                </div>
+                <div>
+                  <input
+                    type="radio"
+                    name="exp"
+                    value="1"
+                    v-model="game.isExpansion"
+                  />
+                  <label for="exp_s">Sim</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Dificuldade</label>
             <select class="form-input" v-model="game.difficulties_id" required>
               <option
@@ -88,7 +142,7 @@
             </select>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Gênero</label>
             <select class="form-input" v-model="game.genres_id" required>
               <option
@@ -100,7 +154,37 @@
             </select>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+              <label class="title-label">Dificuldade</label>
+              <select
+                class="form-input"
+                v-model="game.difficulties_id"
+                required
+              >
+                <option
+                  v-for="difficulty in difficulties"
+                  v-bind:key="difficulty.id"
+                  v-bind:value="difficulty.id"
+                  >{{ difficulty.title }}</option
+                >
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="title-label">Gênero</label>
+              <select class="form-input" v-model="game.genres_id" required>
+                <option
+                  v-for="genre in genres"
+                  v-bind:key="genre.id"
+                  v-bind:value="genre.id"
+                  >{{ genre.title }}</option
+                >
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Idioma</label>
             <select class="form-input" v-model="game.languages_id" required>
               <option
@@ -112,7 +196,7 @@
             </select>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Loja</label>
             <select
               class="form-control form-input"
@@ -128,7 +212,37 @@
             </select>
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group">
+              <label class="title-label">Idioma</label>
+              <select class="form-input" v-model="game.languages_id" required>
+                <option
+                  v-for="language in languages"
+                  v-bind:key="language.id"
+                  v-bind:value="language.id"
+                  >{{ language.title }}</option
+                >
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="title-label">Loja</label>
+              <select
+                class="form-control form-input"
+                v-model="game.filial_id"
+                required
+              >
+                <option
+                  v-for="filial in filials"
+                  v-bind:key="filial.id"
+                  v-bind:value="filial.id"
+                  >{{ filial.title }}</option
+                >
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group flex-col-3" v-if="!phone">
             <label class="title-label">Tempo de Jogo (min.)</label>
             <div class="row">
               <div class="input">
@@ -155,7 +269,7 @@
             </div>
           </div>
 
-          <div class="form-group flex-col-1">
+          <div class="form-group flex-col-1" v-if="!phone">
             <label for="price" class="title-label">Preço</label>
             <input
               type="text"
@@ -166,7 +280,47 @@
             />
           </div>
 
-          <div class="form-group flex-col-3">
+          <div class="form-group-row" v-if="phone">
+            <div class="form-group ">
+              <label class="title-label">Tempo de Jogo</label>
+              <div class="row">
+                <div class="input">
+                  <input
+                    type="text"
+                    class="form-input"
+                    name="minTime"
+                    v-model="game.minTime"
+                    required
+                  />
+                </div>
+                <div class="letter">
+                  a
+                </div>
+                <div class="input">
+                  <input
+                    type="text"
+                    class="form-input"
+                    name="maxTime"
+                    v-model="game.maxTime"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group ">
+              <label for="price" class="title-label">Preço</label>
+              <input
+                type="text"
+                name="price"
+                class="form-input"
+                v-model="game.price"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group" :class="{ 'flex-col-3': !phone }">
             <label for="obslang" class="title-label">Obs. Idioma</label>
             <input
               type="text"
@@ -176,7 +330,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-5">
+          <div class="form-group" :class="{ 'flex-col-5': !phone }">
             <label for="image" class="title-label">Imagem (URL)</label>
             <input
               type="text"
@@ -186,7 +340,7 @@
             />
           </div>
 
-          <div class="form-group flex-col-12">
+          <div class="form-group" :class="{ 'flex-col-12': !phone }">
             <label for="description" class="title-label">Descrição</label>
             <textarea
               class="form-input"
@@ -207,9 +361,11 @@
 
 <script>
 import axios from "axios";
+import { responsive } from "@/mixins/responsive";
 
 export default {
   name: "AddGameModal",
+  mixins: [responsive],
 
   data() {
     return {

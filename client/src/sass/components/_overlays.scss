@@ -1,20 +1,5 @@
-.unavailable-overlay {
-  height: 0px;
-}
-
 .not_available {
-  @include size(450px, 225px);
-  position: absolute;
   background-color: rgba(lighten(grey, 10), 0.9);
-  text-align: center;
-  z-index: 1000;
-
-  .unavailable-text {
-    @include text(50px, bolder);
-    margin-top: 76px;
-    padding: 0;
-    transform: rotate(-20deg);
-  }
 }
 
 .not_available_admin {

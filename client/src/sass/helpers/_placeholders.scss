@@ -47,7 +47,7 @@
 %background-image-normalize {
   background-size: auto 100%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center center;
 }
 
 %no-decoration {
@@ -95,5 +95,11 @@
   border: 3px solid lighten($main_color_2, 20);
   border-radius: 10px;
   font-weight: bold;
-  font-size:$font_size_btn;
+  font-size: $font_size_btn;
+}
+
+%title-text {
+  @include text($font_size_title, bolder, $main_color_2);
+  @extend %no-decoration;
+  height: 100%;
 }
